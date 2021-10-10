@@ -1,0 +1,59 @@
+@import 'svelte-material-ui/bare.css';
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+}
+
+button:focus,
+a:focus {
+    outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
+}
+
+.mdc-notched-outline--notched .mdc-notched-outline__notch {
+    border-right: 0px !important;
+    border-left: 0px !important;
+}
+
+.mdc-switch__native-control {
+    width: 64px !important;
+    height: 48px !important;
+}
+
+[type='text']:focus,
+[type='email']:focus,
+[type='url']:focus,
+[type='password']:focus,
+[type='number']:focus,
+[type='date']:focus,
+[type='datetime-local']:focus,
+[type='month']:focus,
+[type='search']:focus,
+[type='tel']:focus,
+[type='time']:focus,
+[type='week']:focus,
+[multiple]:focus,
+textarea:focus,
+select:focus {
+    box-shadow: none !important;
+}
