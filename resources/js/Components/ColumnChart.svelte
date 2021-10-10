@@ -15,7 +15,7 @@
         var data = new google.visualization.DataTable()
 
         data.addColumn('string', 'Element')
-        data.addColumn('number', 'Density')
+        data.addColumn('number', 'Repeticiones')
 
         values.map(function (item) {
             data.addRows([['', item]])
