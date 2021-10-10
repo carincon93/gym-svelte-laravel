@@ -20,7 +20,7 @@
             {#each ejercicios as ejercicio}
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex items-center" on:click={() => Inertia.visit(route('ejercicios.show', [ejercicio.categoria, ejercicio.slug]))}>
                     <div class="p-6 titulo-ejercicio">{ejercicio.nombre}</div>
-                    <img src="/storage/{categoria}/{ejercicio.imagen}" class="h-24" alt="" />
+                    <img src="/storage/{categoria.toLowerCase()}/{ejercicio.imagen}" class="h-24" alt="" />
                 </div>
             {/each}
         </div>
