@@ -26,7 +26,7 @@
         view.setColumns([0, 1, { calc: 'stringify', sourceColumn: 1, type: 'string', role: 'annotation' }, 2])
 
         var options = {
-            title: 'Historial de peso (Últimos 31 días)',
+            title: 'Historial de peso (Últimas 31 series)',
             height: 200,
             bar: { groupWidth: '65%' },
             legend: { position: 'none' },
