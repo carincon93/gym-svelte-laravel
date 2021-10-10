@@ -8,9 +8,8 @@
     import { route } from '@/Utils'
 
     import BreezeButton from '@/Components/Button.svelte'
-    import BreezeCheckbox from '@/Components/Checkbox.svelte'
     import BreezeInput from '@/Components/Input.svelte'
-    import BreezeLabel from '@/Components/Label.svelte'
+    import Checkbox from '@smui/checkbox'
     import BreezeValidationErrors from '@/Components/ValidationErrors.svelte'
     import Link from '@/Components/Link.svelte'
     import FormField from '@smui/form-field'
@@ -53,10 +52,10 @@
     </div>
 
     <div class="block mt-4">
-        <!-- <FormField>
-            <BreezeCheckbox name="remember" id="remember" bind:checked={$form.remember} />
-            <span class="ml-2 text-sm text-gray-600">Remember me</span>
-        </FormField> -->
+        <FormField>
+            <Checkbox bind:checked={$form.remember} />
+            <span slot="label">Remember me.</span>
+        </FormField>
     </div>
 
     <div class="flex items-center justify-end mt-4">

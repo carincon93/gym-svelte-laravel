@@ -14,11 +14,11 @@
     <div class="py-12">
         <div class="lg:px-8 max-w-7xl mx-auto sm:px-6">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 border-b border-gray-200">{categoria}</div>
+                <div class="p-6 border-b border-gray-200 text-center sm:text-left">{categoria}</div>
             </div>
 
             {#each ejercicios as ejercicio}
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex items-center" on:click={() => Inertia.visit(route('ejercicios.show', [ejercicio.categoria, ejercicio.slug]))}>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex items-center mb-1 shadow-md" on:click={() => Inertia.visit(route('ejercicios.show', [ejercicio.categoria, ejercicio.slug]))}>
                     <div class="p-6 titulo-ejercicio">{ejercicio.nombre}</div>
                     <img src="/storage/{categoria.toLowerCase()}/{ejercicio.imagen}" class="h-24" alt="" />
                 </div>

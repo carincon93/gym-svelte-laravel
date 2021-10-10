@@ -4,7 +4,6 @@
     $: props = {
         type: 'submit',
         variant: 'raised',
-        height: '100px',
         ...$$restProps,
         class: `${$$restProps.class || ''}`,
     }
