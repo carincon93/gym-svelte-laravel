@@ -25,7 +25,7 @@
     let form = useForm({
         numero_sesion: $page.props.auth.user.sesion.numero_sesion,
         nombre_ejercicio: slug,
-        numero_repeticion: null,
+        numero_serie: null,
         cantidad_repeticiones: null,
         peso: null,
         tiempo_descanso: null,
@@ -78,7 +78,7 @@
         <div slot="content">
             <form on:submit|preventDefault={submit} id="form">
                 <div>
-                    <BreezeInput id="numero_repeticion" type="number" class="mt-1 block w-full" input$min="0" bind:value={$form.numero_repeticion} label="¿En cuál repetición va?" required autofocus />
+                    <BreezeInput id="numero_serie" type="number" class="mt-1 block w-full" input$min="0" bind:value={$form.numero_serie} label="¿En cuál serie va?" required autofocus />
                 </div>
 
                 <div class="mt-4">

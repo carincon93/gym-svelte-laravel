@@ -18,7 +18,7 @@ class Repeticion extends Model
         'user_id',
         'numero_sesion',
         'nombre_ejercicio',
-        'numero_repeticion',
+        'numero_serie',
         'cantidad_repeticiones',
         'peso',
         'tiempo_descanso',
