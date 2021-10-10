@@ -47,8 +47,8 @@ class User extends Authenticatable
         return $this->hasOne(Sesion::class);
     }
 
-    public function repeticiones()
+    public function series()
     {
-        return $this->hasMany(Repeticion::class);
+        return $this->hasMany(Serie::class);
     }
 }

@@ -1,5 +1,4 @@
 <script>
-    import { Inertia } from '@inertiajs/inertia'
     import { page, useForm } from '@inertiajs/inertia-svelte'
     import { route } from '@/Utils'
     import { timer, time, isRunning, isComplete } from '@/Stores/countdown-timer'
@@ -8,10 +7,10 @@
     import BreezeButton from '@/Components/Button.svelte'
     import BreezeInput from '@/Components/Input.svelte'
     import Dialog from '@/Components/Dialog.svelte'
-    import Card, { Content } from '@smui/card'
+    import Card from '@smui/card'
     import ColumnChart from '@/Components/ColumnChart.svelte'
 
-    $: $title = 'Aductores'
+    $: $title = ejercicioInfo.nombre
 
     export let slug
     export let categoria
@@ -20,7 +19,6 @@
     export let pesoHistory
 
     let dialog = false
-    let done = false
 
     let form = useForm({
         numero_sesion: $page.props.auth.user.sesion.numero_sesion,
@@ -36,7 +34,7 @@
         timer.finish()
     }
     function submit() {
-        $form.post(route('repeticiones.store'), { preserveScroll: true })
+        $form.post(route('series.store'), { preserveScroll: true })
     }
 </script>
 
@@ -53,7 +51,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    Añadir repetición
+                    Añadir serie
                 </div>
             </BreezeButton>
         </div>
@@ -74,7 +72,7 @@
     <ColumnChart bind:values={pesoHistory} />
 
     <Dialog bind:open={dialog}>
-        <div slot="title" class="text-center">Guardar repetición</div>
+        <div slot="title" class="text-center">Guardar serie</div>
         <div slot="content">
             <form on:submit|preventDefault={submit} id="form">
                 <div>

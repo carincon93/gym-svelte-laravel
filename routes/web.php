@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Repeticion;
+use App\Models\Serie;
 use App\Models\Ejercicio;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
@@ -43,8 +43,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $ejercicios = null;
         $pesoHistory = null;
 
-        $ejercicios = $authUser->repeticiones()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->paginate(4);
-        $pesoHistory = $authUser->repeticiones()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->get()->take(31)->map(function ($repeticion) {
+        $ejercicios = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->paginate(4);
+        $pesoHistory = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->get()->take(31)->map(function ($repeticion) {
             return (int) $repeticion->peso;
         });
 
@@ -58,13 +58,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('ejercicios.show');
 
-    Route::post('/repeticiones/store', function (Request $request) {
-        $repeticion = new Repeticion();
+    Route::post('/series/store', function (Request $request) {
+        $serie = new Serie();
         $request->request->add(['user_id' => Auth::user()->id]);
-        $repeticion->fill($request->all());
-        $repeticion->save();
+        $serie->fill($request->all());
+        $serie->save();
         return back();
-    })->name('repeticiones.store');
+    })->name('series.store');
 
     Route::post('sesion/store', function (Request $request) {
         $authUser = Auth::user();

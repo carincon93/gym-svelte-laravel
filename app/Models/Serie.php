@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Repeticion extends Model
+class Serie extends Model
 {
     use HasFactory;
 
@@ -24,7 +24,7 @@ class Repeticion extends Model
         'tiempo_descanso',
     ];
 
-    protected $table = 'repeticiones';
+    protected $table = 'series';
 
     /**
      * user
