@@ -13814,7 +13814,11 @@ function create_fragment(ctx) {
 	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(textfield, 'value', textfield_value_binding));
 
 	textfield.$on("input", function () {
-		if ((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(/*$form*/ ctx[3].post((0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('sesiones.store'), { preserveScroll: true }))) /*$form*/ ctx[3].post((0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('sesiones.store'), { preserveScroll: true }).apply(this, arguments);
+		if ((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(/*$form*/ ctx[3].numero_sesion > 0
+		? /*$form*/ ctx[3].post((0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('sesiones.store'), { preserveScroll: true })
+		: null)) (/*$form*/ ctx[3].numero_sesion > 0
+		? /*$form*/ ctx[3].post((0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('sesiones.store'), { preserveScroll: true })
+		: null).apply(this, arguments);
 	});
 
 	breezeresponsivenavlink1 = new _Components_ResponsiveNavLink_svelte__WEBPACK_IMPORTED_MODULE_8__["default"]({

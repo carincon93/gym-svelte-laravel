@@ -92,7 +92,7 @@
                     <BreezeResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>Dashboard</BreezeResponsiveNavLink>
                     <div class="px-4 flex items-center">
                         <small class="text-gray-500">Configure el número de la sesión de entrenamiento</small>
-                        <Textfield id="numero_sesion" variant="outlined" type="number" class="mt-1 w-1/4" input$min="0" bind:value={$form.numero_sesion} on:input={$form.post(route('sesiones.store'), { preserveScroll: true })} />
+                        <Textfield id="numero_sesion" variant="outlined" type="number" class="mt-1 w-1/4" input$min="0" bind:value={$form.numero_sesion} on:input={$form.numero_sesion > 0 ? $form.post(route('sesiones.store'), { preserveScroll: true }) : null} />
                     </div>
                 </div>
 
