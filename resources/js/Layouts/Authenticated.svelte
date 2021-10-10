@@ -18,7 +18,7 @@
     let showingNavigationDropdown = false
 
     let form = useForm({
-        numero_sesion: $page.props.auth.user.sesion.numero_sesion,
+        numero_sesion: $page.props.auth.user.sesion?.numero_sesion,
     })
 </script>
 

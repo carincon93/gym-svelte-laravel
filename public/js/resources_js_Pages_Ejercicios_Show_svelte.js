@@ -17800,7 +17800,7 @@ function instance($$self, $$props, $$invalidate) {
 	let showingNavigationDropdown = false;
 
 	let form = (0,_inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_3__.useForm)({
-		numero_sesion: $page.props.auth.user.sesion.numero_sesion
+		numero_sesion: $page.props.auth.user.sesion?.numero_sesion
 	});
 
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, form, value => $$invalidate(3, $form = value));
@@ -18016,7 +18016,7 @@ function create_title_slot(ctx) {
 	return {
 		c() {
 			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			div.textContent = "Guardar serie";
+			div.textContent = "Añadir serie";
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "slot", "title");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", "text-center");
 		},
@@ -18103,7 +18103,7 @@ function create_content_slot(ctx) {
 		class: "mt-1 block w-full",
 		input$min: "0",
 		input$step: "0.1",
-		label: "¿Cúanto peso utilizó?",
+		label: "¿Cuánto peso utilizó?",
 		required: true
 	};
 
@@ -18303,7 +18303,7 @@ function create_else_block(ctx) {
 
 	return {
 		c() {
-			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Guardar");
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Añadir");
 		},
 		m(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
@@ -18320,7 +18320,7 @@ function create_if_block_2(ctx) {
 
 	return {
 		c() {
-			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Guardando");
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Añadiendo");
 		},
 		m(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
@@ -18831,7 +18831,7 @@ function instance($$self, $$props, $$invalidate) {
 	let dialog = false;
 
 	let form = (0,_inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_1__.useForm)({
-		numero_sesion: $page.props.auth.user.sesion.numero_sesion,
+		numero_sesion: $page.props.auth.user.sesion?.numero_sesion,
 		nombre_ejercicio: slug,
 		numero_serie: null,
 		cantidad_repeticiones: null,

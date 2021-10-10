@@ -14160,7 +14160,7 @@ function instance($$self, $$props, $$invalidate) {
 	let showingNavigationDropdown = false;
 
 	let form = (0,_inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_3__.useForm)({
-		numero_sesion: $page.props.auth.user.sesion.numero_sesion
+		numero_sesion: $page.props.auth.user.sesion?.numero_sesion
 	});
 
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, form, value => $$invalidate(3, $form = value));
