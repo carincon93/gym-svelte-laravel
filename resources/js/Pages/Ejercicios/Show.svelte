@@ -72,7 +72,7 @@
     <ColumnChart bind:values={pesoHistory} />
 
     <Dialog bind:open={dialog}>
-        <div slot="title" class="text-center">Guardar serie</div>
+        <div slot="title" class="text-center">Añadir serie</div>
         <div slot="content">
             <form on:submit|preventDefault={submit} id="form">
                 <div>
@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="mt-4">
-                    <BreezeInput id="peso" type="number" class="mt-1 block w-full" input$min="0" input$step="0.1" bind:value={$form.peso} label="¿Cúanto peso utilizó?" required />
+                    <BreezeInput id="peso" type="number" class="mt-1 block w-full" input$min="0" input$step="0.1" bind:value={$form.peso} label="¿Cuánto peso utilizó?" required />
                 </div>
 
                 <div class="mt-4">
@@ -99,9 +99,9 @@
                     <div class={$isRunning ? 'flex flex-col items-center justify-center' : ''}>
                         {#if !$isRunning}
                             {#if $form.processing}
-                                Guardando
+                                Añadiendo
                             {:else}
-                                Guardar
+                                Añadir
                             {/if}
                         {/if}
 
