@@ -30,11 +30,11 @@
     })
 
     $: if ($isComplete) {
-        submit()
+        $form.post(route('series.store'), { preserveScroll: true })
         timer.finish()
     }
     function submit() {
-        $form.post(route('series.store'), { preserveScroll: true })
+        timer.start($form.tiempo_descanso * 1000)
     }
 </script>
 
@@ -95,7 +95,7 @@
         <div slot="actions">
             <div class="p-4">
                 <BreezeButton on:click={() => (dialog = false)} variant={null}>Cancelar</BreezeButton>
-                <BreezeButton variant="raised" class={$isRunning ? 'ml-4' : 'ml-4'} bind:disabled={$isRunning} on:click={() => timer.start($form.tiempo_descanso * 1000)}>
+                <BreezeButton variant="raised" class={$isRunning ? 'ml-4' : 'ml-4'} bind:disabled={$isRunning} form="form">
                     <div class={$isRunning ? 'flex flex-col items-center justify-center' : ''}>
                         {#if !$isRunning}
                             {#if $form.processing}
