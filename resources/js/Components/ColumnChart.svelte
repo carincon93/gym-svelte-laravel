@@ -16,13 +16,14 @@
 
         data.addColumn('string', 'Element')
         data.addColumn('number', 'Repeticiones')
+        data.addColumn({ type: 'string', role: 'style' })
 
         values.map(function (item) {
-            data.addRows([['', item]])
+            data.addRows([['', item, '#6200ee']])
         })
 
         var view = new google.visualization.DataView(data)
-        view.setColumns([0, 1, { calc: 'stringify', sourceColumn: 1, type: 'string', role: 'annotation' }])
+        view.setColumns([0, 1, { calc: 'stringify', sourceColumn: 1, type: 'string', role: 'annotation' }, 2])
 
         var options = {
             title: 'Historial de peso (Últimos 31 días)',
@@ -31,6 +32,10 @@
             legend: { position: 'none' },
             hAxis: {
                 direction: -1,
+            },
+            animation: {
+                duration: 1000,
+                easing: 'out',
             },
         }
         var chart = new google.visualization.ColumnChart(document.getElementById('columnchart_values'))

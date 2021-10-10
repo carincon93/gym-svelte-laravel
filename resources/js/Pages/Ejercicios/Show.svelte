@@ -58,7 +58,7 @@
             </BreezeButton>
         </div>
 
-        <div class="mt-2 flex items-center justify-center max-w-4xl mt-2 mx-auto">
+        <div class="mt-2 flex items-center justify-center max-w-4xl mt-2 mx-auto flex-col">
             {#each ejercicios.data as ejercicio}
                 <div class="card-container w-full">
                     <Card variant="outlined" padded>
