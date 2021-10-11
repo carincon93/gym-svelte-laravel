@@ -2,6 +2,7 @@
 
 use App\Models\Serie;
 use App\Models\Ejercicio;
+use App\Models\Sesion;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         $ejercicios = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->paginate(4);
         $pesoHistory = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->get()->take(31)->map(function ($repeticion) {
-            return (int) $repeticion->peso;
+            return (float) $repeticion->peso;
         });
 
         return Inertia::render('Ejercicios/Show', [
@@ -54,13 +55,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'categoria' => Ejercicio::where('categoria', $ejercicio)->first() ? ucfirst(Ejercicio::where('categoria', $ejercicio)->first()->categoria) : null,
 
             'ejercicios' => $ejercicios,
-            'pesoHistory' => $pesoHistory
+            'pesoHistory' => $pesoHistory,
         ]);
     })->name('ejercicios.show');
 
     Route::post('/series/store', function (Request $request) {
+        $authUser = Auth::user();
+        $sesion = Sesion::select('numero_sesion')->where('user_id', $authUser->id)->first();
+        $numeroSerie = $authUser->series()->select('numero_serie')->where('nombre_ejercicio', $request->nombre_ejercicio)->where('numero_sesion', $sesion->numero_sesion)->orderBy('id', 'DESC')->first() ? $authUser->series()->select('numero_serie')->where('nombre_ejercicio', $request->nombre_ejercicio)->where('numero_sesion', $sesion->numero_sesion)->orderBy('id', 'DESC')->first()->numero_serie : 0;
+
         $serie = new Serie();
         $request->request->add(['user_id' => Auth::user()->id]);
+        $request->request->add(['numero_sesion' => $sesion->numero_sesion]);
+        $request->request->add(['numero_serie' => $numeroSerie + 1]);
         $serie->fill($request->all());
         $serie->save();
         return back();

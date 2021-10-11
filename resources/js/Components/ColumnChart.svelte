@@ -33,6 +33,7 @@
             hAxis: {
                 direction: -1,
             },
+
             animation: {
                 duration: 1000,
                 easing: 'out',

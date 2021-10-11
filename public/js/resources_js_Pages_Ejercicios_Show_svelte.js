@@ -18036,11 +18036,11 @@ __webpack_require__.r(__webpack_exports__);
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[23] = list[i];
+	child_ctx[21] = list[i];
 	return child_ctx;
 }
 
-// (49:16) {#if ejercicioInfo.link_video}
+// (47:16) {#if ejercicioInfo.link_video}
 function create_if_block_3(ctx) {
 	let a;
 	let youtubelogo;
@@ -18082,7 +18082,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (55:12) <BreezeButton type="button" class="w-full rounded-b-full" on:click={() => (dialog = true)}>
+// (53:12) <BreezeButton type="button" class="w-full rounded-b-full" on:click={() => (dialog = true)}>
 function create_default_slot_4(ctx) {
 	let div;
 
@@ -18104,16 +18104,16 @@ function create_default_slot_4(ctx) {
 	};
 }
 
-// (68:20) <Card variant="outlined" padded>
+// (66:20) <Card variant="outlined" padded>
 function create_default_slot_3(ctx) {
 	let div;
 	let span0;
-	let t0_value = /*ejercicio*/ ctx[23].peso + "";
+	let t0_value = /*ejercicio*/ ctx[21].peso + "";
 	let t0;
 	let t1;
 	let t2;
 	let span1;
-	let t3_value = /*ejercicio*/ ctx[23].cantidad_repeticiones + "";
+	let t3_value = /*ejercicio*/ ctx[21].cantidad_repeticiones + "";
 	let t3;
 	let t4;
 
@@ -18140,8 +18140,8 @@ function create_default_slot_3(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(span1, t4);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*ejercicios*/ 8 && t0_value !== (t0_value = /*ejercicio*/ ctx[23].peso + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t0, t0_value);
-			if (dirty & /*ejercicios*/ 8 && t3_value !== (t3_value = /*ejercicio*/ ctx[23].cantidad_repeticiones + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t3, t3_value);
+			if (dirty & /*ejercicios*/ 8 && t0_value !== (t0_value = /*ejercicio*/ ctx[21].peso + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t0, t0_value);
+			if (dirty & /*ejercicios*/ 8 && t3_value !== (t3_value = /*ejercicio*/ ctx[21].cantidad_repeticiones + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t3, t3_value);
 		},
 		d(detaching) {
 			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
@@ -18149,7 +18149,7 @@ function create_default_slot_3(ctx) {
 	};
 }
 
-// (66:12) {#each ejercicios.data as ejercicio}
+// (64:12) {#each ejercicios.data as ejercicio}
 function create_each_block(ctx) {
 	let div;
 	let card;
@@ -18181,7 +18181,7 @@ function create_each_block(ctx) {
 		p(ctx, dirty) {
 			const card_changes = {};
 
-			if (dirty & /*$$scope, ejercicios*/ 67108872) {
+			if (dirty & /*$$scope, ejercicios*/ 16777224) {
 				card_changes.$$scope = { dirty, ctx };
 			}
 
@@ -18203,7 +18203,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (81:8) 
+// (79:8) 
 function create_title_slot(ctx) {
 	let div;
 
@@ -18223,9 +18223,9 @@ function create_title_slot(ctx) {
 	};
 }
 
-// (82:8) 
+// (80:8) 
 function create_content_slot(ctx) {
-	let div4;
+	let div3;
 	let form_1;
 	let div0;
 	let breezeinput0;
@@ -18238,10 +18238,6 @@ function create_content_slot(ctx) {
 	let div2;
 	let breezeinput2;
 	let updating_value_2;
-	let t2;
-	let div3;
-	let breezeinput3;
-	let updating_value_3;
 	let current;
 	let mounted;
 	let dispose;
@@ -18251,17 +18247,16 @@ function create_content_slot(ctx) {
 	}
 
 	let breezeinput0_props = {
-		id: "numero_serie",
+		id: "cantidad_repeticiones",
 		type: "number",
 		class: "mt-1 block w-full",
 		input$min: "0",
-		label: "¿En cuál serie va?",
-		required: true,
-		autofocus: true
+		label: "¿Cuántas repeticiones hizo?",
+		required: true
 	};
 
-	if (/*$form*/ ctx[4].numero_serie !== void 0) {
-		breezeinput0_props.value = /*$form*/ ctx[4].numero_serie;
+	if (/*$form*/ ctx[4].cantidad_repeticiones !== void 0) {
+		breezeinput0_props.value = /*$form*/ ctx[4].cantidad_repeticiones;
 	}
 
 	breezeinput0 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_6__["default"]({ props: breezeinput0_props });
@@ -18272,26 +18267,6 @@ function create_content_slot(ctx) {
 	}
 
 	let breezeinput1_props = {
-		id: "cantidad_repeticiones",
-		type: "number",
-		class: "mt-1 block w-full",
-		input$min: "0",
-		label: "¿Cuántas repeticiones hizo?",
-		required: true
-	};
-
-	if (/*$form*/ ctx[4].cantidad_repeticiones !== void 0) {
-		breezeinput1_props.value = /*$form*/ ctx[4].cantidad_repeticiones;
-	}
-
-	breezeinput1 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_6__["default"]({ props: breezeinput1_props });
-	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput1, 'value', breezeinput1_value_binding));
-
-	function breezeinput2_value_binding(value) {
-		/*breezeinput2_value_binding*/ ctx[18](value);
-	}
-
-	let breezeinput2_props = {
 		id: "peso",
 		type: "number",
 		class: "mt-1 block w-full",
@@ -18302,17 +18277,17 @@ function create_content_slot(ctx) {
 	};
 
 	if (/*$form*/ ctx[4].peso !== void 0) {
-		breezeinput2_props.value = /*$form*/ ctx[4].peso;
+		breezeinput1_props.value = /*$form*/ ctx[4].peso;
 	}
 
-	breezeinput2 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_6__["default"]({ props: breezeinput2_props });
-	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput2, 'value', breezeinput2_value_binding));
+	breezeinput1 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_6__["default"]({ props: breezeinput1_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput1, 'value', breezeinput1_value_binding));
 
-	function breezeinput3_value_binding(value) {
-		/*breezeinput3_value_binding*/ ctx[19](value);
+	function breezeinput2_value_binding(value) {
+		/*breezeinput2_value_binding*/ ctx[18](value);
 	}
 
-	let breezeinput3_props = {
+	let breezeinput2_props = {
 		id: "tiempo_descanso",
 		type: "number",
 		class: "mt-1 block w-full",
@@ -18322,15 +18297,15 @@ function create_content_slot(ctx) {
 	};
 
 	if (/*$form*/ ctx[4].tiempo_descanso !== void 0) {
-		breezeinput3_props.value = /*$form*/ ctx[4].tiempo_descanso;
+		breezeinput2_props.value = /*$form*/ ctx[4].tiempo_descanso;
 	}
 
-	breezeinput3 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_6__["default"]({ props: breezeinput3_props });
-	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput3, 'value', breezeinput3_value_binding));
+	breezeinput2 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_6__["default"]({ props: breezeinput2_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput2, 'value', breezeinput2_value_binding));
 
 	return {
 		c() {
-			div4 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			form_1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("form");
 			div0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeinput0.$$.fragment);
@@ -18340,18 +18315,15 @@ function create_content_slot(ctx) {
 			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
 			div2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeinput2.$$.fragment);
-			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
-			div3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeinput3.$$.fragment);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div0, "class", "mt-4");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div1, "class", "mt-4");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div2, "class", "mt-4");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div3, "class", "mt-4");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(form_1, "id", "form");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div4, "slot", "content");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div3, "slot", "content");
 		},
 		m(target, anchor) {
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div4, anchor);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div4, form_1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div3, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div3, form_1);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, div0);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeinput0, div0, null);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, t0);
@@ -18360,9 +18332,6 @@ function create_content_slot(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, t1);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, div2);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeinput2, div2, null);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, t2);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, div3);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeinput3, div3, null);
 			current = true;
 
 			if (!mounted) {
@@ -18375,7 +18344,7 @@ function create_content_slot(ctx) {
 
 			if (!updating_value && dirty & /*$form*/ 16) {
 				updating_value = true;
-				breezeinput0_changes.value = /*$form*/ ctx[4].numero_serie;
+				breezeinput0_changes.value = /*$form*/ ctx[4].cantidad_repeticiones;
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value = false);
 			}
 
@@ -18384,7 +18353,7 @@ function create_content_slot(ctx) {
 
 			if (!updating_value_1 && dirty & /*$form*/ 16) {
 				updating_value_1 = true;
-				breezeinput1_changes.value = /*$form*/ ctx[4].cantidad_repeticiones;
+				breezeinput1_changes.value = /*$form*/ ctx[4].peso;
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value_1 = false);
 			}
 
@@ -18393,49 +18362,37 @@ function create_content_slot(ctx) {
 
 			if (!updating_value_2 && dirty & /*$form*/ 16) {
 				updating_value_2 = true;
-				breezeinput2_changes.value = /*$form*/ ctx[4].peso;
+				breezeinput2_changes.value = /*$form*/ ctx[4].tiempo_descanso;
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value_2 = false);
 			}
 
 			breezeinput2.$set(breezeinput2_changes);
-			const breezeinput3_changes = {};
-
-			if (!updating_value_3 && dirty & /*$form*/ 16) {
-				updating_value_3 = true;
-				breezeinput3_changes.value = /*$form*/ ctx[4].tiempo_descanso;
-				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value_3 = false);
-			}
-
-			breezeinput3.$set(breezeinput3_changes);
 		},
 		i(local) {
 			if (current) return;
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeinput0.$$.fragment, local);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeinput1.$$.fragment, local);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeinput2.$$.fragment, local);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeinput3.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeinput0.$$.fragment, local);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeinput1.$$.fragment, local);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeinput2.$$.fragment, local);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeinput3.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div4);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div3);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeinput0);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeinput1);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeinput2);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeinput3);
 			mounted = false;
 			dispose();
 		}
 	};
 }
 
-// (103:16) <BreezeButton on:click={() => (dialog = false)} variant={null}>
+// (101:16) <BreezeButton on:click={() => (dialog = false)} variant={null}>
 function create_default_slot_2(ctx) {
 	let t;
 
@@ -18452,7 +18409,7 @@ function create_default_slot_2(ctx) {
 	};
 }
 
-// (106:24) {#if !$isRunning}
+// (104:24) {#if !$isRunning}
 function create_if_block_1(ctx) {
 	let if_block_anchor;
 
@@ -18491,7 +18448,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (109:28) {:else}
+// (107:28) {:else}
 function create_else_block(ctx) {
 	let t;
 
@@ -18508,7 +18465,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (107:28) {#if $form.processing}
+// (105:28) {#if $form.processing}
 function create_if_block_2(ctx) {
 	let t;
 
@@ -18525,7 +18482,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (114:24) {#if $isRunning}
+// (112:24) {#if $isRunning}
 function create_if_block(ctx) {
 	let small;
 	let t;
@@ -18549,7 +18506,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (104:16) <BreezeButton variant="raised" class={$isRunning ? 'ml-4' : 'ml-4'} bind:disabled={$isRunning} form="form">
+// (102:16) <BreezeButton variant="raised" class={$isRunning ? 'ml-4' : 'ml-4'} bind:disabled={$isRunning} form="form">
 function create_default_slot_1(ctx) {
 	let div;
 	let t;
@@ -18615,7 +18572,7 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (101:8) 
+// (99:8) 
 function create_actions_slot(ctx) {
 	let div1;
 	let div0;
@@ -18675,7 +18632,7 @@ function create_actions_slot(ctx) {
 		p(ctx, dirty) {
 			const breezebutton0_changes = {};
 
-			if (dirty & /*$$scope*/ 67108864) {
+			if (dirty & /*$$scope*/ 16777216) {
 				breezebutton0_changes.$$scope = { dirty, ctx };
 			}
 
@@ -18683,7 +18640,7 @@ function create_actions_slot(ctx) {
 			const breezebutton1_changes = {};
 			if (dirty & /*$isRunning*/ 64) breezebutton1_changes.class = /*$isRunning*/ ctx[6] ? 'ml-4' : 'ml-4';
 
-			if (dirty & /*$$scope, $isRunning, $time, $form*/ 67109072) {
+			if (dirty & /*$$scope, $isRunning, $time, $form*/ 16777424) {
 				breezebutton1_changes.$$scope = { dirty, ctx };
 			}
 
@@ -18714,7 +18671,7 @@ function create_actions_slot(ctx) {
 	};
 }
 
-// (42:0) <BreezeAuthenticatedLayout>
+// (40:0) <BreezeAuthenticatedLayout>
 function create_default_slot(ctx) {
 	let div5;
 	let div3;
@@ -18778,7 +18735,7 @@ function create_default_slot(ctx) {
 	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(columnchart, 'values', columnchart_values_binding));
 
 	function dialog_1_open_binding(value) {
-		/*dialog_1_open_binding*/ ctx[20](value);
+		/*dialog_1_open_binding*/ ctx[19](value);
 	}
 
 	let dialog_1_props = {
@@ -18899,7 +18856,7 @@ function create_default_slot(ctx) {
 
 			const breezebutton_changes = {};
 
-			if (dirty & /*$$scope*/ 67108864) {
+			if (dirty & /*$$scope*/ 16777216) {
 				breezebutton_changes.$$scope = { dirty, ctx };
 			}
 
@@ -18943,7 +18900,7 @@ function create_default_slot(ctx) {
 			columnchart.$set(columnchart_changes);
 			const dialog_1_changes = {};
 
-			if (dirty & /*$$scope, $isRunning, $time, $form, dialog*/ 67109104) {
+			if (dirty & /*$$scope, $isRunning, $time, $form, dialog*/ 16777456) {
 				dialog_1_changes.$$scope = { dirty, ctx };
 			}
 
@@ -19016,7 +18973,7 @@ function create_fragment(ctx) {
 		p(ctx, [dirty]) {
 			const breezeauthenticatedlayout_changes = {};
 
-			if (dirty & /*$$scope, dialog, $isRunning, $time, $form, pesoHistory, ejercicios, ejercicioInfo, categoria*/ 67109119) {
+			if (dirty & /*$$scope, dialog, $isRunning, $time, $form, pesoHistory, ejercicios, ejercicioInfo, categoria*/ 16777471) {
 				breezeauthenticatedlayout_changes.$$scope = { dirty, ctx };
 			}
 
@@ -19040,13 +18997,11 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let $form;
 	let $isComplete;
-	let $page;
 	let $title;
 	let $isRunning;
 	let $time;
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _Stores_countdown_timer__WEBPACK_IMPORTED_MODULE_3__.isComplete, $$value => $$invalidate(11, $isComplete = $$value));
-	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_1__.page, $$value => $$invalidate(21, $page = $$value));
-	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _Layouts_Authenticated_svelte__WEBPACK_IMPORTED_MODULE_4__.title, $$value => $$invalidate(22, $title = $$value));
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _Layouts_Authenticated_svelte__WEBPACK_IMPORTED_MODULE_4__.title, $$value => $$invalidate(20, $title = $$value));
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _Stores_countdown_timer__WEBPACK_IMPORTED_MODULE_3__.isRunning, $$value => $$invalidate(6, $isRunning = $$value));
 	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _Stores_countdown_timer__WEBPACK_IMPORTED_MODULE_3__.time, $$value => $$invalidate(7, $time = $$value));
 	let { slug } = $$props;
@@ -19057,9 +19012,7 @@ function instance($$self, $$props, $$invalidate) {
 	let dialog = false;
 
 	let form = (0,_inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_1__.useForm)({
-		numero_sesion: $page.props.auth.user.sesion?.numero_sesion,
 		nombre_ejercicio: slug,
-		numero_serie: null,
 		cantidad_repeticiones: null,
 		peso: null,
 		tiempo_descanso: null
@@ -19086,27 +19039,20 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	function breezeinput0_value_binding(value) {
-		if ($$self.$$.not_equal($form.numero_serie, value)) {
-			$form.numero_serie = value;
-			form.set($form);
-		}
-	}
-
-	function breezeinput1_value_binding(value) {
 		if ($$self.$$.not_equal($form.cantidad_repeticiones, value)) {
 			$form.cantidad_repeticiones = value;
 			form.set($form);
 		}
 	}
 
-	function breezeinput2_value_binding(value) {
+	function breezeinput1_value_binding(value) {
 		if ($$self.$$.not_equal($form.peso, value)) {
 			$form.peso = value;
 			form.set($form);
 		}
 	}
 
-	function breezeinput3_value_binding(value) {
+	function breezeinput2_value_binding(value) {
 		if ($$self.$$.not_equal($form.tiempo_descanso, value)) {
 			$form.tiempo_descanso = value;
 			form.set($form);
@@ -19159,7 +19105,6 @@ function instance($$self, $$props, $$invalidate) {
 		breezeinput0_value_binding,
 		breezeinput1_value_binding,
 		breezeinput2_value_binding,
-		breezeinput3_value_binding,
 		dialog_1_open_binding
 	];
 }

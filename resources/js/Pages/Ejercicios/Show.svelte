@@ -22,9 +22,7 @@
     let dialog = false
 
     let form = useForm({
-        numero_sesion: $page.props.auth.user.sesion?.numero_sesion,
         nombre_ejercicio: slug,
-        numero_serie: null,
         cantidad_repeticiones: null,
         peso: null,
         tiempo_descanso: null,
@@ -81,9 +79,9 @@
         <div slot="title" class="text-center">Añadir serie</div>
         <div slot="content">
             <form on:submit|preventDefault={submit} id="form">
-                <div>
+                <!-- <div>
                     <BreezeInput id="numero_serie" type="number" class="mt-1 block w-full" input$min="0" bind:value={$form.numero_serie} label="¿En cuál serie va?" required autofocus />
-                </div>
+                </div> -->
 
                 <div class="mt-4">
                     <BreezeInput id="cantidad_repeticiones" type="number" class="mt-1 block w-full" input$min="0" bind:value={$form.cantidad_repeticiones} label="¿Cuántas repeticiones hizo?" required />
