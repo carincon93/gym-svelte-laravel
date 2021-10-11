@@ -19,6 +19,7 @@ class Ejercicio extends Model
         'slug',
         'imagen',
         'categoria',
+        'link_video'
     ];
 
     protected $table = 'ejercicios';

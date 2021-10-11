@@ -9,6 +9,7 @@
     import Dialog from '@/Components/Dialog.svelte'
     import Card from '@smui/card'
     import ColumnChart from '@/Components/ColumnChart.svelte'
+    import YouTubeLogo from '@/Components/YouTubeLogo.svelte'
 
     $: $title = ejercicioInfo.nombre
 
@@ -45,6 +46,11 @@
                 <div class="p-6 text-center font-black">{categoria}</div>
                 <div class="text-center">{ejercicioInfo.nombre}</div>
                 <img src="/storage/{ejercicioInfo.categoria}/{ejercicioInfo.imagen}" class="h-24 mx-auto mt-4 mb-4" alt={ejercicioInfo.nombre} />
+                {#if ejercicioInfo.link_video}
+                    <a href={ejercicioInfo.link_video} class="flex inline-block justify-center mb-2 opacity-90" target="_blank">
+                        <YouTubeLogo />
+                    </a>
+                {/if}
             </div>
             <BreezeButton type="button" class="w-full rounded-b-full" on:click={() => (dialog = true)}>
                 <div class="flex items-center justify-center">
