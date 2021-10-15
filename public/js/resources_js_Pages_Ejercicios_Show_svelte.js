@@ -18107,41 +18107,63 @@ function create_default_slot_4(ctx) {
 // (66:20) <Card variant="outlined" padded>
 function create_default_slot_3(ctx) {
 	let div;
-	let span0;
-	let t0_value = /*ejercicio*/ ctx[21].peso + "";
+	let small0;
 	let t0;
+	let t1_value = /*ejercicio*/ ctx[21].numero_sesion + "";
 	let t1;
 	let t2;
-	let span1;
-	let t3_value = /*ejercicio*/ ctx[21].cantidad_repeticiones + "";
+	let t3_value = /*ejercicio*/ ctx[21].numero_serie + "";
 	let t3;
 	let t4;
+	let small1;
+	let t5_value = /*ejercicio*/ ctx[21].peso + "";
+	let t5;
+	let t6;
+	let t7;
+	let small2;
+	let t8_value = /*ejercicio*/ ctx[21].cantidad_repeticiones + "";
+	let t8;
+	let t9;
 
 	return {
 		c() {
 			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			span0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("span");
-			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t0_value);
-			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(" kg");
-			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
-			span1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("span");
+			small0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("small");
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Sesión: ");
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t1_value);
+			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(" / Serie ");
 			t3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t3_value);
-			t4 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(" repeticiones");
+			t4 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			small1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("small");
+			t5 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t5_value);
+			t6 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(" kg");
+			t7 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			small2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("small");
+			t8 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t8_value);
+			t9 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(" repeticiones");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", "flex items-center justify-around");
 		},
 		m(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, span0);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(span0, t0);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(span0, t1);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t2);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, span1);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(span1, t3);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(span1, t4);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, small0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small0, t0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small0, t1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small0, t2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small0, t3);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t4);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, small1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small1, t5);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small1, t6);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t7);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, small2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small2, t8);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(small2, t9);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*ejercicios*/ 8 && t0_value !== (t0_value = /*ejercicio*/ ctx[21].peso + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t0, t0_value);
-			if (dirty & /*ejercicios*/ 8 && t3_value !== (t3_value = /*ejercicio*/ ctx[21].cantidad_repeticiones + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t3, t3_value);
+			if (dirty & /*ejercicios*/ 8 && t1_value !== (t1_value = /*ejercicio*/ ctx[21].numero_sesion + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t1, t1_value);
+			if (dirty & /*ejercicios*/ 8 && t3_value !== (t3_value = /*ejercicio*/ ctx[21].numero_serie + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t3, t3_value);
+			if (dirty & /*ejercicios*/ 8 && t5_value !== (t5_value = /*ejercicio*/ ctx[21].peso + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t5, t5_value);
+			if (dirty & /*ejercicios*/ 8 && t8_value !== (t8_value = /*ejercicio*/ ctx[21].cantidad_repeticiones + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t8, t8_value);
 		},
 		d(detaching) {
 			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
@@ -18203,7 +18225,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (79:8) 
+// (80:8) 
 function create_title_slot(ctx) {
 	let div;
 
@@ -18223,7 +18245,7 @@ function create_title_slot(ctx) {
 	};
 }
 
-// (80:8) 
+// (81:8) 
 function create_content_slot(ctx) {
 	let div3;
 	let form_1;
@@ -18392,7 +18414,7 @@ function create_content_slot(ctx) {
 	};
 }
 
-// (101:16) <BreezeButton on:click={() => (dialog = false)} variant={null}>
+// (102:16) <BreezeButton on:click={() => (dialog = false)} variant={null}>
 function create_default_slot_2(ctx) {
 	let t;
 
@@ -18409,7 +18431,7 @@ function create_default_slot_2(ctx) {
 	};
 }
 
-// (104:24) {#if !$isRunning}
+// (105:24) {#if !$isRunning}
 function create_if_block_1(ctx) {
 	let if_block_anchor;
 
@@ -18448,7 +18470,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (107:28) {:else}
+// (108:28) {:else}
 function create_else_block(ctx) {
 	let t;
 
@@ -18465,7 +18487,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (105:28) {#if $form.processing}
+// (106:28) {#if $form.processing}
 function create_if_block_2(ctx) {
 	let t;
 
@@ -18482,7 +18504,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (112:24) {#if $isRunning}
+// (113:24) {#if $isRunning}
 function create_if_block(ctx) {
 	let small;
 	let t;
@@ -18506,7 +18528,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (102:16) <BreezeButton variant="raised" class={$isRunning ? 'ml-4' : 'ml-4'} bind:disabled={$isRunning} form="form">
+// (103:16) <BreezeButton variant="raised" class={$isRunning ? 'ml-4' : 'ml-4'} bind:disabled={$isRunning} form="form">
 function create_default_slot_1(ctx) {
 	let div;
 	let t;
@@ -18572,7 +18594,7 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (99:8) 
+// (100:8) 
 function create_actions_slot(ctx) {
 	let div1;
 	let div0;

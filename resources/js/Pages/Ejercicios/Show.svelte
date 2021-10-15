@@ -65,8 +65,9 @@
                 <div class="card-container w-full">
                     <Card variant="outlined" padded>
                         <div class="flex items-center justify-around">
-                            <span>{ejercicio.peso} kg</span>
-                            <span>{ejercicio.cantidad_repeticiones} repeticiones</span>
+                            <small>Sesión: {ejercicio.numero_sesion} / Serie {ejercicio.numero_serie}</small>
+                            <small>{ejercicio.peso} kg</small>
+                            <small>{ejercicio.cantidad_repeticiones} repeticiones</small>
                         </div>
                     </Card>
                 </div>
