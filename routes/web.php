@@ -43,11 +43,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $authUser = Auth::user();
         $ejercicios = null;
         $pesoHistory = null;
+        $repeticionesHistory = null;
 
         $ejercicios = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->paginate(4);
-        $pesoHistory = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->get()->take(31)->map(function ($repeticion) {
-            return (float) $repeticion->peso;
+        $pesoHistory = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->get()->take(31)->map(function ($serie) {
+            return (float) $serie->peso;
         });
+
+        $repeticionesHistory = $authUser->series()->where('nombre_ejercicio', $slug)->orderBy('id', 'DESC')->get()->take(31)->map(function ($serie) {
+            return (float) $serie->cantidad_repeticiones;
+        });
+
+        $numSeries = $authUser->series()->where('nombre_ejercicio', $slug)->where('numero_sesion', 5)->count();
+        $totalDescanso = $authUser->series()->selectRaw('sum(tiempo_descanso) as suma_tiempo')->where('nombre_ejercicio', $slug)->where('numero_sesion', 5)->first();
 
         return Inertia::render('Ejercicios/Show', [
             'slug' => $slug,
@@ -56,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             'ejercicios' => $ejercicios,
             'pesoHistory' => $pesoHistory,
+            'repeticionesHistory' => $repeticionesHistory,
+            'promedioDescanso' => $numSeries > 0 ? $totalDescanso->suma_tiempo / $numSeries : 0
         ]);
     })->name('ejercicios.show');
 

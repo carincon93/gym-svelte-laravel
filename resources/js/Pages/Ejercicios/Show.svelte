@@ -18,6 +18,8 @@
     export let ejercicioInfo
     export let ejercicios
     export let pesoHistory
+    export let repeticionesHistory
+    export let promedioDescanso
 
     let dialog = false
 
@@ -74,7 +76,11 @@
             {/each}
         </div>
     </div>
-    <ColumnChart bind:values={pesoHistory} />
+    <p class="text-center text-sm mb-10"><strong>Tiempo de descanso promedio:</strong> {promedioDescanso} segundos</p>
+    <hr />
+    <ColumnChart bind:values={pesoHistory} chartType="peso" />
+    <hr />
+    <ColumnChart bind:values={repeticionesHistory} chartType="repeticiones" />
 
     <Dialog bind:open={dialog}>
         <div slot="title" class="text-center">Añadir serie</div>
