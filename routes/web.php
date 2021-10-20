@@ -54,8 +54,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return (float) $serie->cantidad_repeticiones;
         });
 
-        $numSeries = $authUser->series()->where('nombre_ejercicio', $slug)->where('numero_sesion', Sesion::where('user_id', $authUser->id)->first()->numero_sesion)->count();
-        $totalDescanso = $authUser->series()->selectRaw('sum(tiempo_descanso) as suma_tiempo')->where('nombre_ejercicio', $slug)->where('numero_sesion', Sesion::where('user_id', $authUser->id)->first()->numero_sesion)->first();
+        $numSeries = $authUser->series()->where('nombre_ejercicio', $slug)->count();
+        $totalDescanso = $authUser->series()->selectRaw('sum(tiempo_descanso) as suma_tiempo')->where('nombre_ejercicio', $slug)->first();
 
         return Inertia::render('Ejercicios/Show', [
             'slug' => $slug,
@@ -65,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             'ejercicios' => $ejercicios,
             'pesoHistory' => $pesoHistory,
             'repeticionesHistory' => $repeticionesHistory,
-            'promedioDescanso' => $numSeries > 0 ? $totalDescanso->suma_tiempo / $numSeries : 0
+            'promedioDescanso' => $numSeries > 0 ? number_format((float)$totalDescanso->suma_tiempo / $numSeries, 2, '.', '') : 0
         ]);
     })->name('ejercicios.show');
 
