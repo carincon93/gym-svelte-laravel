@@ -76,7 +76,7 @@
             {/each}
         </div>
     </div>
-    <div class="text-red-400 bg-red-100 p-4 mb-10">
+    <div class="{promedioDescanso < 60 ? 'text-red-400 bg-red-100' : 'bg-white'} p-4 mb-10">
         <p class="text-center text-sm"><strong>Tiempo de descanso promedio:</strong> {promedioDescanso} segundos</p>
         <small class="block mt-2 text-center">Hipertrofia entre 60 y 120 segundos</small>
     </div>
