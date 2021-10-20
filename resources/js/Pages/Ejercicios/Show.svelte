@@ -76,7 +76,10 @@
             {/each}
         </div>
     </div>
-    <p class="text-center text-sm mb-10"><strong>Tiempo de descanso promedio:</strong> {promedioDescanso} segundos</p>
+    <div class="text-red-400 bg-red-100 p-4 mb-10">
+        <p class="text-center text-sm"><strong>Tiempo de descanso promedio:</strong> {promedioDescanso} segundos</p>
+        <small class="block mt-2 text-center">Hipertrofia entre 60 y 120 segundos</small>
+    </div>
     <hr />
     <ColumnChart bind:values={pesoHistory} chartType="peso" />
     <hr />
