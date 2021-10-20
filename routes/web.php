@@ -54,8 +54,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return (float) $serie->cantidad_repeticiones;
         });
 
-        $numSeries = $authUser->series()->where('nombre_ejercicio', $slug)->count();
-        $totalDescanso = $authUser->series()->selectRaw('sum(tiempo_descanso) as suma_tiempo')->where('nombre_ejercicio', $slug)->first();
+        $numSeries = $authUser->series()->where('nombre_ejercicio', $slug)->where('numero_sesion', Sesion::where('user_id', $authUser->id)->first()->numero_sesion)->count();
+        $totalDescanso = $authUser->series()->selectRaw('sum(tiempo_descanso) as suma_tiempo')->where('nombre_ejercicio', $slug)->where('numero_sesion', Sesion::where('user_id', $authUser->id)->first()->numero_sesion)->first();
 
         return Inertia::render('Ejercicios/Show', [
             'slug' => $slug,
