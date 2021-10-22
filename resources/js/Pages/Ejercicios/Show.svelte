@@ -37,6 +37,10 @@
     function submit() {
         timer.start($form.tiempo_descanso * 1000)
     }
+
+    function back() {
+        window.history.back()
+    }
 </script>
 
 <BreezeAuthenticatedLayout>
@@ -127,4 +131,10 @@
             </div>
         </div>
     </Dialog>
+
+    <BreezeButton on:click={() => back()} class="fixed bottom-0 z-50" style="background: var(--mdc-theme-primary, #6200ee);border-radius: 0 28px 0 0;" variant="raised">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
+        </svg>
+    </BreezeButton>
 </BreezeAuthenticatedLayout>

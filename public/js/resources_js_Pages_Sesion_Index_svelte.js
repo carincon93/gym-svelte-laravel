@@ -5021,10 +5021,10 @@ var route = window.route;
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./resources/js/Pages/Sesion/Index.svelte":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./resources/js/Pages/Sesion/Index.svelte ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./resources/js/Pages/Sesion/Index.svelte":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./resources/js/Pages/Sesion/Index.svelte ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -5119,10 +5119,10 @@ module.exports = function (cssWithMappingToString) {
 
 /***/ }),
 
-/***/ "./resources/js/Pages/Sesion/Index.svelte.42.css!=!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./resources/js/Pages/Sesion/Index.svelte":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./resources/js/Pages/Sesion/Index.svelte.42.css!=!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./resources/js/Pages/Sesion/Index.svelte ***!
-  \*****************************************************************************************************************************************************************************************************************/
+/***/ "./resources/js/Pages/Sesion/Index.svelte.3.css!=!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./resources/js/Pages/Sesion/Index.svelte":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./resources/js/Pages/Sesion/Index.svelte.3.css!=!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./resources/js/Pages/Sesion/Index.svelte ***!
+  \***************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -5131,7 +5131,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_node_modules_svelte_loader_index_js_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_42_css_Index_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!../../../../node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./Index.svelte */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./resources/js/Pages/Sesion/Index.svelte");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_node_modules_svelte_loader_index_js_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_3_css_Index_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!../../../../node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./Index.svelte */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[6].oneOf[1].use[2]!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./resources/js/Pages/Sesion/Index.svelte");
 
             
 
@@ -5140,11 +5140,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_node_modules_svelte_loader_index_js_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_42_css_Index_svelte__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_node_modules_svelte_loader_index_js_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_3_css_Index_svelte__WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_node_modules_svelte_loader_index_js_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_42_css_Index_svelte__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_6_oneOf_1_use_2_node_modules_svelte_loader_index_js_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_3_css_Index_svelte__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -14592,7 +14592,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _smui_textfield__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @smui/textfield */ "./node_modules/@smui/textfield/index.js");
 /* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
 /* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
-/* harmony import */ var C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_42_css_svelte_loader_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_42_css_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./resources/js/Pages/Sesion/Index.svelte.42.css!=!svelte-loader?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./resources/js/Pages/Sesion/Index.svelte */ "./resources/js/Pages/Sesion/Index.svelte.42.css!=!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.42.css!./resources/js/Pages/Sesion/Index.svelte");
+/* harmony import */ var C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_3_css_svelte_loader_cssPath_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte_3_css_C_laragon_www_gym_resources_js_Pages_Sesion_Index_svelte__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./resources/js/Pages/Sesion/Index.svelte.3.css!=!svelte-loader?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./resources/js/Pages/Sesion/Index.svelte */ "./resources/js/Pages/Sesion/Index.svelte.3.css!=!./node_modules/svelte-loader/index.js?cssPath=C:/laragon/www/gym/resources/js/Pages/Sesion/Index.svelte.3.css!./resources/js/Pages/Sesion/Index.svelte");
 /* module decorator */ module = __webpack_require__.hmd(module);
 /* resources\js\Pages\Sesion\Index.svelte generated by Svelte v3.43.1 */
 
@@ -14893,7 +14893,7 @@ function create_default_slot(ctx) {
 
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div0, "class", "p-6 border-b border-gray-200 text-center sm:text-left");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(small, "class", "text-gray-500");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div1, "class", "px-4 flex items-center");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div1, "class", "px-4 flex items-center justify-between");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div2, "class", "bg-white overflow-hidden shadow-sm sm:rounded-lg");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div3, "class", "lg:px-8 max-w-7xl mx-auto sm:px-6");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div4, "class", "py-12");

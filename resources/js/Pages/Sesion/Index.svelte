@@ -30,7 +30,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 border-b border-gray-200 text-center sm:text-left">Sesión del día</div>
 
-                <div class="px-4 flex items-center">
+                <div class="px-4 flex items-center justify-between">
                     <small class="text-gray-500">Configure el número de la sesión de entrenamiento</small>
                     <Textfield id="numero_sesion" variant="outlined" type="number" class="mt-1 w-1/4" input$min="0" bind:value={$formSesion.numero_sesion} on:input={$formSesion.numero_sesion > 0 ? $formSesion.post(route('sesiones.store'), { preserveScroll: true }) : null} />
                 </div>
