@@ -17227,7 +17227,7 @@ function create_fragment(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div5, "class", "-mr-2 flex items-center sm:hidden");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div6, "class", "flex justify-between h-16");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div7, "class", "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div8, "class", "block border-l-4 duration-150 ease-in-out focus:bg-indigo-100 focus:border-indigo-700 focus:outline-none focus:text-indigo-800 font-medium pl-3 pr-4 py-2 text-base transition");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div8, "class", "block border-l-4 text-gray-600 duration-150 ease-in-out focus:bg-indigo-100 focus:border-indigo-700 focus:outline-none focus:text-indigo-800 font-medium pl-3 pr-4 py-2 text-base transition");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div8, "variant", div8_variant_value = null);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div9, "class", "pt-2 pb-3 space-y-1");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div10, "class", "font-medium text-base text-gray-800");

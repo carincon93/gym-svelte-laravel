@@ -101,7 +101,7 @@
                 <div class="pt-2 pb-3 space-y-1">
                     <BreezeResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>Dashboard</BreezeResponsiveNavLink>
                     <BreezeResponsiveNavLink href={route('sesion.index')} active={route().current('sesion.index')}>Sesión del día</BreezeResponsiveNavLink>
-                    <div class="block border-l-4 duration-150 ease-in-out focus:bg-indigo-100 focus:border-indigo-700 focus:outline-none focus:text-indigo-800 font-medium pl-3 pr-4 py-2 text-base transition" on:click={() => (dialog = true)} variant={null}>Crear ejercicio</div>
+                    <div class="block border-l-4 text-gray-600 duration-150 ease-in-out focus:bg-indigo-100 focus:border-indigo-700 focus:outline-none focus:text-indigo-800 font-medium pl-3 pr-4 py-2 text-base transition" on:click={() => (dialog = true)} variant={null}>Crear ejercicio</div>
                 </div>
 
                 <!-- Responsive Settings Options -->
