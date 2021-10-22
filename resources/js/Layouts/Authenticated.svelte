@@ -13,8 +13,23 @@
     import BreezeNavLink from '@/Components/NavLink.svelte'
     import BreezeResponsiveNavLink from '@/Components/ResponsiveNavLink.svelte'
     import Link from '@/Components/Link.svelte'
+    import Dialog from '@/Components/Dialog.svelte'
+    import BreezeInput from '@/Components/Input.svelte'
+    import BreezeButton from '@/Components/Button.svelte'
+    import BreezeFile from '@/Components/File.svelte'
 
     let showingNavigationDropdown = false
+    let dialog = false
+
+    let form = useForm({
+        nombre: '',
+        imagen: null,
+        categoria: '',
+        link_video: '',
+    })
+    function submit() {
+        $form.post(route('ejercicios.store'), { onFinish: () => (dialog = false), preserveScroll: true })
+    }
 </script>
 
 <svelte:head>
@@ -86,6 +101,7 @@
                 <div class="pt-2 pb-3 space-y-1">
                     <BreezeResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>Dashboard</BreezeResponsiveNavLink>
                     <BreezeResponsiveNavLink href={route('sesion.index')} active={route().current('sesion.index')}>Sesión del día</BreezeResponsiveNavLink>
+                    <div class="block border-l-4 duration-150 ease-in-out focus:bg-indigo-100 focus:border-indigo-700 focus:outline-none focus:text-indigo-800 font-medium pl-3 pr-4 py-2 text-base transition" on:click={() => (dialog = true)} variant={null}>Crear ejercicio</div>
                 </div>
 
                 <!-- Responsive Settings Options -->
@@ -117,3 +133,40 @@
         </main>
     </div>
 </div>
+
+<Dialog bind:open={dialog}>
+    <div slot="title" class="text-center">Añadir ejercicio</div>
+    <div slot="content">
+        <form on:submit|preventDefault={submit} id="form">
+            <div class="mt-4">
+                <BreezeInput id="nombre" type="text" class="mt-1 block w-full" bind:value={$form.nombre} label="Nombre" required />
+            </div>
+
+            <div class="mt-4">
+                <BreezeInput id="categoria" type="text" class="mt-1 block w-full" bind:value={$form.categoria} label="Categoría" required />
+            </div>
+
+            <div class="mt-4">
+                <BreezeFile id="imagen" type="file" maxSize="10000" accept=".png,.jpeg,.jpg" class="mt-1 block w-full" bind:value={$form.imagen} label="Imagen" required />
+            </div>
+
+            <div class="mt-4">
+                <BreezeInput id="link_video" type="url" class="mt-1 block w-full" bind:value={$form.link_video} label="Link del video" />
+            </div>
+        </form>
+    </div>
+    <div slot="actions">
+        <div class="p-4">
+            <BreezeButton on:click={() => (dialog = false)} variant={null}>Cancelar</BreezeButton>
+            <BreezeButton variant="raised" bind:disabled={$form.processing} form="form">
+                <div>
+                    {#if $form.processing}
+                        Añadiendo
+                    {:else}
+                        Añadir
+                    {/if}
+                </div>
+            </BreezeButton>
+        </div>
+    </div>
+</Dialog>

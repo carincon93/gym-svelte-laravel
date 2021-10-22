@@ -1,6 +1,105 @@
 "use strict";
 (self["webpackChunk"] = self["webpackChunk"] || []).push([["resources_js_Pages_Ejercicios_Index_svelte"],{
 
+/***/ "./node_modules/@material/animation/animationframe.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@material/animation/animationframe.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AnimationFrame": () => (/* binding */ AnimationFrame)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2020 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+/**
+ * AnimationFrame provides a user-friendly abstraction around requesting
+ * and canceling animation frames.
+ */
+var AnimationFrame = /** @class */ (function () {
+    function AnimationFrame() {
+        this.rafIDs = new Map();
+    }
+    /**
+     * Requests an animation frame. Cancels any existing frame with the same key.
+     * @param {string} key The key for this callback.
+     * @param {FrameRequestCallback} callback The callback to be executed.
+     */
+    AnimationFrame.prototype.request = function (key, callback) {
+        var _this = this;
+        this.cancel(key);
+        var frameID = requestAnimationFrame(function (frame) {
+            _this.rafIDs.delete(key);
+            // Callback must come *after* the key is deleted so that nested calls to
+            // request with the same key are not deleted.
+            callback(frame);
+        });
+        this.rafIDs.set(key, frameID);
+    };
+    /**
+     * Cancels a queued callback with the given key.
+     * @param {string} key The key for this callback.
+     */
+    AnimationFrame.prototype.cancel = function (key) {
+        var rafID = this.rafIDs.get(key);
+        if (rafID) {
+            cancelAnimationFrame(rafID);
+            this.rafIDs.delete(key);
+        }
+    };
+    /**
+     * Cancels all queued callback.
+     */
+    AnimationFrame.prototype.cancelAll = function () {
+        var _this = this;
+        // Need to use forEach because it's the only iteration method supported
+        // by IE11. Suppress the underscore because we don't need it.
+        // tslint:disable-next-line:enforce-name-casing
+        this.rafIDs.forEach(function (_, key) {
+            _this.cancel(key);
+        });
+    };
+    /**
+     * Returns the queue of unexecuted callback keys.
+     */
+    AnimationFrame.prototype.getQueue = function () {
+        var queue = [];
+        // Need to use forEach because it's the only iteration method supported
+        // by IE11. Suppress the underscore because we don't need it.
+        // tslint:disable-next-line:enforce-name-casing
+        this.rafIDs.forEach(function (_, key) {
+            queue.push(key);
+        });
+        return queue;
+    };
+    return AnimationFrame;
+}());
+
+//# sourceMappingURL=animationframe.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@material/base/foundation.js":
 /*!***************************************************!*\
   !*** ./node_modules/@material/base/foundation.js ***!
@@ -91,6 +190,577 @@ var MDCFoundation = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./node_modules/@material/dialog/constants.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@material/dialog/constants.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cssClasses": () => (/* binding */ cssClasses),
+/* harmony export */   "strings": () => (/* binding */ strings),
+/* harmony export */   "numbers": () => (/* binding */ numbers)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+    CLOSING: 'mdc-dialog--closing',
+    OPEN: 'mdc-dialog--open',
+    OPENING: 'mdc-dialog--opening',
+    SCROLLABLE: 'mdc-dialog--scrollable',
+    SCROLL_LOCK: 'mdc-dialog-scroll-lock',
+    STACKED: 'mdc-dialog--stacked',
+    FULLSCREEN: 'mdc-dialog--fullscreen',
+    // Class for showing a scroll divider on full-screen dialog header element.
+    // Should only be displayed on scrollable content, when the dialog content is
+    // scrolled "underneath" the header.
+    SCROLL_DIVIDER_HEADER: 'mdc-dialog-scroll-divider-header',
+    // Class for showing a scroll divider on a full-screen dialog footer element.
+    // Should only be displayed on scrolalble content, when the dialog content is
+    // obscured "underneath" the footer.
+    SCROLL_DIVIDER_FOOTER: 'mdc-dialog-scroll-divider-footer',
+    // The "surface scrim" is a scrim covering only the surface of a dialog. This
+    // is used in situations where a confirmation dialog is shown over an already
+    // opened full-screen dialog. On larger screen-sizes, the full-screen dialog
+    // is sized as a modal and so in these situations we display a "surface scrim"
+    // to prevent a "double scrim" (where the scrim from the secondary
+    // confirmation dialog would overlap with the scrim from the full-screen
+    // dialog).
+    SURFACE_SCRIM_SHOWN: 'mdc-dialog__surface-scrim--shown',
+    // "Showing" animating class for the surface-scrim.
+    SURFACE_SCRIM_SHOWING: 'mdc-dialog__surface-scrim--showing',
+    // "Hiding" animating class for the surface-scrim.
+    SURFACE_SCRIM_HIDING: 'mdc-dialog__surface-scrim--hiding',
+    // Class to hide a dialog's scrim (used in conjunction with a surface-scrim).
+    // Note that we only hide the original scrim rather than removing it entirely
+    // to prevent interactions with the content behind this scrim, and to capture
+    // scrim clicks.
+    SCRIM_HIDDEN: 'mdc-dialog__scrim--hidden',
+};
+var strings = {
+    ACTION_ATTRIBUTE: 'data-mdc-dialog-action',
+    BUTTON_DEFAULT_ATTRIBUTE: 'data-mdc-dialog-button-default',
+    BUTTON_SELECTOR: '.mdc-dialog__button',
+    CLOSED_EVENT: 'MDCDialog:closed',
+    CLOSE_ACTION: 'close',
+    CLOSING_EVENT: 'MDCDialog:closing',
+    CONTAINER_SELECTOR: '.mdc-dialog__container',
+    CONTENT_SELECTOR: '.mdc-dialog__content',
+    DESTROY_ACTION: 'destroy',
+    INITIAL_FOCUS_ATTRIBUTE: 'data-mdc-dialog-initial-focus',
+    OPENED_EVENT: 'MDCDialog:opened',
+    OPENING_EVENT: 'MDCDialog:opening',
+    SCRIM_SELECTOR: '.mdc-dialog__scrim',
+    SUPPRESS_DEFAULT_PRESS_SELECTOR: [
+        'textarea',
+        '.mdc-menu .mdc-list-item',
+        '.mdc-menu .mdc-deprecated-list-item',
+    ].join(', '),
+    SURFACE_SELECTOR: '.mdc-dialog__surface',
+};
+var numbers = {
+    DIALOG_ANIMATION_CLOSE_TIME_MS: 75,
+    DIALOG_ANIMATION_OPEN_TIME_MS: 150,
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/dialog/foundation.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@material/dialog/foundation.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MDCDialogFoundation": () => (/* binding */ MDCDialogFoundation),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _material_animation_animationframe__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/animation/animationframe */ "./node_modules/@material/animation/animationframe.js");
+/* harmony import */ var _material_base_foundation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material/base/foundation */ "./node_modules/@material/base/foundation.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/dialog/constants.js");
+/**
+ * @license
+ * Copyright 2017 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+
+
+
+var AnimationKeys;
+(function (AnimationKeys) {
+    AnimationKeys["POLL_SCROLL_POS"] = "poll_scroll_position";
+    AnimationKeys["POLL_LAYOUT_CHANGE"] = "poll_layout_change";
+})(AnimationKeys || (AnimationKeys = {}));
+var MDCDialogFoundation = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MDCDialogFoundation, _super);
+    function MDCDialogFoundation(adapter) {
+        var _this = _super.call(this, (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, MDCDialogFoundation.defaultAdapter), adapter)) || this;
+        _this.dialogOpen = false;
+        _this.isFullscreen = false;
+        _this.animationFrame = 0;
+        _this.animationTimer = 0;
+        _this.escapeKeyAction = _constants__WEBPACK_IMPORTED_MODULE_1__.strings.CLOSE_ACTION;
+        _this.scrimClickAction = _constants__WEBPACK_IMPORTED_MODULE_1__.strings.CLOSE_ACTION;
+        _this.autoStackButtons = true;
+        _this.areButtonsStacked = false;
+        _this.suppressDefaultPressSelector = _constants__WEBPACK_IMPORTED_MODULE_1__.strings.SUPPRESS_DEFAULT_PRESS_SELECTOR;
+        _this.animFrame = new _material_animation_animationframe__WEBPACK_IMPORTED_MODULE_2__.AnimationFrame();
+        _this.contentScrollHandler = function () {
+            _this.handleScrollEvent();
+        };
+        _this.windowResizeHandler = function () {
+            _this.layout();
+        };
+        _this.windowOrientationChangeHandler = function () {
+            _this.layout();
+        };
+        return _this;
+    }
+    Object.defineProperty(MDCDialogFoundation, "cssClasses", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCDialogFoundation, "strings", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.strings;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCDialogFoundation, "numbers", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.numbers;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCDialogFoundation, "defaultAdapter", {
+        get: function () {
+            return {
+                addBodyClass: function () { return undefined; },
+                addClass: function () { return undefined; },
+                areButtonsStacked: function () { return false; },
+                clickDefaultButton: function () { return undefined; },
+                eventTargetMatches: function () { return false; },
+                getActionFromEvent: function () { return ''; },
+                getInitialFocusEl: function () { return null; },
+                hasClass: function () { return false; },
+                isContentScrollable: function () { return false; },
+                notifyClosed: function () { return undefined; },
+                notifyClosing: function () { return undefined; },
+                notifyOpened: function () { return undefined; },
+                notifyOpening: function () { return undefined; },
+                releaseFocus: function () { return undefined; },
+                removeBodyClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                reverseButtons: function () { return undefined; },
+                trapFocus: function () { return undefined; },
+                registerContentEventHandler: function () { return undefined; },
+                deregisterContentEventHandler: function () { return undefined; },
+                isScrollableContentAtTop: function () { return false; },
+                isScrollableContentAtBottom: function () { return false; },
+                registerWindowEventHandler: function () { return undefined; },
+                deregisterWindowEventHandler: function () { return undefined; },
+            };
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCDialogFoundation.prototype.init = function () {
+        if (this.adapter.hasClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.STACKED)) {
+            this.setAutoStackButtons(false);
+        }
+        this.isFullscreen = this.adapter.hasClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.FULLSCREEN);
+    };
+    MDCDialogFoundation.prototype.destroy = function () {
+        if (this.dialogOpen) {
+            this.close(_constants__WEBPACK_IMPORTED_MODULE_1__.strings.DESTROY_ACTION);
+        }
+        if (this.animationTimer) {
+            clearTimeout(this.animationTimer);
+            this.handleAnimationTimerEnd();
+        }
+        if (this.isFullscreen) {
+            this.adapter.deregisterContentEventHandler('scroll', this.contentScrollHandler);
+        }
+        this.animFrame.cancelAll();
+        this.adapter.deregisterWindowEventHandler('resize', this.windowResizeHandler);
+        this.adapter.deregisterWindowEventHandler('orientationchange', this.windowOrientationChangeHandler);
+    };
+    MDCDialogFoundation.prototype.open = function (dialogOptions) {
+        var _this = this;
+        this.dialogOpen = true;
+        this.adapter.notifyOpening();
+        this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.OPENING);
+        if (this.isFullscreen) {
+            // A scroll event listener is registered even if the dialog is not
+            // scrollable on open, since the window resize event, or orientation
+            // change may make the dialog scrollable after it is opened.
+            this.adapter.registerContentEventHandler('scroll', this.contentScrollHandler);
+        }
+        if (dialogOptions && dialogOptions.isAboveFullscreenDialog) {
+            this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCRIM_HIDDEN);
+        }
+        this.adapter.registerWindowEventHandler('resize', this.windowResizeHandler);
+        this.adapter.registerWindowEventHandler('orientationchange', this.windowOrientationChangeHandler);
+        // Wait a frame once display is no longer "none", to establish basis for
+        // animation
+        this.runNextAnimationFrame(function () {
+            _this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.OPEN);
+            _this.adapter.addBodyClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_LOCK);
+            _this.layout();
+            _this.animationTimer = setTimeout(function () {
+                _this.handleAnimationTimerEnd();
+                _this.adapter.trapFocus(_this.adapter.getInitialFocusEl());
+                _this.adapter.notifyOpened();
+            }, _constants__WEBPACK_IMPORTED_MODULE_1__.numbers.DIALOG_ANIMATION_OPEN_TIME_MS);
+        });
+    };
+    MDCDialogFoundation.prototype.close = function (action) {
+        var _this = this;
+        if (action === void 0) { action = ''; }
+        if (!this.dialogOpen) {
+            // Avoid redundant close calls (and events), e.g. from keydown on elements
+            // that inherently emit click
+            return;
+        }
+        this.dialogOpen = false;
+        this.adapter.notifyClosing(action);
+        this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.CLOSING);
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.OPEN);
+        this.adapter.removeBodyClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_LOCK);
+        if (this.isFullscreen) {
+            this.adapter.deregisterContentEventHandler('scroll', this.contentScrollHandler);
+        }
+        this.adapter.deregisterWindowEventHandler('resize', this.windowResizeHandler);
+        this.adapter.deregisterWindowEventHandler('orientationchange', this.windowOrientationChangeHandler);
+        cancelAnimationFrame(this.animationFrame);
+        this.animationFrame = 0;
+        clearTimeout(this.animationTimer);
+        this.animationTimer = setTimeout(function () {
+            _this.adapter.releaseFocus();
+            _this.handleAnimationTimerEnd();
+            _this.adapter.notifyClosed(action);
+        }, _constants__WEBPACK_IMPORTED_MODULE_1__.numbers.DIALOG_ANIMATION_CLOSE_TIME_MS);
+    };
+    /**
+     * Used only in instances of showing a secondary dialog over a full-screen
+     * dialog. Shows the "surface scrim" displayed over the full-screen dialog.
+     */
+    MDCDialogFoundation.prototype.showSurfaceScrim = function () {
+        var _this = this;
+        this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SURFACE_SCRIM_SHOWING);
+        this.runNextAnimationFrame(function () {
+            _this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SURFACE_SCRIM_SHOWN);
+        });
+    };
+    /**
+     * Used only in instances of showing a secondary dialog over a full-screen
+     * dialog. Hides the "surface scrim" displayed over the full-screen dialog.
+     */
+    MDCDialogFoundation.prototype.hideSurfaceScrim = function () {
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SURFACE_SCRIM_SHOWN);
+        this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SURFACE_SCRIM_HIDING);
+    };
+    /**
+     * Handles `transitionend` event triggered when surface scrim animation is
+     * finished.
+     */
+    MDCDialogFoundation.prototype.handleSurfaceScrimTransitionEnd = function () {
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SURFACE_SCRIM_HIDING);
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SURFACE_SCRIM_SHOWING);
+    };
+    MDCDialogFoundation.prototype.isOpen = function () {
+        return this.dialogOpen;
+    };
+    MDCDialogFoundation.prototype.getEscapeKeyAction = function () {
+        return this.escapeKeyAction;
+    };
+    MDCDialogFoundation.prototype.setEscapeKeyAction = function (action) {
+        this.escapeKeyAction = action;
+    };
+    MDCDialogFoundation.prototype.getScrimClickAction = function () {
+        return this.scrimClickAction;
+    };
+    MDCDialogFoundation.prototype.setScrimClickAction = function (action) {
+        this.scrimClickAction = action;
+    };
+    MDCDialogFoundation.prototype.getAutoStackButtons = function () {
+        return this.autoStackButtons;
+    };
+    MDCDialogFoundation.prototype.setAutoStackButtons = function (autoStack) {
+        this.autoStackButtons = autoStack;
+    };
+    MDCDialogFoundation.prototype.getSuppressDefaultPressSelector = function () {
+        return this.suppressDefaultPressSelector;
+    };
+    MDCDialogFoundation.prototype.setSuppressDefaultPressSelector = function (selector) {
+        this.suppressDefaultPressSelector = selector;
+    };
+    MDCDialogFoundation.prototype.layout = function () {
+        var _this = this;
+        this.animFrame.request(AnimationKeys.POLL_LAYOUT_CHANGE, function () {
+            _this.layoutInternal();
+        });
+    };
+    /** Handles click on the dialog root element. */
+    MDCDialogFoundation.prototype.handleClick = function (evt) {
+        var isScrim = this.adapter.eventTargetMatches(evt.target, _constants__WEBPACK_IMPORTED_MODULE_1__.strings.SCRIM_SELECTOR);
+        // Check for scrim click first since it doesn't require querying ancestors.
+        if (isScrim && this.scrimClickAction !== '') {
+            this.close(this.scrimClickAction);
+        }
+        else {
+            var action = this.adapter.getActionFromEvent(evt);
+            if (action) {
+                this.close(action);
+            }
+        }
+    };
+    /** Handles keydown on the dialog root element. */
+    MDCDialogFoundation.prototype.handleKeydown = function (evt) {
+        var isEnter = evt.key === 'Enter' || evt.keyCode === 13;
+        if (!isEnter) {
+            return;
+        }
+        var action = this.adapter.getActionFromEvent(evt);
+        if (action) {
+            // Action button callback is handled in `handleClick`,
+            // since space/enter keydowns on buttons trigger click events.
+            return;
+        }
+        // `composedPath` is used here, when available, to account for use cases
+        // where a target meant to suppress the default press behaviour
+        // may exist in a shadow root.
+        // For example, a textarea inside a web component:
+        // <mwc-dialog>
+        //   <horizontal-layout>
+        //     #shadow-root (open)
+        //       <mwc-textarea>
+        //         #shadow-root (open)
+        //           <textarea></textarea>
+        //       </mwc-textarea>
+        //   </horizontal-layout>
+        // </mwc-dialog>
+        var target = evt.composedPath ? evt.composedPath()[0] : evt.target;
+        var isDefault = this.suppressDefaultPressSelector ?
+            !this.adapter.eventTargetMatches(target, this.suppressDefaultPressSelector) :
+            true;
+        if (isEnter && isDefault) {
+            this.adapter.clickDefaultButton();
+        }
+    };
+    /** Handles keydown on the document. */
+    MDCDialogFoundation.prototype.handleDocumentKeydown = function (evt) {
+        var isEscape = evt.key === 'Escape' || evt.keyCode === 27;
+        if (isEscape && this.escapeKeyAction !== '') {
+            this.close(this.escapeKeyAction);
+        }
+    };
+    /**
+     * Handles scroll event on the dialog's content element -- showing a scroll
+     * divider on the header or footer based on the scroll position. This handler
+     * should only be registered on full-screen dialogs with scrollable content.
+     */
+    MDCDialogFoundation.prototype.handleScrollEvent = function () {
+        var _this = this;
+        // Since scroll events can fire at a high rate, we throttle these events by
+        // using requestAnimationFrame.
+        this.animFrame.request(AnimationKeys.POLL_SCROLL_POS, function () {
+            _this.toggleScrollDividerHeader();
+            _this.toggleScrollDividerFooter();
+        });
+    };
+    MDCDialogFoundation.prototype.layoutInternal = function () {
+        if (this.autoStackButtons) {
+            this.detectStackedButtons();
+        }
+        this.toggleScrollableClasses();
+    };
+    MDCDialogFoundation.prototype.handleAnimationTimerEnd = function () {
+        this.animationTimer = 0;
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.OPENING);
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.CLOSING);
+    };
+    /**
+     * Runs the given logic on the next animation frame, using setTimeout to
+     * factor in Firefox reflow behavior.
+     */
+    MDCDialogFoundation.prototype.runNextAnimationFrame = function (callback) {
+        var _this = this;
+        cancelAnimationFrame(this.animationFrame);
+        this.animationFrame = requestAnimationFrame(function () {
+            _this.animationFrame = 0;
+            clearTimeout(_this.animationTimer);
+            _this.animationTimer = setTimeout(callback, 0);
+        });
+    };
+    MDCDialogFoundation.prototype.detectStackedButtons = function () {
+        // Remove the class first to let us measure the buttons' natural positions.
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.STACKED);
+        var areButtonsStacked = this.adapter.areButtonsStacked();
+        if (areButtonsStacked) {
+            this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.STACKED);
+        }
+        if (areButtonsStacked !== this.areButtonsStacked) {
+            this.adapter.reverseButtons();
+            this.areButtonsStacked = areButtonsStacked;
+        }
+    };
+    MDCDialogFoundation.prototype.toggleScrollableClasses = function () {
+        // Remove the class first to let us measure the natural height of the
+        // content.
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLLABLE);
+        if (this.adapter.isContentScrollable()) {
+            this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLLABLE);
+            if (this.isFullscreen) {
+                // If dialog is full-screen and scrollable, check if a scroll divider
+                // should be shown.
+                this.toggleScrollDividerHeader();
+                this.toggleScrollDividerFooter();
+            }
+        }
+    };
+    MDCDialogFoundation.prototype.toggleScrollDividerHeader = function () {
+        if (!this.adapter.isScrollableContentAtTop()) {
+            this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_DIVIDER_HEADER);
+        }
+        else if (this.adapter.hasClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_DIVIDER_HEADER)) {
+            this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_DIVIDER_HEADER);
+        }
+    };
+    MDCDialogFoundation.prototype.toggleScrollDividerFooter = function () {
+        if (!this.adapter.isScrollableContentAtBottom()) {
+            this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_DIVIDER_FOOTER);
+        }
+        else if (this.adapter.hasClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_DIVIDER_FOOTER)) {
+            this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.SCROLL_DIVIDER_FOOTER);
+        }
+    };
+    return MDCDialogFoundation;
+}(_material_base_foundation__WEBPACK_IMPORTED_MODULE_3__.MDCFoundation));
+
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MDCDialogFoundation);
+//# sourceMappingURL=foundation.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/dialog/util.js":
+/*!***********************************************!*\
+  !*** ./node_modules/@material/dialog/util.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "createFocusTrapInstance": () => (/* binding */ createFocusTrapInstance),
+/* harmony export */   "isScrollable": () => (/* binding */ isScrollable),
+/* harmony export */   "isScrollAtTop": () => (/* binding */ isScrollAtTop),
+/* harmony export */   "isScrollAtBottom": () => (/* binding */ isScrollAtBottom),
+/* harmony export */   "areTopsMisaligned": () => (/* binding */ areTopsMisaligned)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+function createFocusTrapInstance(surfaceEl, focusTrapFactory, initialFocusEl) {
+    return focusTrapFactory(surfaceEl, { initialFocusEl: initialFocusEl });
+}
+function isScrollable(el) {
+    return el ? el.scrollHeight > el.offsetHeight : false;
+}
+/**
+ * For scrollable content, returns true if the content has not been scrolled
+ * (that is, the scroll content is as the "top"). This is used in full-screen
+ * dialogs, where the scroll divider is expected only to appear once the
+ * content has been scrolled "underneath" the header bar.
+ */
+function isScrollAtTop(el) {
+    return el ? el.scrollTop === 0 : false;
+}
+/**
+ * For scrollable content, returns true if the content has been scrolled all the
+ * way to the bottom. This is used in full-screen dialogs, where the footer
+ * scroll divider is expected only to appear when the content is "cut-off" by
+ * the footer bar.
+ */
+function isScrollAtBottom(el) {
+    return el ? Math.ceil(el.scrollHeight - el.scrollTop) === el.clientHeight :
+        false;
+}
+function areTopsMisaligned(els) {
+    var tops = new Set();
+    [].forEach.call(els, function (el) { return tops.add(el.offsetTop); });
+    return tops.size > 1;
+}
+//# sourceMappingURL=util.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@material/dom/events.js":
 /*!**********************************************!*\
   !*** ./node_modules/@material/dom/events.js ***!
@@ -157,6 +827,155 @@ function supportsPassiveOption(globalObj) {
     return passiveSupported;
 }
 //# sourceMappingURL=events.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/dom/focus-trap.js":
+/*!**************************************************!*\
+  !*** ./node_modules/@material/dom/focus-trap.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "FocusTrap": () => (/* binding */ FocusTrap)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2020 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var FOCUS_SENTINEL_CLASS = 'mdc-dom-focus-sentinel';
+/**
+ * Utility to trap focus in a given root element, e.g. for modal components such
+ * as dialogs. The root should have at least one focusable child element,
+ * for setting initial focus when trapping focus.
+ * Also tracks the previously focused element, and restores focus to that
+ * element when releasing focus.
+ */
+var FocusTrap = /** @class */ (function () {
+    function FocusTrap(root, options) {
+        if (options === void 0) { options = {}; }
+        this.root = root;
+        this.options = options;
+        // Previously focused element before trapping focus.
+        this.elFocusedBeforeTrapFocus = null;
+    }
+    /**
+     * Traps focus in `root`. Also focuses on either `initialFocusEl` if set;
+     * otherwises sets initial focus to the first focusable child element.
+     */
+    FocusTrap.prototype.trapFocus = function () {
+        var focusableEls = this.getFocusableElements(this.root);
+        if (focusableEls.length === 0) {
+            throw new Error('FocusTrap: Element must have at least one focusable child.');
+        }
+        this.elFocusedBeforeTrapFocus =
+            document.activeElement instanceof HTMLElement ? document.activeElement :
+                null;
+        this.wrapTabFocus(this.root);
+        if (!this.options.skipInitialFocus) {
+            this.focusInitialElement(focusableEls, this.options.initialFocusEl);
+        }
+    };
+    /**
+     * Releases focus from `root`. Also restores focus to the previously focused
+     * element.
+     */
+    FocusTrap.prototype.releaseFocus = function () {
+        [].slice.call(this.root.querySelectorAll("." + FOCUS_SENTINEL_CLASS))
+            .forEach(function (sentinelEl) {
+            sentinelEl.parentElement.removeChild(sentinelEl);
+        });
+        if (!this.options.skipRestoreFocus && this.elFocusedBeforeTrapFocus) {
+            this.elFocusedBeforeTrapFocus.focus();
+        }
+    };
+    /**
+     * Wraps tab focus within `el` by adding two hidden sentinel divs which are
+     * used to mark the beginning and the end of the tabbable region. When
+     * focused, these sentinel elements redirect focus to the first/last
+     * children elements of the tabbable region, ensuring that focus is trapped
+     * within that region.
+     */
+    FocusTrap.prototype.wrapTabFocus = function (el) {
+        var _this = this;
+        var sentinelStart = this.createSentinel();
+        var sentinelEnd = this.createSentinel();
+        sentinelStart.addEventListener('focus', function () {
+            var focusableEls = _this.getFocusableElements(el);
+            if (focusableEls.length > 0) {
+                focusableEls[focusableEls.length - 1].focus();
+            }
+        });
+        sentinelEnd.addEventListener('focus', function () {
+            var focusableEls = _this.getFocusableElements(el);
+            if (focusableEls.length > 0) {
+                focusableEls[0].focus();
+            }
+        });
+        el.insertBefore(sentinelStart, el.children[0]);
+        el.appendChild(sentinelEnd);
+    };
+    /**
+     * Focuses on `initialFocusEl` if defined and a child of the root element.
+     * Otherwise, focuses on the first focusable child element of the root.
+     */
+    FocusTrap.prototype.focusInitialElement = function (focusableEls, initialFocusEl) {
+        var focusIndex = 0;
+        if (initialFocusEl) {
+            focusIndex = Math.max(focusableEls.indexOf(initialFocusEl), 0);
+        }
+        focusableEls[focusIndex].focus();
+    };
+    FocusTrap.prototype.getFocusableElements = function (root) {
+        var focusableEls = [].slice.call(root.querySelectorAll('[autofocus], [tabindex], a, input, textarea, select, button'));
+        return focusableEls.filter(function (el) {
+            var isDisabledOrHidden = el.getAttribute('aria-disabled') === 'true' ||
+                el.getAttribute('disabled') != null ||
+                el.getAttribute('hidden') != null ||
+                el.getAttribute('aria-hidden') === 'true';
+            var isTabbableAndVisible = el.tabIndex >= 0 &&
+                el.getBoundingClientRect().width > 0 &&
+                !el.classList.contains(FOCUS_SENTINEL_CLASS) && !isDisabledOrHidden;
+            var isProgrammaticallyHidden = false;
+            if (isTabbableAndVisible) {
+                var style = getComputedStyle(el);
+                isProgrammaticallyHidden =
+                    style.display === 'none' || style.visibility === 'hidden';
+            }
+            return isTabbableAndVisible && !isProgrammaticallyHidden;
+        });
+    };
+    FocusTrap.prototype.createSentinel = function () {
+        var sentinel = document.createElement('div');
+        sentinel.setAttribute('tabindex', '0');
+        // Don't announce in screen readers.
+        sentinel.setAttribute('aria-hidden', 'true');
+        sentinel.classList.add(FOCUS_SENTINEL_CLASS);
+        return sentinel;
+    };
+    return FocusTrap;
+}());
+
+//# sourceMappingURL=focus-trap.js.map
 
 /***/ }),
 
@@ -243,6 +1062,494 @@ function estimateScrollWidth(element) {
     return scrollWidth;
 }
 //# sourceMappingURL=ponyfill.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/floating-label/constants.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@material/floating-label/constants.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cssClasses": () => (/* binding */ cssClasses)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+    LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
+    LABEL_REQUIRED: 'mdc-floating-label--required',
+    LABEL_SHAKE: 'mdc-floating-label--shake',
+    ROOT: 'mdc-floating-label',
+};
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/floating-label/foundation.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@material/floating-label/foundation.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MDCFloatingLabelFoundation": () => (/* binding */ MDCFloatingLabelFoundation),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _material_base_foundation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/base/foundation */ "./node_modules/@material/base/foundation.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/floating-label/constants.js");
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+
+
+var MDCFloatingLabelFoundation = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MDCFloatingLabelFoundation, _super);
+    function MDCFloatingLabelFoundation(adapter) {
+        var _this = _super.call(this, (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, MDCFloatingLabelFoundation.defaultAdapter), adapter)) || this;
+        _this.shakeAnimationEndHandler_ = function () { return _this.handleShakeAnimationEnd_(); };
+        return _this;
+    }
+    Object.defineProperty(MDCFloatingLabelFoundation, "cssClasses", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCFloatingLabelFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCFloatingLabelAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                getWidth: function () { return 0; },
+                registerInteractionHandler: function () { return undefined; },
+                deregisterInteractionHandler: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCFloatingLabelFoundation.prototype.init = function () {
+        this.adapter.registerInteractionHandler('animationend', this.shakeAnimationEndHandler_);
+    };
+    MDCFloatingLabelFoundation.prototype.destroy = function () {
+        this.adapter.deregisterInteractionHandler('animationend', this.shakeAnimationEndHandler_);
+    };
+    /**
+     * Returns the width of the label element.
+     */
+    MDCFloatingLabelFoundation.prototype.getWidth = function () {
+        return this.adapter.getWidth();
+    };
+    /**
+     * Styles the label to produce a shake animation to indicate an error.
+     * @param shouldShake If true, adds the shake CSS class; otherwise, removes shake class.
+     */
+    MDCFloatingLabelFoundation.prototype.shake = function (shouldShake) {
+        var LABEL_SHAKE = MDCFloatingLabelFoundation.cssClasses.LABEL_SHAKE;
+        if (shouldShake) {
+            this.adapter.addClass(LABEL_SHAKE);
+        }
+        else {
+            this.adapter.removeClass(LABEL_SHAKE);
+        }
+    };
+    /**
+     * Styles the label to float or dock.
+     * @param shouldFloat If true, adds the float CSS class; otherwise, removes float and shake classes to dock the label.
+     */
+    MDCFloatingLabelFoundation.prototype.float = function (shouldFloat) {
+        var _a = MDCFloatingLabelFoundation.cssClasses, LABEL_FLOAT_ABOVE = _a.LABEL_FLOAT_ABOVE, LABEL_SHAKE = _a.LABEL_SHAKE;
+        if (shouldFloat) {
+            this.adapter.addClass(LABEL_FLOAT_ABOVE);
+        }
+        else {
+            this.adapter.removeClass(LABEL_FLOAT_ABOVE);
+            this.adapter.removeClass(LABEL_SHAKE);
+        }
+    };
+    /**
+     * Styles the label as required.
+     * @param isRequired If true, adds an asterisk to the label, indicating that it is required.
+     */
+    MDCFloatingLabelFoundation.prototype.setRequired = function (isRequired) {
+        var LABEL_REQUIRED = MDCFloatingLabelFoundation.cssClasses.LABEL_REQUIRED;
+        if (isRequired) {
+            this.adapter.addClass(LABEL_REQUIRED);
+        }
+        else {
+            this.adapter.removeClass(LABEL_REQUIRED);
+        }
+    };
+    MDCFloatingLabelFoundation.prototype.handleShakeAnimationEnd_ = function () {
+        var LABEL_SHAKE = MDCFloatingLabelFoundation.cssClasses.LABEL_SHAKE;
+        this.adapter.removeClass(LABEL_SHAKE);
+    };
+    return MDCFloatingLabelFoundation;
+}(_material_base_foundation__WEBPACK_IMPORTED_MODULE_2__.MDCFoundation));
+
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MDCFloatingLabelFoundation);
+//# sourceMappingURL=foundation.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/line-ripple/constants.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/@material/line-ripple/constants.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cssClasses": () => (/* binding */ cssClasses)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var cssClasses = {
+    LINE_RIPPLE_ACTIVE: 'mdc-line-ripple--active',
+    LINE_RIPPLE_DEACTIVATING: 'mdc-line-ripple--deactivating',
+};
+
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/line-ripple/foundation.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@material/line-ripple/foundation.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MDCLineRippleFoundation": () => (/* binding */ MDCLineRippleFoundation),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _material_base_foundation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/base/foundation */ "./node_modules/@material/base/foundation.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/line-ripple/constants.js");
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+
+
+var MDCLineRippleFoundation = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MDCLineRippleFoundation, _super);
+    function MDCLineRippleFoundation(adapter) {
+        var _this = _super.call(this, (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, MDCLineRippleFoundation.defaultAdapter), adapter)) || this;
+        _this.transitionEndHandler_ = function (evt) { return _this.handleTransitionEnd(evt); };
+        return _this;
+    }
+    Object.defineProperty(MDCLineRippleFoundation, "cssClasses", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCLineRippleFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCLineRippleAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                hasClass: function () { return false; },
+                setStyle: function () { return undefined; },
+                registerEventHandler: function () { return undefined; },
+                deregisterEventHandler: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCLineRippleFoundation.prototype.init = function () {
+        this.adapter.registerEventHandler('transitionend', this.transitionEndHandler_);
+    };
+    MDCLineRippleFoundation.prototype.destroy = function () {
+        this.adapter.deregisterEventHandler('transitionend', this.transitionEndHandler_);
+    };
+    MDCLineRippleFoundation.prototype.activate = function () {
+        this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.LINE_RIPPLE_DEACTIVATING);
+        this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.LINE_RIPPLE_ACTIVE);
+    };
+    MDCLineRippleFoundation.prototype.setRippleCenter = function (xCoordinate) {
+        this.adapter.setStyle('transform-origin', xCoordinate + "px center");
+    };
+    MDCLineRippleFoundation.prototype.deactivate = function () {
+        this.adapter.addClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.LINE_RIPPLE_DEACTIVATING);
+    };
+    MDCLineRippleFoundation.prototype.handleTransitionEnd = function (evt) {
+        // Wait for the line ripple to be either transparent or opaque
+        // before emitting the animation end event
+        var isDeactivating = this.adapter.hasClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.LINE_RIPPLE_DEACTIVATING);
+        if (evt.propertyName === 'opacity') {
+            if (isDeactivating) {
+                this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.LINE_RIPPLE_ACTIVE);
+                this.adapter.removeClass(_constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses.LINE_RIPPLE_DEACTIVATING);
+            }
+        }
+    };
+    return MDCLineRippleFoundation;
+}(_material_base_foundation__WEBPACK_IMPORTED_MODULE_2__.MDCFoundation));
+
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MDCLineRippleFoundation);
+//# sourceMappingURL=foundation.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/notched-outline/constants.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@material/notched-outline/constants.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cssClasses": () => (/* binding */ cssClasses),
+/* harmony export */   "numbers": () => (/* binding */ numbers),
+/* harmony export */   "strings": () => (/* binding */ strings)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2018 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings = {
+    NOTCH_ELEMENT_SELECTOR: '.mdc-notched-outline__notch',
+};
+var numbers = {
+    // This should stay in sync with $mdc-notched-outline-padding * 2.
+    NOTCH_ELEMENT_PADDING: 8,
+};
+var cssClasses = {
+    NO_LABEL: 'mdc-notched-outline--no-label',
+    OUTLINE_NOTCHED: 'mdc-notched-outline--notched',
+    OUTLINE_UPGRADED: 'mdc-notched-outline--upgraded',
+};
+
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/notched-outline/foundation.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@material/notched-outline/foundation.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MDCNotchedOutlineFoundation": () => (/* binding */ MDCNotchedOutlineFoundation),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _material_base_foundation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/base/foundation */ "./node_modules/@material/base/foundation.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/notched-outline/constants.js");
+/**
+ * @license
+ * Copyright 2017 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+
+
+var MDCNotchedOutlineFoundation = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MDCNotchedOutlineFoundation, _super);
+    function MDCNotchedOutlineFoundation(adapter) {
+        return _super.call(this, (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, MDCNotchedOutlineFoundation.defaultAdapter), adapter)) || this;
+    }
+    Object.defineProperty(MDCNotchedOutlineFoundation, "strings", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.strings;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCNotchedOutlineFoundation, "cssClasses", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCNotchedOutlineFoundation, "numbers", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.numbers;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCNotchedOutlineFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCNotchedOutlineAdapter} for typing information on parameters and return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                setNotchWidthProperty: function () { return undefined; },
+                removeNotchWidthProperty: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    /**
+     * Adds the outline notched selector and updates the notch width calculated based off of notchWidth.
+     */
+    MDCNotchedOutlineFoundation.prototype.notch = function (notchWidth) {
+        var OUTLINE_NOTCHED = MDCNotchedOutlineFoundation.cssClasses.OUTLINE_NOTCHED;
+        if (notchWidth > 0) {
+            notchWidth += _constants__WEBPACK_IMPORTED_MODULE_1__.numbers.NOTCH_ELEMENT_PADDING; // Add padding from left/right.
+        }
+        this.adapter.setNotchWidthProperty(notchWidth);
+        this.adapter.addClass(OUTLINE_NOTCHED);
+    };
+    /**
+     * Removes notched outline selector to close the notch in the outline.
+     */
+    MDCNotchedOutlineFoundation.prototype.closeNotch = function () {
+        var OUTLINE_NOTCHED = MDCNotchedOutlineFoundation.cssClasses.OUTLINE_NOTCHED;
+        this.adapter.removeClass(OUTLINE_NOTCHED);
+        this.adapter.removeNotchWidthProperty();
+    };
+    return MDCNotchedOutlineFoundation;
+}(_material_base_foundation__WEBPACK_IMPORTED_MODULE_2__.MDCFoundation));
+
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MDCNotchedOutlineFoundation);
+//# sourceMappingURL=foundation.js.map
 
 /***/ }),
 
@@ -857,6 +2164,640 @@ function getNormalizedEventCoords(evt, pageOffset, clientRect) {
     return { x: normalizedX, y: normalizedY };
 }
 //# sourceMappingURL=util.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/textfield/constants.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/@material/textfield/constants.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "cssClasses": () => (/* binding */ cssClasses),
+/* harmony export */   "strings": () => (/* binding */ strings),
+/* harmony export */   "numbers": () => (/* binding */ numbers),
+/* harmony export */   "VALIDATION_ATTR_WHITELIST": () => (/* binding */ VALIDATION_ATTR_WHITELIST),
+/* harmony export */   "ALWAYS_FLOAT_TYPES": () => (/* binding */ ALWAYS_FLOAT_TYPES)
+/* harmony export */ });
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings = {
+    ARIA_CONTROLS: 'aria-controls',
+    ARIA_DESCRIBEDBY: 'aria-describedby',
+    INPUT_SELECTOR: '.mdc-text-field__input',
+    LABEL_SELECTOR: '.mdc-floating-label',
+    LEADING_ICON_SELECTOR: '.mdc-text-field__icon--leading',
+    LINE_RIPPLE_SELECTOR: '.mdc-line-ripple',
+    OUTLINE_SELECTOR: '.mdc-notched-outline',
+    PREFIX_SELECTOR: '.mdc-text-field__affix--prefix',
+    SUFFIX_SELECTOR: '.mdc-text-field__affix--suffix',
+    TRAILING_ICON_SELECTOR: '.mdc-text-field__icon--trailing'
+};
+var cssClasses = {
+    DISABLED: 'mdc-text-field--disabled',
+    FOCUSED: 'mdc-text-field--focused',
+    HELPER_LINE: 'mdc-text-field-helper-line',
+    INVALID: 'mdc-text-field--invalid',
+    LABEL_FLOATING: 'mdc-text-field--label-floating',
+    NO_LABEL: 'mdc-text-field--no-label',
+    OUTLINED: 'mdc-text-field--outlined',
+    ROOT: 'mdc-text-field',
+    TEXTAREA: 'mdc-text-field--textarea',
+    WITH_LEADING_ICON: 'mdc-text-field--with-leading-icon',
+    WITH_TRAILING_ICON: 'mdc-text-field--with-trailing-icon',
+};
+var numbers = {
+    LABEL_SCALE: 0.75,
+};
+/**
+ * Whitelist based off of https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation
+ * under the "Validation-related attributes" section.
+ */
+var VALIDATION_ATTR_WHITELIST = [
+    'pattern', 'min', 'max', 'required', 'step', 'minlength', 'maxlength',
+];
+/**
+ * Label should always float for these types as they show some UI even if value is empty.
+ */
+var ALWAYS_FLOAT_TYPES = [
+    'color', 'date', 'datetime-local', 'month', 'range', 'time', 'week',
+];
+
+//# sourceMappingURL=constants.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@material/textfield/foundation.js":
+/*!********************************************************!*\
+  !*** ./node_modules/@material/textfield/foundation.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MDCTextFieldFoundation": () => (/* binding */ MDCTextFieldFoundation),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _material_base_foundation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material/base/foundation */ "./node_modules/@material/base/foundation.js");
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ "./node_modules/@material/textfield/constants.js");
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+
+
+var POINTERDOWN_EVENTS = ['mousedown', 'touchstart'];
+var INTERACTION_EVENTS = ['click', 'keydown'];
+var MDCTextFieldFoundation = /** @class */ (function (_super) {
+    (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__extends)(MDCTextFieldFoundation, _super);
+    /**
+     * @param adapter
+     * @param foundationMap Map from subcomponent names to their subfoundations.
+     */
+    function MDCTextFieldFoundation(adapter, foundationMap) {
+        if (foundationMap === void 0) { foundationMap = {}; }
+        var _this = _super.call(this, (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__assign)({}, MDCTextFieldFoundation.defaultAdapter), adapter)) || this;
+        _this.isFocused_ = false;
+        _this.receivedUserInput_ = false;
+        _this.isValid_ = true;
+        _this.useNativeValidation_ = true;
+        _this.validateOnValueChange_ = true;
+        _this.helperText_ = foundationMap.helperText;
+        _this.characterCounter_ = foundationMap.characterCounter;
+        _this.leadingIcon_ = foundationMap.leadingIcon;
+        _this.trailingIcon_ = foundationMap.trailingIcon;
+        _this.inputFocusHandler_ = function () { return _this.activateFocus(); };
+        _this.inputBlurHandler_ = function () { return _this.deactivateFocus(); };
+        _this.inputInputHandler_ = function () { return _this.handleInput(); };
+        _this.setPointerXOffset_ = function (evt) { return _this.setTransformOrigin(evt); };
+        _this.textFieldInteractionHandler_ = function () { return _this.handleTextFieldInteraction(); };
+        _this.validationAttributeChangeHandler_ = function (attributesList) {
+            return _this.handleValidationAttributeChange(attributesList);
+        };
+        return _this;
+    }
+    Object.defineProperty(MDCTextFieldFoundation, "cssClasses", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.cssClasses;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation, "strings", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.strings;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation, "numbers", {
+        get: function () {
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.numbers;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation.prototype, "shouldAlwaysFloat_", {
+        get: function () {
+            var type = this.getNativeInput_().type;
+            return _constants__WEBPACK_IMPORTED_MODULE_1__.ALWAYS_FLOAT_TYPES.indexOf(type) >= 0;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation.prototype, "shouldFloat", {
+        get: function () {
+            return this.shouldAlwaysFloat_ || this.isFocused_ || !!this.getValue() ||
+                this.isBadInput_();
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation.prototype, "shouldShake", {
+        get: function () {
+            return !this.isFocused_ && !this.isValid() && !!this.getValue();
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(MDCTextFieldFoundation, "defaultAdapter", {
+        /**
+         * See {@link MDCTextFieldAdapter} for typing information on parameters and
+         * return types.
+         */
+        get: function () {
+            // tslint:disable:object-literal-sort-keys Methods should be in the same order as the adapter interface.
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                hasClass: function () { return true; },
+                setInputAttr: function () { return undefined; },
+                removeInputAttr: function () { return undefined; },
+                registerTextFieldInteractionHandler: function () { return undefined; },
+                deregisterTextFieldInteractionHandler: function () { return undefined; },
+                registerInputInteractionHandler: function () { return undefined; },
+                deregisterInputInteractionHandler: function () { return undefined; },
+                registerValidationAttributeChangeHandler: function () {
+                    return new MutationObserver(function () { return undefined; });
+                },
+                deregisterValidationAttributeChangeHandler: function () { return undefined; },
+                getNativeInput: function () { return null; },
+                isFocused: function () { return false; },
+                activateLineRipple: function () { return undefined; },
+                deactivateLineRipple: function () { return undefined; },
+                setLineRippleTransformOrigin: function () { return undefined; },
+                shakeLabel: function () { return undefined; },
+                floatLabel: function () { return undefined; },
+                setLabelRequired: function () { return undefined; },
+                hasLabel: function () { return false; },
+                getLabelWidth: function () { return 0; },
+                hasOutline: function () { return false; },
+                notchOutline: function () { return undefined; },
+                closeOutline: function () { return undefined; },
+            };
+            // tslint:enable:object-literal-sort-keys
+        },
+        enumerable: false,
+        configurable: true
+    });
+    MDCTextFieldFoundation.prototype.init = function () {
+        var _this = this;
+        if (this.adapter.hasLabel() && this.getNativeInput_().required) {
+            this.adapter.setLabelRequired(true);
+        }
+        if (this.adapter.isFocused()) {
+            this.inputFocusHandler_();
+        }
+        else if (this.adapter.hasLabel() && this.shouldFloat) {
+            this.notchOutline(true);
+            this.adapter.floatLabel(true);
+            this.styleFloating_(true);
+        }
+        this.adapter.registerInputInteractionHandler('focus', this.inputFocusHandler_);
+        this.adapter.registerInputInteractionHandler('blur', this.inputBlurHandler_);
+        this.adapter.registerInputInteractionHandler('input', this.inputInputHandler_);
+        POINTERDOWN_EVENTS.forEach(function (evtType) {
+            _this.adapter.registerInputInteractionHandler(evtType, _this.setPointerXOffset_);
+        });
+        INTERACTION_EVENTS.forEach(function (evtType) {
+            _this.adapter.registerTextFieldInteractionHandler(evtType, _this.textFieldInteractionHandler_);
+        });
+        this.validationObserver_ =
+            this.adapter.registerValidationAttributeChangeHandler(this.validationAttributeChangeHandler_);
+        this.setCharacterCounter_(this.getValue().length);
+    };
+    MDCTextFieldFoundation.prototype.destroy = function () {
+        var _this = this;
+        this.adapter.deregisterInputInteractionHandler('focus', this.inputFocusHandler_);
+        this.adapter.deregisterInputInteractionHandler('blur', this.inputBlurHandler_);
+        this.adapter.deregisterInputInteractionHandler('input', this.inputInputHandler_);
+        POINTERDOWN_EVENTS.forEach(function (evtType) {
+            _this.adapter.deregisterInputInteractionHandler(evtType, _this.setPointerXOffset_);
+        });
+        INTERACTION_EVENTS.forEach(function (evtType) {
+            _this.adapter.deregisterTextFieldInteractionHandler(evtType, _this.textFieldInteractionHandler_);
+        });
+        this.adapter.deregisterValidationAttributeChangeHandler(this.validationObserver_);
+    };
+    /**
+     * Handles user interactions with the Text Field.
+     */
+    MDCTextFieldFoundation.prototype.handleTextFieldInteraction = function () {
+        var nativeInput = this.adapter.getNativeInput();
+        if (nativeInput && nativeInput.disabled) {
+            return;
+        }
+        this.receivedUserInput_ = true;
+    };
+    /**
+     * Handles validation attribute changes
+     */
+    MDCTextFieldFoundation.prototype.handleValidationAttributeChange = function (attributesList) {
+        var _this = this;
+        attributesList.some(function (attributeName) {
+            if (_constants__WEBPACK_IMPORTED_MODULE_1__.VALIDATION_ATTR_WHITELIST.indexOf(attributeName) > -1) {
+                _this.styleValidity_(true);
+                _this.adapter.setLabelRequired(_this.getNativeInput_().required);
+                return true;
+            }
+            return false;
+        });
+        if (attributesList.indexOf('maxlength') > -1) {
+            this.setCharacterCounter_(this.getValue().length);
+        }
+    };
+    /**
+     * Opens/closes the notched outline.
+     */
+    MDCTextFieldFoundation.prototype.notchOutline = function (openNotch) {
+        if (!this.adapter.hasOutline() || !this.adapter.hasLabel()) {
+            return;
+        }
+        if (openNotch) {
+            var labelWidth = this.adapter.getLabelWidth() * _constants__WEBPACK_IMPORTED_MODULE_1__.numbers.LABEL_SCALE;
+            this.adapter.notchOutline(labelWidth);
+        }
+        else {
+            this.adapter.closeOutline();
+        }
+    };
+    /**
+     * Activates the text field focus state.
+     */
+    MDCTextFieldFoundation.prototype.activateFocus = function () {
+        this.isFocused_ = true;
+        this.styleFocused_(this.isFocused_);
+        this.adapter.activateLineRipple();
+        if (this.adapter.hasLabel()) {
+            this.notchOutline(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
+            this.styleFloating_(this.shouldFloat);
+            this.adapter.shakeLabel(this.shouldShake);
+        }
+        if (this.helperText_ &&
+            (this.helperText_.isPersistent() || !this.helperText_.isValidation() ||
+                !this.isValid_)) {
+            this.helperText_.showToScreenReader();
+        }
+    };
+    /**
+     * Sets the line ripple's transform origin, so that the line ripple activate
+     * animation will animate out from the user's click location.
+     */
+    MDCTextFieldFoundation.prototype.setTransformOrigin = function (evt) {
+        if (this.isDisabled() || this.adapter.hasOutline()) {
+            return;
+        }
+        var touches = evt.touches;
+        var targetEvent = touches ? touches[0] : evt;
+        var targetClientRect = targetEvent.target.getBoundingClientRect();
+        var normalizedX = targetEvent.clientX - targetClientRect.left;
+        this.adapter.setLineRippleTransformOrigin(normalizedX);
+    };
+    /**
+     * Handles input change of text input and text area.
+     */
+    MDCTextFieldFoundation.prototype.handleInput = function () {
+        this.autoCompleteFocus();
+        this.setCharacterCounter_(this.getValue().length);
+    };
+    /**
+     * Activates the Text Field's focus state in cases when the input value
+     * changes without user input (e.g. programmatically).
+     */
+    MDCTextFieldFoundation.prototype.autoCompleteFocus = function () {
+        if (!this.receivedUserInput_) {
+            this.activateFocus();
+        }
+    };
+    /**
+     * Deactivates the Text Field's focus state.
+     */
+    MDCTextFieldFoundation.prototype.deactivateFocus = function () {
+        this.isFocused_ = false;
+        this.adapter.deactivateLineRipple();
+        var isValid = this.isValid();
+        this.styleValidity_(isValid);
+        this.styleFocused_(this.isFocused_);
+        if (this.adapter.hasLabel()) {
+            this.notchOutline(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
+            this.styleFloating_(this.shouldFloat);
+            this.adapter.shakeLabel(this.shouldShake);
+        }
+        if (!this.shouldFloat) {
+            this.receivedUserInput_ = false;
+        }
+    };
+    MDCTextFieldFoundation.prototype.getValue = function () {
+        return this.getNativeInput_().value;
+    };
+    /**
+     * @param value The value to set on the input Element.
+     */
+    MDCTextFieldFoundation.prototype.setValue = function (value) {
+        // Prevent Safari from moving the caret to the end of the input when the
+        // value has not changed.
+        if (this.getValue() !== value) {
+            this.getNativeInput_().value = value;
+        }
+        this.setCharacterCounter_(value.length);
+        if (this.validateOnValueChange_) {
+            var isValid = this.isValid();
+            this.styleValidity_(isValid);
+        }
+        if (this.adapter.hasLabel()) {
+            this.notchOutline(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
+            this.styleFloating_(this.shouldFloat);
+            if (this.validateOnValueChange_) {
+                this.adapter.shakeLabel(this.shouldShake);
+            }
+        }
+    };
+    /**
+     * @return The custom validity state, if set; otherwise, the result of a
+     *     native validity check.
+     */
+    MDCTextFieldFoundation.prototype.isValid = function () {
+        return this.useNativeValidation_ ? this.isNativeInputValid_() :
+            this.isValid_;
+    };
+    /**
+     * @param isValid Sets the custom validity state of the Text Field.
+     */
+    MDCTextFieldFoundation.prototype.setValid = function (isValid) {
+        this.isValid_ = isValid;
+        this.styleValidity_(isValid);
+        var shouldShake = !isValid && !this.isFocused_ && !!this.getValue();
+        if (this.adapter.hasLabel()) {
+            this.adapter.shakeLabel(shouldShake);
+        }
+    };
+    /**
+     * @param shouldValidate Whether or not validity should be updated on
+     *     value change.
+     */
+    MDCTextFieldFoundation.prototype.setValidateOnValueChange = function (shouldValidate) {
+        this.validateOnValueChange_ = shouldValidate;
+    };
+    /**
+     * @return Whether or not validity should be updated on value change. `true`
+     *     by default.
+     */
+    MDCTextFieldFoundation.prototype.getValidateOnValueChange = function () {
+        return this.validateOnValueChange_;
+    };
+    /**
+     * Enables or disables the use of native validation. Use this for custom
+     * validation.
+     * @param useNativeValidation Set this to false to ignore native input
+     *     validation.
+     */
+    MDCTextFieldFoundation.prototype.setUseNativeValidation = function (useNativeValidation) {
+        this.useNativeValidation_ = useNativeValidation;
+    };
+    MDCTextFieldFoundation.prototype.isDisabled = function () {
+        return this.getNativeInput_().disabled;
+    };
+    /**
+     * @param disabled Sets the text-field disabled or enabled.
+     */
+    MDCTextFieldFoundation.prototype.setDisabled = function (disabled) {
+        this.getNativeInput_().disabled = disabled;
+        this.styleDisabled_(disabled);
+    };
+    /**
+     * @param content Sets the content of the helper text.
+     */
+    MDCTextFieldFoundation.prototype.setHelperTextContent = function (content) {
+        if (this.helperText_) {
+            this.helperText_.setContent(content);
+        }
+    };
+    /**
+     * Sets the aria label of the leading icon.
+     */
+    MDCTextFieldFoundation.prototype.setLeadingIconAriaLabel = function (label) {
+        if (this.leadingIcon_) {
+            this.leadingIcon_.setAriaLabel(label);
+        }
+    };
+    /**
+     * Sets the text content of the leading icon.
+     */
+    MDCTextFieldFoundation.prototype.setLeadingIconContent = function (content) {
+        if (this.leadingIcon_) {
+            this.leadingIcon_.setContent(content);
+        }
+    };
+    /**
+     * Sets the aria label of the trailing icon.
+     */
+    MDCTextFieldFoundation.prototype.setTrailingIconAriaLabel = function (label) {
+        if (this.trailingIcon_) {
+            this.trailingIcon_.setAriaLabel(label);
+        }
+    };
+    /**
+     * Sets the text content of the trailing icon.
+     */
+    MDCTextFieldFoundation.prototype.setTrailingIconContent = function (content) {
+        if (this.trailingIcon_) {
+            this.trailingIcon_.setContent(content);
+        }
+    };
+    /**
+     * Sets character counter values that shows characters used and the total
+     * character limit.
+     */
+    MDCTextFieldFoundation.prototype.setCharacterCounter_ = function (currentLength) {
+        if (!this.characterCounter_) {
+            return;
+        }
+        var maxLength = this.getNativeInput_().maxLength;
+        if (maxLength === -1) {
+            throw new Error('MDCTextFieldFoundation: Expected maxlength html property on text input or textarea.');
+        }
+        this.characterCounter_.setCounterValue(currentLength, maxLength);
+    };
+    /**
+     * @return True if the Text Field input fails in converting the user-supplied
+     *     value.
+     */
+    MDCTextFieldFoundation.prototype.isBadInput_ = function () {
+        // The badInput property is not supported in IE 11 💩.
+        return this.getNativeInput_().validity.badInput || false;
+    };
+    /**
+     * @return The result of native validity checking (ValidityState.valid).
+     */
+    MDCTextFieldFoundation.prototype.isNativeInputValid_ = function () {
+        return this.getNativeInput_().validity.valid;
+    };
+    /**
+     * Styles the component based on the validity state.
+     */
+    MDCTextFieldFoundation.prototype.styleValidity_ = function (isValid) {
+        var INVALID = MDCTextFieldFoundation.cssClasses.INVALID;
+        if (isValid) {
+            this.adapter.removeClass(INVALID);
+        }
+        else {
+            this.adapter.addClass(INVALID);
+        }
+        if (this.helperText_) {
+            this.helperText_.setValidity(isValid);
+            // We dynamically set or unset aria-describedby for validation helper text
+            // only, based on whether the field is valid
+            var helperTextValidation = this.helperText_.isValidation();
+            if (!helperTextValidation) {
+                return;
+            }
+            var helperTextVisible = this.helperText_.isVisible();
+            var helperTextId = this.helperText_.getId();
+            if (helperTextVisible && helperTextId) {
+                this.adapter.setInputAttr(_constants__WEBPACK_IMPORTED_MODULE_1__.strings.ARIA_DESCRIBEDBY, helperTextId);
+            }
+            else {
+                this.adapter.removeInputAttr(_constants__WEBPACK_IMPORTED_MODULE_1__.strings.ARIA_DESCRIBEDBY);
+            }
+        }
+    };
+    /**
+     * Styles the component based on the focused state.
+     */
+    MDCTextFieldFoundation.prototype.styleFocused_ = function (isFocused) {
+        var FOCUSED = MDCTextFieldFoundation.cssClasses.FOCUSED;
+        if (isFocused) {
+            this.adapter.addClass(FOCUSED);
+        }
+        else {
+            this.adapter.removeClass(FOCUSED);
+        }
+    };
+    /**
+     * Styles the component based on the disabled state.
+     */
+    MDCTextFieldFoundation.prototype.styleDisabled_ = function (isDisabled) {
+        var _a = MDCTextFieldFoundation.cssClasses, DISABLED = _a.DISABLED, INVALID = _a.INVALID;
+        if (isDisabled) {
+            this.adapter.addClass(DISABLED);
+            this.adapter.removeClass(INVALID);
+        }
+        else {
+            this.adapter.removeClass(DISABLED);
+        }
+        if (this.leadingIcon_) {
+            this.leadingIcon_.setDisabled(isDisabled);
+        }
+        if (this.trailingIcon_) {
+            this.trailingIcon_.setDisabled(isDisabled);
+        }
+    };
+    /**
+     * Styles the component based on the label floating state.
+     */
+    MDCTextFieldFoundation.prototype.styleFloating_ = function (isFloating) {
+        var LABEL_FLOATING = MDCTextFieldFoundation.cssClasses.LABEL_FLOATING;
+        if (isFloating) {
+            this.adapter.addClass(LABEL_FLOATING);
+        }
+        else {
+            this.adapter.removeClass(LABEL_FLOATING);
+        }
+    };
+    /**
+     * @return The native text input element from the host environment, or an
+     *     object with the same shape for unit tests.
+     */
+    MDCTextFieldFoundation.prototype.getNativeInput_ = function () {
+        // this.adapter may be undefined in foundation unit tests. This happens when
+        // testdouble is creating a mock object and invokes the
+        // shouldShake/shouldFloat getters (which in turn call getValue(), which
+        // calls this method) before init() has been called from the MDCTextField
+        // constructor. To work around that issue, we return a dummy object.
+        var nativeInput = this.adapter ? this.adapter.getNativeInput() : null;
+        return nativeInput || {
+            disabled: false,
+            maxLength: -1,
+            required: false,
+            type: 'input',
+            validity: {
+                badInput: false,
+                valid: true,
+            },
+            value: '',
+        };
+    };
+    return MDCTextFieldFoundation;
+}(_material_base_foundation__WEBPACK_IMPORTED_MODULE_2__.MDCFoundation));
+
+// tslint:disable-next-line:no-default-export Needed for backward compatibility with MDC Web v0.44.0 and earlier.
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MDCTextFieldFoundation);
+//# sourceMappingURL=foundation.js.map
 
 /***/ }),
 
@@ -6167,6 +8108,429 @@ if (module && module.hot) {}
 
 /***/ }),
 
+/***/ "./node_modules/@smui/common/ContextFragment.svelte":
+/*!**********************************************************!*\
+  !*** ./node_modules/@smui/common/ContextFragment.svelte ***!
+  \**********************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var svelte_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! svelte/store */ "./node_modules/svelte/store/index.mjs");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\common\ContextFragment.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+function create_fragment(ctx) {
+	let current;
+	const default_slot_template = /*#slots*/ ctx[4].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[3], null);
+
+	return {
+		c() {
+			if (default_slot) default_slot.c();
+		},
+		m(target, anchor) {
+			if (default_slot) {
+				default_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 8)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[3],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[3])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[3], dirty, null),
+						null
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (default_slot) default_slot.d(detaching);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let $storeValue;
+	let { $$slots: slots = {}, $$scope } = $$props;
+	let { key } = $$props;
+	let { value } = $$props;
+	const storeValue = (0,svelte_store__WEBPACK_IMPORTED_MODULE_2__.writable)(value);
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, storeValue, value => $$invalidate(5, $storeValue = value));
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.setContext)(key, storeValue);
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onDestroy)(() => {
+		storeValue.set(undefined);
+	});
+
+	$$self.$$set = $$props => {
+		if ('key' in $$props) $$invalidate(1, key = $$props.key);
+		if ('value' in $$props) $$invalidate(2, value = $$props.value);
+		if ('$$scope' in $$props) $$invalidate(3, $$scope = $$props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*value*/ 4) {
+			$: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_store_value)(storeValue, $storeValue = value, $storeValue);
+		}
+	};
+
+	return [storeValue, key, value, $$scope, slots];
+}
+
+class ContextFragment extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, { key: 1, value: 2 });
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ContextFragment);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/common/Div.svelte":
+/*!**********************************************!*\
+  !*** ./node_modules/@smui/common/Div.svelte ***!
+  \**********************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\common\Div.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+function create_fragment(ctx) {
+	let div;
+	let useActions_action;
+	let forwardEvents_action;
+	let current;
+	let mounted;
+	let dispose;
+	const default_slot_template = /*#slots*/ ctx[6].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[5], null);
+	let div_levels = [/*$$restProps*/ ctx[3]];
+	let div_data = {};
+
+	for (let i = 0; i < div_levels.length; i += 1) {
+		div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div_data, div_levels[i]);
+	}
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			if (default_slot) default_slot.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+
+			if (default_slot) {
+				default_slot.m(div, null);
+			}
+
+			/*div_binding*/ ctx[7](div);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _internal_js__WEBPACK_IMPORTED_MODULE_1__.useActions.call(null, div, /*use*/ ctx[0])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[2].call(null, div))
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 32)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[5],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[5])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[5], dirty, null),
+						null
+					);
+				}
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div_levels, [dirty & /*$$restProps*/ 8 && /*$$restProps*/ ctx[3]]));
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 1) useActions_action.update.call(null, /*use*/ ctx[0]);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			if (default_slot) default_slot.d(detaching);
+			/*div_binding*/ ctx[7](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	const omit_props_names = ["use","getElement"];
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	let { use = [] } = $$props;
+	const forwardEvents = (0,_internal_js__WEBPACK_IMPORTED_MODULE_1__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let element = null;
+
+	function getElement() {
+		return element;
+	}
+
+	function div_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(1, element);
+		});
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(3, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(0, use = $$new_props.use);
+		if ('$$scope' in $$new_props) $$invalidate(5, $$scope = $$new_props.$$scope);
+	};
+
+	return [
+		use,
+		element,
+		forwardEvents,
+		$$restProps,
+		getElement,
+		$$scope,
+		slots,
+		div_binding
+	];
+}
+
+class Div extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, { use: 0, getElement: 4 });
+	}
+
+	get getElement() {
+		return this.$$.ctx[4];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Div);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/common/H2.svelte":
+/*!*********************************************!*\
+  !*** ./node_modules/@smui/common/H2.svelte ***!
+  \*********************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _internal_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\common\H2.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+function create_fragment(ctx) {
+	let h2;
+	let useActions_action;
+	let forwardEvents_action;
+	let current;
+	let mounted;
+	let dispose;
+	const default_slot_template = /*#slots*/ ctx[6].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[5], null);
+	let h2_levels = [/*$$restProps*/ ctx[3]];
+	let h2_data = {};
+
+	for (let i = 0; i < h2_levels.length; i += 1) {
+		h2_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(h2_data, h2_levels[i]);
+	}
+
+	return {
+		c() {
+			h2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("h2");
+			if (default_slot) default_slot.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(h2, h2_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, h2, anchor);
+
+			if (default_slot) {
+				default_slot.m(h2, null);
+			}
+
+			/*h2_binding*/ ctx[7](h2);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _internal_js__WEBPACK_IMPORTED_MODULE_1__.useActions.call(null, h2, /*use*/ ctx[0])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[2].call(null, h2))
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 32)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[5],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[5])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[5], dirty, null),
+						null
+					);
+				}
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(h2, h2_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(h2_levels, [dirty & /*$$restProps*/ 8 && /*$$restProps*/ ctx[3]]));
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 1) useActions_action.update.call(null, /*use*/ ctx[0]);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(h2);
+			if (default_slot) default_slot.d(detaching);
+			/*h2_binding*/ ctx[7](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	const omit_props_names = ["use","getElement"];
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	let { use = [] } = $$props;
+	const forwardEvents = (0,_internal_js__WEBPACK_IMPORTED_MODULE_1__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let element = null;
+
+	function getElement() {
+		return element;
+	}
+
+	function h2_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(1, element);
+		});
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(3, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(0, use = $$new_props.use);
+		if ('$$scope' in $$new_props) $$invalidate(5, $$scope = $$new_props.$$scope);
+	};
+
+	return [
+		use,
+		element,
+		forwardEvents,
+		$$restProps,
+		getElement,
+		$$scope,
+		slots,
+		h2_binding
+	];
+}
+
+class H2 extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, { use: 0, getElement: 4 });
+	}
+
+	get getElement() {
+		return this.$$.ctx[4];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (H2);
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@smui/common/I.svelte":
 /*!********************************************!*\
   !*** ./node_modules/@smui/common/I.svelte ***!
@@ -6635,6 +8999,5162 @@ if (module && module.hot) {}
 
 /***/ }),
 
+/***/ "./node_modules/@smui/dialog/Dialog.svelte":
+/*!*************************************************!*\
+  !*** ./node_modules/@smui/dialog/Dialog.svelte ***!
+  \*************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _material_dialog__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material/dialog */ "./node_modules/@material/dialog/foundation.js");
+/* harmony import */ var _material_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material/dialog */ "./node_modules/@material/dialog/util.js");
+/* harmony import */ var _material_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material/dom */ "./node_modules/@material/dom/focus-trap.js");
+/* harmony import */ var _material_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material/dom */ "./node_modules/@material/dom/ponyfill.js");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var svelte_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! svelte/store */ "./node_modules/svelte/store/index.mjs");
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\dialog\Dialog.svelte generated by Svelte v3.43.1 */
+
+
+const { document: document_1, window: window_1 } = svelte_internal__WEBPACK_IMPORTED_MODULE_0__.globals;
+
+
+
+
+
+
+
+
+const get_over_slot_changes = dirty => ({});
+const get_over_slot_context = ctx => ({});
+
+// (47:6) {#if fullscreen}
+function create_if_block(ctx) {
+	let div;
+	let mounted;
+	let dispose;
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", "mdc-dialog__surface-scrim");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+
+			if (!mounted) {
+				dispose = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div, "transitionend", /*transitionend_handler*/ ctx[31]);
+				mounted = true;
+			}
+		},
+		p: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let t0;
+	let div3;
+	let div1;
+	let div0;
+	let t1;
+	let div0_class_value;
+	let div1_class_value;
+	let t2;
+	let div2;
+	let div3_class_value;
+	let useActions_action;
+	let forwardEvents_action;
+	let t3;
+	let current;
+	let mounted;
+	let dispose;
+	const default_slot_template = /*#slots*/ ctx[27].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[26], null);
+	let if_block = /*fullscreen*/ ctx[5] && create_if_block(ctx);
+
+	let div0_levels = [
+		{
+			class: div0_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({
+				[/*surface$class*/ ctx[7]]: true,
+				'mdc-dialog__surface': true
+			})
+		},
+		{ role: "alertdialog" },
+		{ "aria-modal": "true" },
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.prefixFilter)(/*$$restProps*/ ctx[17], 'surface$')
+	];
+
+	let div0_data = {};
+
+	for (let i = 0; i < div0_levels.length; i += 1) {
+		div0_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div0_data, div0_levels[i]);
+	}
+
+	let div1_levels = [
+		{
+			class: div1_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({
+				[/*container$class*/ ctx[6]]: true,
+				'mdc-dialog__container': true
+			})
+		},
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.prefixFilter)(/*$$restProps*/ ctx[17], 'container$')
+	];
+
+	let div1_data = {};
+
+	for (let i = 0; i < div1_levels.length; i += 1) {
+		div1_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div1_data, div1_levels[i]);
+	}
+
+	let div3_levels = [
+		{
+			class: div3_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({
+				[/*className*/ ctx[2]]: true,
+				'mdc-dialog': true,
+				'mdc-dialog--stacked': !/*autoStackButtons*/ ctx[4],
+				'mdc-dialog--fullscreen': /*fullscreen*/ ctx[5],
+				'smui-dialog--selection': /*selection*/ ctx[3],
+				.../*internalClasses*/ ctx[10]
+			})
+		},
+		{ role: "alertdialog" },
+		{ "aria-modal": "true" },
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.exclude)(/*$$restProps*/ ctx[17], ['container$', 'surface$'])
+	];
+
+	let div3_data = {};
+
+	for (let i = 0; i < div3_levels.length; i += 1) {
+		div3_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div3_data, div3_levels[i]);
+	}
+
+	const over_slot_template = /*#slots*/ ctx[27].over;
+	const over_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(over_slot_template, ctx, /*$$scope*/ ctx[26], get_over_slot_context);
+
+	return {
+		c() {
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			if (default_slot) default_slot.c();
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block) if_block.c();
+			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			t3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (over_slot) over_slot.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div0, div0_data);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div1, div1_data);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div2, "class", "mdc-dialog__scrim");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div3, div3_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t0, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div3, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div3, div1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div1, div0);
+
+			if (default_slot) {
+				default_slot.m(div0, null);
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div0, t1);
+			if (if_block) if_block.m(div0, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div3, t2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div3, div2);
+			/*div3_binding*/ ctx[32](div3);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t3, anchor);
+
+			if (over_slot) {
+				over_slot.m(target, anchor);
+			}
+
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(window_1, "resize", /*resize_handler*/ ctx[28]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(window_1, "orientationchange", /*orientationchange_handler*/ ctx[29]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(document_1.body, "keydown", /*keydown_handler*/ ctx[30]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.useActions.call(null, div3, /*use*/ ctx[1])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[11].call(null, div3)),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div3, "MDCDialog:opening", /*handleDialogOpening*/ ctx[14]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div3, "MDCDialog:opened", /*handleDialogOpened*/ ctx[15]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div3, "MDCDialog:closed", /*handleDialogClosed*/ ctx[16]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div3, "click", /*click_handler*/ ctx[33]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div3, "keydown", /*keydown_handler_1*/ ctx[34])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty[0] & /*$$scope*/ 67108864)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[26],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[26])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[26], dirty, null),
+						null
+					);
+				}
+			}
+
+			if (/*fullscreen*/ ctx[5]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					if_block.m(div0, null);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div0, div0_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div0_levels, [
+				(!current || dirty[0] & /*surface$class*/ 128 && div0_class_value !== (div0_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({
+					[/*surface$class*/ ctx[7]]: true,
+					'mdc-dialog__surface': true
+				}))) && { class: div0_class_value },
+				{ role: "alertdialog" },
+				{ "aria-modal": "true" },
+				dirty[0] & /*$$restProps*/ 131072 && (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.prefixFilter)(/*$$restProps*/ ctx[17], 'surface$')
+			]));
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div1, div1_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div1_levels, [
+				(!current || dirty[0] & /*container$class*/ 64 && div1_class_value !== (div1_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({
+					[/*container$class*/ ctx[6]]: true,
+					'mdc-dialog__container': true
+				}))) && { class: div1_class_value },
+				dirty[0] & /*$$restProps*/ 131072 && (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.prefixFilter)(/*$$restProps*/ ctx[17], 'container$')
+			]));
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div3, div3_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div3_levels, [
+				(!current || dirty[0] & /*className, autoStackButtons, fullscreen, selection, internalClasses*/ 1084 && div3_class_value !== (div3_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.classMap)({
+					[/*className*/ ctx[2]]: true,
+					'mdc-dialog': true,
+					'mdc-dialog--stacked': !/*autoStackButtons*/ ctx[4],
+					'mdc-dialog--fullscreen': /*fullscreen*/ ctx[5],
+					'smui-dialog--selection': /*selection*/ ctx[3],
+					.../*internalClasses*/ ctx[10]
+				}))) && { class: div3_class_value },
+				{ role: "alertdialog" },
+				{ "aria-modal": "true" },
+				dirty[0] & /*$$restProps*/ 131072 && (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.exclude)(/*$$restProps*/ ctx[17], ['container$', 'surface$'])
+			]));
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty[0] & /*use*/ 2) useActions_action.update.call(null, /*use*/ ctx[1]);
+
+			if (over_slot) {
+				if (over_slot.p && (!current || dirty[0] & /*$$scope*/ 67108864)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						over_slot,
+						over_slot_template,
+						ctx,
+						/*$$scope*/ ctx[26],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[26])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(over_slot_template, /*$$scope*/ ctx[26], dirty, get_over_slot_changes),
+						get_over_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(over_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(over_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t0);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div3);
+			if (default_slot) default_slot.d(detaching);
+			if (if_block) if_block.d();
+			/*div3_binding*/ ctx[32](null);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t3);
+			if (over_slot) over_slot.d(detaching);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+function instance_1($$self, $$props, $$invalidate) {
+	const omit_props_names = [
+		"use","class","open","selection","escapeKeyAction","scrimClickAction","autoStackButtons","fullscreen","container$class","surface$class","isOpen","setOpen","layout","getElement"
+	];
+
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let $aboveFullscreenShown;
+	let $actionButtonsReversed;
+	let { $$slots: slots = {}, $$scope } = $$props;
+	const { FocusTrap } = _material_dom__WEBPACK_IMPORTED_MODULE_4__;
+	const { closest, matches } = _material_dom__WEBPACK_IMPORTED_MODULE_5__;
+	const forwardEvents = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let { use = [] } = $$props;
+	let { class: className = '' } = $$props;
+	let { open = false } = $$props;
+	let { selection = false } = $$props;
+	let { escapeKeyAction = 'close' } = $$props;
+	let { scrimClickAction = 'close' } = $$props;
+	let { autoStackButtons = true } = $$props;
+	let { fullscreen = false } = $$props;
+	let { container$class = '' } = $$props;
+	let { surface$class = '' } = $$props;
+	let element;
+	let instance;
+	let internalClasses = {};
+	let focusTrap;
+	let actionButtonsReversed = (0,svelte_store__WEBPACK_IMPORTED_MODULE_2__.writable)(false);
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, actionButtonsReversed, value => $$invalidate(37, $actionButtonsReversed = value));
+	let addLayoutListener = (0,svelte__WEBPACK_IMPORTED_MODULE_1__.getContext)('SMUI:addLayoutListener');
+	let aboveFullscreen = (0,svelte__WEBPACK_IMPORTED_MODULE_1__.getContext)('SMUI:dialog:aboveFullscreen');
+	let aboveFullscreenShown = (0,svelte__WEBPACK_IMPORTED_MODULE_1__.getContext)('SMUI:dialog:aboveFullscreenShown') || (0,svelte_store__WEBPACK_IMPORTED_MODULE_2__.writable)(false);
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, aboveFullscreenShown, value => $$invalidate(25, $aboveFullscreenShown = value));
+	let removeLayoutListener;
+	let layoutListeners = [];
+
+	let addLayoutListenerFn = listener => {
+		layoutListeners.push(listener);
+
+		return () => {
+			const idx = layoutListeners.indexOf(listener);
+
+			if (idx >= 0) {
+				layoutListeners.splice(idx, 1);
+			}
+		};
+	};
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.setContext)('SMUI:dialog:actions:reversed', actionButtonsReversed);
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.setContext)('SMUI:addLayoutListener', addLayoutListenerFn);
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.setContext)('SMUI:dialog:selection', selection);
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.setContext)('SMUI:dialog:aboveFullscreen', aboveFullscreen || fullscreen);
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.setContext)('SMUI:dialog:aboveFullscreenShown', aboveFullscreenShown);
+
+	if (addLayoutListener) {
+		removeLayoutListener = addLayoutListener(layout);
+	}
+
+	let previousAboveFullscreenShown = $aboveFullscreenShown;
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onMount)(() => {
+		focusTrap = new FocusTrap(element, { initialFocusEl: getInitialFocusEl() });
+
+		$$invalidate(8, instance = new _material_dialog__WEBPACK_IMPORTED_MODULE_6__.MDCDialogFoundation({
+				addBodyClass: className => document.body.classList.add(className),
+				addClass,
+				areButtonsStacked: () => _material_dialog__WEBPACK_IMPORTED_MODULE_7__.areTopsMisaligned(getButtonEls()),
+				clickDefaultButton: () => {
+					const defaultButton = getDefaultButtonEl();
+
+					if (defaultButton) {
+						defaultButton.click();
+					}
+				},
+				eventTargetMatches: (target, selector) => target ? matches(target, selector) : false,
+				getActionFromEvent: evt => {
+					if (!evt.target) {
+						return '';
+					}
+
+					const element = closest(evt.target, '[data-mdc-dialog-action]');
+					return element && element.getAttribute('data-mdc-dialog-action');
+				},
+				getInitialFocusEl,
+				hasClass,
+				isContentScrollable: () => _material_dialog__WEBPACK_IMPORTED_MODULE_7__.isScrollable(getContentEl()),
+				notifyClosed: action => {
+					$$invalidate(0, open = false);
+					(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.dispatch)(getElement(), 'MDCDialog:closed', action ? { action } : {});
+				},
+				notifyClosing: action => (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.dispatch)(getElement(), 'MDCDialog:closing', action ? { action } : {}),
+				notifyOpened: () => (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.dispatch)(getElement(), 'MDCDialog:opened', {}),
+				notifyOpening: () => (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_3__.dispatch)(getElement(), 'MDCDialog:opening', {}),
+				releaseFocus: () => focusTrap.releaseFocus(),
+				removeBodyClass: className => document.body.classList.remove(className),
+				removeClass,
+				reverseButtons: () => {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_store_value)(actionButtonsReversed, $actionButtonsReversed = true, $actionButtonsReversed);
+				},
+				trapFocus: () => focusTrap.trapFocus(),
+				registerContentEventHandler: (evt, handler) => {
+					const content = getContentEl();
+
+					if (content instanceof HTMLElement) {
+						content.addEventListener(evt, handler);
+					}
+				},
+				deregisterContentEventHandler: (evt, handler) => {
+					const content = getContentEl();
+
+					if (content instanceof HTMLElement) {
+						content.removeEventListener(evt, handler);
+					}
+				},
+				isScrollableContentAtTop: () => {
+					return _material_dialog__WEBPACK_IMPORTED_MODULE_7__.isScrollAtTop(getContentEl());
+				},
+				isScrollableContentAtBottom: () => {
+					return _material_dialog__WEBPACK_IMPORTED_MODULE_7__.isScrollAtBottom(getContentEl());
+				},
+				registerWindowEventHandler: (evt, handler) => {
+					window.addEventListener(evt, handler);
+				},
+				deregisterWindowEventHandler: (evt, handler) => {
+					window.removeEventListener(evt, handler);
+				}
+			}));
+
+		instance.init();
+
+		return () => {
+			instance.destroy();
+		};
+	});
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onDestroy)(() => {
+		if (removeLayoutListener) {
+			removeLayoutListener();
+		}
+	});
+
+	function hasClass(className) {
+		return className in internalClasses
+		? internalClasses[className]
+		: getElement().classList.contains(className);
+	}
+
+	function addClass(className) {
+		if (!internalClasses[className]) {
+			$$invalidate(10, internalClasses[className] = true, internalClasses);
+		}
+	}
+
+	function removeClass(className) {
+		if (!(className in internalClasses) || internalClasses[className]) {
+			$$invalidate(10, internalClasses[className] = false, internalClasses);
+		}
+	}
+
+	function getButtonEls() {
+		return [].slice.call(element.querySelectorAll('.mdc-dialog__button'));
+	}
+
+	function getDefaultButtonEl() {
+		return element.querySelector('[data-mdc-dialog-button-default');
+	}
+
+	function getContentEl() {
+		return element.querySelector('.mdc-dialog__content');
+	}
+
+	function getInitialFocusEl() {
+		return element.querySelector('[data-mdc-dialog-initial-focus]');
+	}
+
+	function handleDialogOpening() {
+		if (aboveFullscreen) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_store_value)(aboveFullscreenShown, $aboveFullscreenShown = true, $aboveFullscreenShown);
+		}
+
+		requestAnimationFrame(() => {
+			layoutListeners.forEach(listener => listener());
+		});
+	}
+
+	function handleDialogOpened() {
+		layoutListeners.forEach(listener => listener());
+	}
+
+	function handleDialogClosed() {
+		if (aboveFullscreen) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_store_value)(aboveFullscreenShown, $aboveFullscreenShown = false, $aboveFullscreenShown);
+		}
+	}
+
+	function isOpen() {
+		return open;
+	}
+
+	function setOpen(value) {
+		$$invalidate(0, open = value);
+	}
+
+	function layout() {
+		return instance.layout();
+	}
+
+	function getElement() {
+		return element;
+	}
+
+	const resize_handler = () => open && instance && instance.layout();
+	const orientationchange_handler = () => open && instance && instance.layout();
+	const keydown_handler = event => open && instance && instance.handleDocumentKeydown(event);
+	const transitionend_handler = () => instance && instance.handleSurfaceScrimTransitionEnd();
+
+	function div3_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(9, element);
+		});
+	}
+
+	const click_handler = event => instance && instance.handleClick(event);
+	const keydown_handler_1 = event => instance && instance.handleKeydown(event);
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(17, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(1, use = $$new_props.use);
+		if ('class' in $$new_props) $$invalidate(2, className = $$new_props.class);
+		if ('open' in $$new_props) $$invalidate(0, open = $$new_props.open);
+		if ('selection' in $$new_props) $$invalidate(3, selection = $$new_props.selection);
+		if ('escapeKeyAction' in $$new_props) $$invalidate(18, escapeKeyAction = $$new_props.escapeKeyAction);
+		if ('scrimClickAction' in $$new_props) $$invalidate(19, scrimClickAction = $$new_props.scrimClickAction);
+		if ('autoStackButtons' in $$new_props) $$invalidate(4, autoStackButtons = $$new_props.autoStackButtons);
+		if ('fullscreen' in $$new_props) $$invalidate(5, fullscreen = $$new_props.fullscreen);
+		if ('container$class' in $$new_props) $$invalidate(6, container$class = $$new_props.container$class);
+		if ('surface$class' in $$new_props) $$invalidate(7, surface$class = $$new_props.surface$class);
+		if ('$$scope' in $$new_props) $$invalidate(26, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty[0] & /*instance, escapeKeyAction*/ 262400) {
+			$: if (instance && instance.getEscapeKeyAction() !== escapeKeyAction) {
+				instance.setEscapeKeyAction(escapeKeyAction);
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*instance, scrimClickAction*/ 524544) {
+			$: if (instance && instance.getScrimClickAction() !== scrimClickAction) {
+				instance.setScrimClickAction(scrimClickAction);
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*instance, autoStackButtons*/ 272) {
+			$: if (instance && instance.getAutoStackButtons() !== autoStackButtons) {
+				instance.setAutoStackButtons(autoStackButtons);
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*autoStackButtons*/ 16) {
+			$: if (!autoStackButtons) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_store_value)(actionButtonsReversed, $actionButtonsReversed = true, $actionButtonsReversed);
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*instance, open*/ 257) {
+			$: if (instance && instance.isOpen() !== open) {
+				if (open) {
+					instance.open({
+						isAboveFullscreenDialog: !!aboveFullscreen
+					});
+				} else {
+					instance.close();
+				}
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*fullscreen, instance, previousAboveFullscreenShown, $aboveFullscreenShown*/ 50331936) {
+			$: if (fullscreen && instance && previousAboveFullscreenShown !== $aboveFullscreenShown) {
+				$$invalidate(24, previousAboveFullscreenShown = $aboveFullscreenShown);
+
+				if ($aboveFullscreenShown) {
+					instance.showSurfaceScrim();
+				} else {
+					instance.hideSurfaceScrim();
+				}
+			}
+		}
+	};
+
+	return [
+		open,
+		use,
+		className,
+		selection,
+		autoStackButtons,
+		fullscreen,
+		container$class,
+		surface$class,
+		instance,
+		element,
+		internalClasses,
+		forwardEvents,
+		actionButtonsReversed,
+		aboveFullscreenShown,
+		handleDialogOpening,
+		handleDialogOpened,
+		handleDialogClosed,
+		$$restProps,
+		escapeKeyAction,
+		scrimClickAction,
+		isOpen,
+		setOpen,
+		layout,
+		getElement,
+		previousAboveFullscreenShown,
+		$aboveFullscreenShown,
+		$$scope,
+		slots,
+		resize_handler,
+		orientationchange_handler,
+		keydown_handler,
+		transitionend_handler,
+		div3_binding,
+		click_handler,
+		keydown_handler_1
+	];
+}
+
+class Dialog extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(
+			this,
+			options,
+			instance_1,
+			create_fragment,
+			svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal,
+			{
+				use: 1,
+				class: 2,
+				open: 0,
+				selection: 3,
+				escapeKeyAction: 18,
+				scrimClickAction: 19,
+				autoStackButtons: 4,
+				fullscreen: 5,
+				container$class: 6,
+				surface$class: 7,
+				isOpen: 20,
+				setOpen: 21,
+				layout: 22,
+				getElement: 23
+			},
+			null,
+			[-1, -1]
+		);
+	}
+
+	get isOpen() {
+		return this.$$.ctx[20];
+	}
+
+	get setOpen() {
+		return this.$$.ctx[21];
+	}
+
+	get layout() {
+		return this.$$.ctx[22];
+	}
+
+	get getElement() {
+		return this.$$.ctx[23];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dialog);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/floating-label/FloatingLabel.svelte":
+/*!****************************************************************!*\
+  !*** ./node_modules/@smui/floating-label/FloatingLabel.svelte ***!
+  \****************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _material_floating_label__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material/floating-label */ "./node_modules/@material/floating-label/foundation.js");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\floating-label\FloatingLabel.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+
+
+
+function create_else_block(ctx) {
+	let label;
+	let label_class_value;
+	let label_style_value;
+	let label_for_value;
+	let useActions_action;
+	let forwardEvents_action;
+	let current;
+	let mounted;
+	let dispose;
+	const default_slot_template = /*#slots*/ ctx[22].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[21], null);
+
+	let label_levels = [
+		{
+			class: label_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[3]]: true,
+				'mdc-floating-label': true,
+				'mdc-floating-label--float-above': /*floatAbove*/ ctx[0],
+				'mdc-floating-label--required': /*required*/ ctx[1],
+				.../*internalClasses*/ ctx[8]
+			})
+		},
+		{
+			style: label_style_value = Object.entries(/*internalStyles*/ ctx[9]).map(func_1).concat([/*style*/ ctx[4]]).join(' ')
+		},
+		{
+			for: label_for_value = /*forId*/ ctx[5] || (/*inputProps*/ ctx[11]
+			? /*inputProps*/ ctx[11].id
+			: null)
+		},
+		/*$$restProps*/ ctx[12]
+	];
+
+	let label_data = {};
+
+	for (let i = 0; i < label_levels.length; i += 1) {
+		label_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(label_data, label_levels[i]);
+	}
+
+	return {
+		c() {
+			label = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("label");
+			if (default_slot) default_slot.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(label, label_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, label, anchor);
+
+			if (default_slot) {
+				default_slot.m(label, null);
+			}
+
+			/*label_binding*/ ctx[24](label);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, label, /*use*/ ctx[2])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[10].call(null, label))
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 2097152)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[21],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[21])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[21], dirty, null),
+						null
+					);
+				}
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(label, label_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(label_levels, [
+				(!current || dirty & /*className, floatAbove, required, internalClasses*/ 267 && label_class_value !== (label_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[3]]: true,
+					'mdc-floating-label': true,
+					'mdc-floating-label--float-above': /*floatAbove*/ ctx[0],
+					'mdc-floating-label--required': /*required*/ ctx[1],
+					.../*internalClasses*/ ctx[8]
+				}))) && { class: label_class_value },
+				(!current || dirty & /*internalStyles, style*/ 528 && label_style_value !== (label_style_value = Object.entries(/*internalStyles*/ ctx[9]).map(func_1).concat([/*style*/ ctx[4]]).join(' '))) && { style: label_style_value },
+				(!current || dirty & /*forId*/ 32 && label_for_value !== (label_for_value = /*forId*/ ctx[5] || (/*inputProps*/ ctx[11]
+				? /*inputProps*/ ctx[11].id
+				: null))) && { for: label_for_value },
+				dirty & /*$$restProps*/ 4096 && /*$$restProps*/ ctx[12]
+			]));
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 4) useActions_action.update.call(null, /*use*/ ctx[2]);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(label);
+			if (default_slot) default_slot.d(detaching);
+			/*label_binding*/ ctx[24](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+// (1:0) {#if wrapped}
+function create_if_block(ctx) {
+	let span;
+	let span_class_value;
+	let span_style_value;
+	let useActions_action;
+	let forwardEvents_action;
+	let current;
+	let mounted;
+	let dispose;
+	const default_slot_template = /*#slots*/ ctx[22].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[21], null);
+
+	let span_levels = [
+		{
+			class: span_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[3]]: true,
+				'mdc-floating-label': true,
+				'mdc-floating-label--float-above': /*floatAbove*/ ctx[0],
+				'mdc-floating-label--required': /*required*/ ctx[1],
+				.../*internalClasses*/ ctx[8]
+			})
+		},
+		{
+			style: span_style_value = Object.entries(/*internalStyles*/ ctx[9]).map(func).concat([/*style*/ ctx[4]]).join(' ')
+		},
+		/*$$restProps*/ ctx[12]
+	];
+
+	let span_data = {};
+
+	for (let i = 0; i < span_levels.length; i += 1) {
+		span_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(span_data, span_levels[i]);
+	}
+
+	return {
+		c() {
+			span = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("span");
+			if (default_slot) default_slot.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(span, span_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, span, anchor);
+
+			if (default_slot) {
+				default_slot.m(span, null);
+			}
+
+			/*span_binding*/ ctx[23](span);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, span, /*use*/ ctx[2])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[10].call(null, span))
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 2097152)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[21],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[21])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[21], dirty, null),
+						null
+					);
+				}
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(span, span_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(span_levels, [
+				(!current || dirty & /*className, floatAbove, required, internalClasses*/ 267 && span_class_value !== (span_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[3]]: true,
+					'mdc-floating-label': true,
+					'mdc-floating-label--float-above': /*floatAbove*/ ctx[0],
+					'mdc-floating-label--required': /*required*/ ctx[1],
+					.../*internalClasses*/ ctx[8]
+				}))) && { class: span_class_value },
+				(!current || dirty & /*internalStyles, style*/ 528 && span_style_value !== (span_style_value = Object.entries(/*internalStyles*/ ctx[9]).map(func).concat([/*style*/ ctx[4]]).join(' '))) && { style: span_style_value },
+				dirty & /*$$restProps*/ 4096 && /*$$restProps*/ ctx[12]
+			]));
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 4) useActions_action.update.call(null, /*use*/ ctx[2]);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(span);
+			if (default_slot) default_slot.d(detaching);
+			/*span_binding*/ ctx[23](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let current_block_type_index;
+	let if_block;
+	let if_block_anchor;
+	let current;
+	const if_block_creators = [create_if_block, create_else_block];
+	const if_blocks = [];
+
+	function select_block_type(ctx, dirty) {
+		if (/*wrapped*/ ctx[6]) return 0;
+		return 1;
+	}
+
+	current_block_type_index = select_block_type(ctx, -1);
+	if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+
+	return {
+		c() {
+			if_block.c();
+			if_block_anchor = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.empty)();
+		},
+		m(target, anchor) {
+			if_blocks[current_block_type_index].m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, if_block_anchor, anchor);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			let previous_block_index = current_block_type_index;
+			current_block_type_index = select_block_type(ctx, dirty);
+
+			if (current_block_type_index === previous_block_index) {
+				if_blocks[current_block_type_index].p(ctx, dirty);
+			} else {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_blocks[previous_block_index], 1, 1, () => {
+					if_blocks[previous_block_index] = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+				if_block = if_blocks[current_block_type_index];
+
+				if (!if_block) {
+					if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+					if_block.c();
+				} else {
+					if_block.p(ctx, dirty);
+				}
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+				if_block.m(if_block_anchor.parentNode, if_block_anchor);
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if_blocks[current_block_type_index].d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(if_block_anchor);
+		}
+	};
+}
+
+const func = ([name, value]) => `${name}: ${value};`;
+const func_1 = ([name, value]) => `${name}: ${value};`;
+
+function instance_1($$self, $$props, $$invalidate) {
+	const omit_props_names = [
+		"use","class","style","for","floatAbove","required","wrapped","shake","float","setRequired","getWidth","getElement"
+	];
+
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	const forwardEvents = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let { use = [] } = $$props;
+	let { class: className = '' } = $$props;
+	let { style = '' } = $$props;
+	let { for: forId = null } = $$props;
+	let { floatAbove = false } = $$props;
+	let { required = false } = $$props;
+	let { wrapped = false } = $$props;
+	let element;
+	let instance;
+	let internalClasses = {};
+	let internalStyles = {};
+	let inputProps = (0,svelte__WEBPACK_IMPORTED_MODULE_1__.getContext)('SMUI:generic:input:props') || {};
+	let previousFloatAbove = floatAbove;
+	let previousRequired = required;
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onMount)(() => {
+		$$invalidate(18, instance = new _material_floating_label__WEBPACK_IMPORTED_MODULE_3__.MDCFloatingLabelFoundation({
+				addClass,
+				removeClass,
+				getWidth: () => {
+					const el = getElement();
+					const clone = el.cloneNode(true);
+					el.parentNode.appendChild(clone);
+					clone.classList.add('smui-floating-label--remove-transition');
+					clone.classList.add('smui-floating-label--force-size');
+					clone.classList.remove('mdc-floating-label--float-above');
+					const scrollWidth = clone.scrollWidth;
+					el.parentNode.removeChild(clone);
+					return scrollWidth;
+				},
+				registerInteractionHandler: (evtType, handler) => getElement().addEventListener(evtType, handler),
+				deregisterInteractionHandler: (evtType, handler) => getElement().removeEventListener(evtType, handler)
+			}));
+
+		const accessor = {
+			get element() {
+				return getElement();
+			},
+			addStyle,
+			removeStyle
+		};
+
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.dispatch)(element, 'SMUI:floating-label:mount', accessor);
+		instance.init();
+
+		return () => {
+			(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.dispatch)(element, 'SMUI:floating-label:unmount', accessor);
+			instance.destroy();
+		};
+	});
+
+	function addClass(className) {
+		if (!internalClasses[className]) {
+			$$invalidate(8, internalClasses[className] = true, internalClasses);
+		}
+	}
+
+	function removeClass(className) {
+		if (!(className in internalClasses) || internalClasses[className]) {
+			$$invalidate(8, internalClasses[className] = false, internalClasses);
+		}
+	}
+
+	function addStyle(name, value) {
+		if (internalStyles[name] != value) {
+			if (value === '' || value == null) {
+				delete internalStyles[name];
+				$$invalidate(9, internalStyles);
+			} else {
+				$$invalidate(9, internalStyles[name] = value, internalStyles);
+			}
+		}
+	}
+
+	function removeStyle(name) {
+		if (name in internalStyles) {
+			delete internalStyles[name];
+			$$invalidate(9, internalStyles);
+		}
+	}
+
+	function shake(shouldShake) {
+		instance.shake(shouldShake);
+	}
+
+	function float(shouldFloat) {
+		$$invalidate(0, floatAbove = shouldFloat);
+	}
+
+	function setRequired(isRequired) {
+		$$invalidate(1, required = isRequired);
+	}
+
+	function getWidth() {
+		return instance.getWidth();
+	}
+
+	function getElement() {
+		return element;
+	}
+
+	function span_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(7, element);
+		});
+	}
+
+	function label_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(7, element);
+		});
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(12, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(2, use = $$new_props.use);
+		if ('class' in $$new_props) $$invalidate(3, className = $$new_props.class);
+		if ('style' in $$new_props) $$invalidate(4, style = $$new_props.style);
+		if ('for' in $$new_props) $$invalidate(5, forId = $$new_props.for);
+		if ('floatAbove' in $$new_props) $$invalidate(0, floatAbove = $$new_props.floatAbove);
+		if ('required' in $$new_props) $$invalidate(1, required = $$new_props.required);
+		if ('wrapped' in $$new_props) $$invalidate(6, wrapped = $$new_props.wrapped);
+		if ('$$scope' in $$new_props) $$invalidate(21, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*previousFloatAbove, floatAbove, instance*/ 786433) {
+			$: if (previousFloatAbove !== floatAbove) {
+				$$invalidate(19, previousFloatAbove = floatAbove);
+				instance.float(floatAbove);
+			}
+		}
+
+		if ($$self.$$.dirty & /*previousRequired, required, instance*/ 1310722) {
+			$: if (previousRequired !== required) {
+				$$invalidate(20, previousRequired = required);
+				instance.setRequired(required);
+			}
+		}
+	};
+
+	return [
+		floatAbove,
+		required,
+		use,
+		className,
+		style,
+		forId,
+		wrapped,
+		element,
+		internalClasses,
+		internalStyles,
+		forwardEvents,
+		inputProps,
+		$$restProps,
+		shake,
+		float,
+		setRequired,
+		getWidth,
+		getElement,
+		instance,
+		previousFloatAbove,
+		previousRequired,
+		$$scope,
+		slots,
+		span_binding,
+		label_binding
+	];
+}
+
+class FloatingLabel extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance_1, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			use: 2,
+			class: 3,
+			style: 4,
+			for: 5,
+			floatAbove: 0,
+			required: 1,
+			wrapped: 6,
+			shake: 13,
+			float: 14,
+			setRequired: 15,
+			getWidth: 16,
+			getElement: 17
+		});
+	}
+
+	get shake() {
+		return this.$$.ctx[13];
+	}
+
+	get float() {
+		return this.$$.ctx[14];
+	}
+
+	get setRequired() {
+		return this.$$.ctx[15];
+	}
+
+	get getWidth() {
+		return this.$$.ctx[16];
+	}
+
+	get getElement() {
+		return this.$$.ctx[17];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FloatingLabel);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/line-ripple/LineRipple.svelte":
+/*!**********************************************************!*\
+  !*** ./node_modules/@smui/line-ripple/LineRipple.svelte ***!
+  \**********************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _material_line_ripple__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material/line-ripple */ "./node_modules/@material/line-ripple/foundation.js");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\line-ripple\LineRipple.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+
+
+
+function create_fragment(ctx) {
+	let div;
+	let div_class_value;
+	let div_style_value;
+	let useActions_action;
+	let forwardEvents_action;
+	let mounted;
+	let dispose;
+
+	let div_levels = [
+		{
+			class: div_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[1]]: true,
+				'mdc-line-ripple': true,
+				'mdc-line-ripple--active': /*active*/ ctx[3],
+				.../*internalClasses*/ ctx[5]
+			})
+		},
+		{
+			style: div_style_value = Object.entries(/*internalStyles*/ ctx[6]).map(func).concat([/*style*/ ctx[2]]).join(' ')
+		},
+		/*$$restProps*/ ctx[8]
+	];
+
+	let div_data = {};
+
+	for (let i = 0; i < div_levels.length; i += 1) {
+		div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div_data, div_levels[i]);
+	}
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+			/*div_binding*/ ctx[13](div);
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, div, /*use*/ ctx[0])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[7].call(null, div))
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div_levels, [
+				dirty & /*className, active, internalClasses*/ 42 && div_class_value !== (div_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[1]]: true,
+					'mdc-line-ripple': true,
+					'mdc-line-ripple--active': /*active*/ ctx[3],
+					.../*internalClasses*/ ctx[5]
+				})) && { class: div_class_value },
+				dirty & /*internalStyles, style*/ 68 && div_style_value !== (div_style_value = Object.entries(/*internalStyles*/ ctx[6]).map(func).concat([/*style*/ ctx[2]]).join(' ')) && { style: div_style_value },
+				dirty & /*$$restProps*/ 256 && /*$$restProps*/ ctx[8]
+			]));
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 1) useActions_action.update.call(null, /*use*/ ctx[0]);
+		},
+		i: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		o: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			/*div_binding*/ ctx[13](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+const func = ([name, value]) => `${name}: ${value};`;
+
+function instance_1($$self, $$props, $$invalidate) {
+	const omit_props_names = [
+		"use","class","style","active","activate","deactivate","setRippleCenter","getElement"
+	];
+
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	const forwardEvents = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let { use = [] } = $$props;
+	let { class: className = '' } = $$props;
+	let { style = '' } = $$props;
+	let { active = false } = $$props;
+	let element;
+	let instance;
+	let internalClasses = {};
+	let internalStyles = {};
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onMount)(() => {
+		instance = new _material_line_ripple__WEBPACK_IMPORTED_MODULE_3__.MDCLineRippleFoundation({
+				addClass,
+				removeClass,
+				hasClass,
+				setStyle: addStyle,
+				registerEventHandler: (evtType, handler) => getElement().addEventListener(evtType, handler),
+				deregisterEventHandler: (evtType, handler) => getElement().removeEventListener(evtType, handler)
+			});
+
+		instance.init();
+
+		return () => {
+			instance.destroy();
+		};
+	});
+
+	function hasClass(className) {
+		return className in internalClasses
+		? internalClasses[className]
+		: getElement().classList.contains(className);
+	}
+
+	function addClass(className) {
+		if (!internalClasses[className]) {
+			$$invalidate(5, internalClasses[className] = true, internalClasses);
+		}
+	}
+
+	function removeClass(className) {
+		if (!(className in internalClasses) || internalClasses[className]) {
+			$$invalidate(5, internalClasses[className] = false, internalClasses);
+		}
+	}
+
+	function addStyle(name, value) {
+		if (internalStyles[name] != value) {
+			if (value === '' || value == null) {
+				delete internalStyles[name];
+				$$invalidate(6, internalStyles);
+			} else {
+				$$invalidate(6, internalStyles[name] = value, internalStyles);
+			}
+		}
+	}
+
+	function activate() {
+		instance.activate();
+	}
+
+	function deactivate() {
+		instance.deactivate();
+	}
+
+	function setRippleCenter(xCoordinate) {
+		instance.setRippleCenter(xCoordinate);
+	}
+
+	function getElement() {
+		return element;
+	}
+
+	function div_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(4, element);
+		});
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(8, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(0, use = $$new_props.use);
+		if ('class' in $$new_props) $$invalidate(1, className = $$new_props.class);
+		if ('style' in $$new_props) $$invalidate(2, style = $$new_props.style);
+		if ('active' in $$new_props) $$invalidate(3, active = $$new_props.active);
+	};
+
+	return [
+		use,
+		className,
+		style,
+		active,
+		element,
+		internalClasses,
+		internalStyles,
+		forwardEvents,
+		$$restProps,
+		activate,
+		deactivate,
+		setRippleCenter,
+		getElement,
+		div_binding
+	];
+}
+
+class LineRipple extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance_1, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			use: 0,
+			class: 1,
+			style: 2,
+			active: 3,
+			activate: 9,
+			deactivate: 10,
+			setRippleCenter: 11,
+			getElement: 12
+		});
+	}
+
+	get activate() {
+		return this.$$.ctx[9];
+	}
+
+	get deactivate() {
+		return this.$$.ctx[10];
+	}
+
+	get setRippleCenter() {
+		return this.$$.ctx[11];
+	}
+
+	get getElement() {
+		return this.$$.ctx[12];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LineRipple);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/notched-outline/NotchedOutline.svelte":
+/*!******************************************************************!*\
+  !*** ./node_modules/@smui/notched-outline/NotchedOutline.svelte ***!
+  \******************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _material_notched_outline__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material/notched-outline */ "./node_modules/@material/notched-outline/foundation.js");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\notched-outline\NotchedOutline.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+
+
+
+function create_if_block(ctx) {
+	let div;
+	let div_style_value;
+	let current;
+	const default_slot_template = /*#slots*/ ctx[14].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[13], null);
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			if (default_slot) default_slot.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", "mdc-notched-outline__notch");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "style", div_style_value = Object.entries(/*notchStyles*/ ctx[7]).map(func).join(' '));
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+
+			if (default_slot) {
+				default_slot.m(div, null);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 8192)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[13],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[13])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[13], dirty, null),
+						null
+					);
+				}
+			}
+
+			if (!current || dirty & /*notchStyles*/ 128 && div_style_value !== (div_style_value = Object.entries(/*notchStyles*/ ctx[7]).map(func).join(' '))) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "style", div_style_value);
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			if (default_slot) default_slot.d(detaching);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let div2;
+	let div0;
+	let t0;
+	let t1;
+	let div1;
+	let div2_class_value;
+	let useActions_action;
+	let forwardEvents_action;
+	let current;
+	let mounted;
+	let dispose;
+	let if_block = !/*noLabel*/ ctx[3] && create_if_block(ctx);
+
+	let div2_levels = [
+		{
+			class: div2_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[1]]: true,
+				'mdc-notched-outline': true,
+				'mdc-notched-outline--notched': /*notched*/ ctx[2],
+				'mdc-notched-outline--no-label': /*noLabel*/ ctx[3],
+				.../*internalClasses*/ ctx[6]
+			})
+		},
+		/*$$restProps*/ ctx[9]
+	];
+
+	let div2_data = {};
+
+	for (let i = 0; i < div2_levels.length; i += 1) {
+		div2_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div2_data, div2_levels[i]);
+	}
+
+	return {
+		c() {
+			div2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block) if_block.c();
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div0, "class", "mdc-notched-outline__leading");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div1, "class", "mdc-notched-outline__trailing");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div2, div2_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div2, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div2, div0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div2, t0);
+			if (if_block) if_block.m(div2, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div2, t1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div2, div1);
+			/*div2_binding*/ ctx[15](div2);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, div2, /*use*/ ctx[0])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[8].call(null, div2)),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div2, "SMUI:floating-label:mount", /*SMUI_floating_label_mount_handler*/ ctx[16]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div2, "SMUI:floating-label:unmount", /*SMUI_floating_label_unmount_handler*/ ctx[17])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			if (!/*noLabel*/ ctx[3]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+
+					if (dirty & /*noLabel*/ 8) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					}
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					if_block.m(div2, t1);
+				}
+			} else if (if_block) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block, 1, 1, () => {
+					if_block = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div2, div2_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div2_levels, [
+				(!current || dirty & /*className, notched, noLabel, internalClasses*/ 78 && div2_class_value !== (div2_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[1]]: true,
+					'mdc-notched-outline': true,
+					'mdc-notched-outline--notched': /*notched*/ ctx[2],
+					'mdc-notched-outline--no-label': /*noLabel*/ ctx[3],
+					.../*internalClasses*/ ctx[6]
+				}))) && { class: div2_class_value },
+				dirty & /*$$restProps*/ 512 && /*$$restProps*/ ctx[9]
+			]));
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 1) useActions_action.update.call(null, /*use*/ ctx[0]);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div2);
+			if (if_block) if_block.d();
+			/*div2_binding*/ ctx[15](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+const func = ([name, value]) => `${name}: ${value};`;
+
+function instance_1($$self, $$props, $$invalidate) {
+	const omit_props_names = ["use","class","notched","noLabel","notch","closeNotch","getElement"];
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	const forwardEvents = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let { use = [] } = $$props;
+	let { class: className = '' } = $$props;
+	let { notched = false } = $$props;
+	let { noLabel = false } = $$props;
+	let element;
+	let instance;
+	let floatingLabel;
+	let internalClasses = {};
+	let notchStyles = {};
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onMount)(() => {
+		instance = new _material_notched_outline__WEBPACK_IMPORTED_MODULE_3__.MDCNotchedOutlineFoundation({
+				addClass,
+				removeClass,
+				setNotchWidthProperty: width => addNotchStyle('width', width + 'px'),
+				removeNotchWidthProperty: () => removeNotchStyle('width')
+			});
+
+		instance.init();
+
+		return () => {
+			instance.destroy();
+		};
+	});
+
+	function addClass(className) {
+		if (!internalClasses[className]) {
+			$$invalidate(6, internalClasses[className] = true, internalClasses);
+		}
+	}
+
+	function removeClass(className) {
+		if (!(className in internalClasses) || internalClasses[className]) {
+			$$invalidate(6, internalClasses[className] = false, internalClasses);
+		}
+	}
+
+	function addNotchStyle(name, value) {
+		if (notchStyles[name] != value) {
+			if (value === '' || value == null) {
+				delete notchStyles[name];
+				$$invalidate(7, notchStyles);
+			} else {
+				$$invalidate(7, notchStyles[name] = value, notchStyles);
+			}
+		}
+	}
+
+	function removeNotchStyle(name) {
+		if (name in notchStyles) {
+			delete notchStyles[name];
+			$$invalidate(7, notchStyles);
+		}
+	}
+
+	function notch(notchWidth) {
+		instance.notch(notchWidth);
+	}
+
+	function closeNotch() {
+		instance.closeNotch();
+	}
+
+	function getElement() {
+		return element;
+	}
+
+	function div2_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(5, element);
+		});
+	}
+
+	const SMUI_floating_label_mount_handler = event => $$invalidate(4, floatingLabel = event.detail);
+	const SMUI_floating_label_unmount_handler = () => $$invalidate(4, floatingLabel = undefined);
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(9, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(0, use = $$new_props.use);
+		if ('class' in $$new_props) $$invalidate(1, className = $$new_props.class);
+		if ('notched' in $$new_props) $$invalidate(2, notched = $$new_props.notched);
+		if ('noLabel' in $$new_props) $$invalidate(3, noLabel = $$new_props.noLabel);
+		if ('$$scope' in $$new_props) $$invalidate(13, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*floatingLabel*/ 16) {
+			$: if (floatingLabel) {
+				floatingLabel.addStyle('transition-duration', '0s');
+				addClass('mdc-notched-outline--upgraded');
+
+				requestAnimationFrame(() => {
+					floatingLabel.removeStyle('transition-duration');
+				});
+			} else {
+				removeClass('mdc-notched-outline--upgraded');
+			}
+		}
+	};
+
+	return [
+		use,
+		className,
+		notched,
+		noLabel,
+		floatingLabel,
+		element,
+		internalClasses,
+		notchStyles,
+		forwardEvents,
+		$$restProps,
+		notch,
+		closeNotch,
+		getElement,
+		$$scope,
+		slots,
+		div2_binding,
+		SMUI_floating_label_mount_handler,
+		SMUI_floating_label_unmount_handler
+	];
+}
+
+class NotchedOutline extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance_1, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			use: 0,
+			class: 1,
+			notched: 2,
+			noLabel: 3,
+			notch: 10,
+			closeNotch: 11,
+			getElement: 12
+		});
+	}
+
+	get notch() {
+		return this.$$.ctx[10];
+	}
+
+	get closeNotch() {
+		return this.$$.ctx[11];
+	}
+
+	get getElement() {
+		return this.$$.ctx[12];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotchedOutline);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/textfield/Input.svelte":
+/*!***************************************************!*\
+  !*** ./node_modules/@smui/textfield/Input.svelte ***!
+  \***************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\textfield\Input.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+
+
+function create_fragment(ctx) {
+	let input;
+	let input_class_value;
+	let useActions_action;
+	let forwardEvents_action;
+	let mounted;
+	let dispose;
+
+	let input_levels = [
+		{
+			class: input_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[1]]: true,
+				'mdc-text-field__input': true
+			})
+		},
+		{ type: /*type*/ ctx[2] },
+		{ placeholder: /*placeholder*/ ctx[3] },
+		/*valueProp*/ ctx[4],
+		/*internalAttrs*/ ctx[6],
+		/*$$restProps*/ ctx[10]
+	];
+
+	let input_data = {};
+
+	for (let i = 0; i < input_levels.length; i += 1) {
+		input_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(input_data, input_levels[i]);
+	}
+
+	return {
+		c() {
+			input = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("input");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(input, input_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, input, anchor);
+			if (input.autofocus) input.focus();
+			/*input_binding*/ ctx[21](input);
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, input, /*use*/ ctx[0])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[7].call(null, input)),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(input, "change", /*change_handler*/ ctx[22]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(input, "input", /*input_handler*/ ctx[23]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(input, "change", /*changeHandler*/ ctx[9])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(input, input_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(input_levels, [
+				dirty & /*className*/ 2 && input_class_value !== (input_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[1]]: true,
+					'mdc-text-field__input': true
+				})) && { class: input_class_value },
+				dirty & /*type*/ 4 && { type: /*type*/ ctx[2] },
+				dirty & /*placeholder*/ 8 && { placeholder: /*placeholder*/ ctx[3] },
+				dirty & /*valueProp*/ 16 && /*valueProp*/ ctx[4],
+				dirty & /*internalAttrs*/ 64 && /*internalAttrs*/ ctx[6],
+				dirty & /*$$restProps*/ 1024 && /*$$restProps*/ ctx[10]
+			]));
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 1) useActions_action.update.call(null, /*use*/ ctx[0]);
+		},
+		i: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		o: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(input);
+			/*input_binding*/ ctx[21](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+function toNumber(value) {
+	if (value === '') {
+		const nan = new Number(Number.NaN);
+		nan.length = 0;
+		return nan;
+	}
+
+	return +value;
+}
+
+function instance($$self, $$props, $$invalidate) {
+	const omit_props_names = [
+		"use","class","type","placeholder","value","files","dirty","invalid","updateInvalid","getAttr","addAttr","removeAttr","focus","getElement"
+	];
+
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	const forwardEvents = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let { use = [] } = $$props;
+	let { class: className = '' } = $$props;
+	let { type = 'text' } = $$props;
+	let { placeholder = ' ' } = $$props;
+	let { value = '' } = $$props;
+	let { files = undefined } = $$props;
+	let { dirty = false } = $$props;
+	let { invalid = false } = $$props;
+	let { updateInvalid = true } = $$props;
+	let element;
+	let internalAttrs = {};
+	let valueProp = {};
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onMount)(() => {
+		if (updateInvalid) {
+			$$invalidate(14, invalid = element.matches(':invalid'));
+		}
+	});
+
+	function valueUpdater(e) {
+		switch (type) {
+			case 'number':
+			case 'range':
+				$$invalidate(11, value = toNumber(e.target.value));
+				break;
+			case 'file':
+				$$invalidate(12, files = e.target.files);
+			default:
+				$$invalidate(11, value = e.target.value);
+				break;
+		}
+	}
+
+	function changeHandler(e) {
+		$$invalidate(13, dirty = true);
+
+		if (updateInvalid) {
+			$$invalidate(14, invalid = element.matches(':invalid'));
+		}
+	}
+
+	function getAttr(name) {
+		return name in internalAttrs
+		? internalAttrs[name]
+		: getElement().getAttribute(name);
+	}
+
+	function addAttr(name, value) {
+		if (internalAttrs[name] !== value) {
+			$$invalidate(6, internalAttrs[name] = value, internalAttrs);
+		}
+	}
+
+	function removeAttr(name) {
+		if (!(name in internalAttrs) || internalAttrs[name] != null) {
+			$$invalidate(6, internalAttrs[name] = undefined, internalAttrs);
+		}
+	}
+
+	function focus() {
+		getElement().focus();
+	}
+
+	function getElement() {
+		return element;
+	}
+
+	function input_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(5, element);
+		});
+	}
+
+	const change_handler = e => (type === 'file' || type === 'range') && valueUpdater(e);
+	const input_handler = e => type !== 'file' && valueUpdater(e);
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(10, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(0, use = $$new_props.use);
+		if ('class' in $$new_props) $$invalidate(1, className = $$new_props.class);
+		if ('type' in $$new_props) $$invalidate(2, type = $$new_props.type);
+		if ('placeholder' in $$new_props) $$invalidate(3, placeholder = $$new_props.placeholder);
+		if ('value' in $$new_props) $$invalidate(11, value = $$new_props.value);
+		if ('files' in $$new_props) $$invalidate(12, files = $$new_props.files);
+		if ('dirty' in $$new_props) $$invalidate(13, dirty = $$new_props.dirty);
+		if ('invalid' in $$new_props) $$invalidate(14, invalid = $$new_props.invalid);
+		if ('updateInvalid' in $$new_props) $$invalidate(15, updateInvalid = $$new_props.updateInvalid);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*type, valueProp, value*/ 2068) {
+			$: if (type === 'file') {
+				delete valueProp.value;
+				(($$invalidate(4, valueProp), $$invalidate(2, type)), $$invalidate(11, value));
+			} else {
+				$$invalidate(4, valueProp.value = value == null ? '' : value, valueProp);
+			}
+		}
+	};
+
+	return [
+		use,
+		className,
+		type,
+		placeholder,
+		valueProp,
+		element,
+		internalAttrs,
+		forwardEvents,
+		valueUpdater,
+		changeHandler,
+		$$restProps,
+		value,
+		files,
+		dirty,
+		invalid,
+		updateInvalid,
+		getAttr,
+		addAttr,
+		removeAttr,
+		focus,
+		getElement,
+		input_binding,
+		change_handler,
+		input_handler
+	];
+}
+
+class Input extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			use: 0,
+			class: 1,
+			type: 2,
+			placeholder: 3,
+			value: 11,
+			files: 12,
+			dirty: 13,
+			invalid: 14,
+			updateInvalid: 15,
+			getAttr: 16,
+			addAttr: 17,
+			removeAttr: 18,
+			focus: 19,
+			getElement: 20
+		});
+	}
+
+	get getAttr() {
+		return this.$$.ctx[16];
+	}
+
+	get addAttr() {
+		return this.$$.ctx[17];
+	}
+
+	get removeAttr() {
+		return this.$$.ctx[18];
+	}
+
+	get focus() {
+		return this.$$.ctx[19];
+	}
+
+	get getElement() {
+		return this.$$.ctx[20];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Input);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/textfield/Textarea.svelte":
+/*!******************************************************!*\
+  !*** ./node_modules/@smui/textfield/Textarea.svelte ***!
+  \******************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\textfield\Textarea.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+
+
+function create_fragment(ctx) {
+	let textarea;
+	let textarea_class_value;
+	let textarea_style_value;
+	let useActions_action;
+	let forwardEvents_action;
+	let mounted;
+	let dispose;
+
+	let textarea_levels = [
+		{
+			class: textarea_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[2]]: true,
+				'mdc-text-field__input': true
+			})
+		},
+		{
+			style: textarea_style_value = `${/*resizable*/ ctx[4] ? '' : 'resize: none; '}${/*style*/ ctx[3]}`
+		},
+		/*internalAttrs*/ ctx[6],
+		/*$$restProps*/ ctx[9]
+	];
+
+	let textarea_data = {};
+
+	for (let i = 0; i < textarea_levels.length; i += 1) {
+		textarea_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(textarea_data, textarea_levels[i]);
+	}
+
+	return {
+		c() {
+			textarea = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("textarea");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(textarea, textarea_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, textarea, anchor);
+			if (textarea.autofocus) textarea.focus();
+			/*textarea_binding*/ ctx[18](textarea);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_input_value)(textarea, /*value*/ ctx[0]);
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, textarea, /*use*/ ctx[1])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[7].call(null, textarea)),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(textarea, "change", /*changeHandler*/ ctx[8]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(textarea, "input", /*textarea_input_handler*/ ctx[19])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(textarea, textarea_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(textarea_levels, [
+				dirty & /*className*/ 4 && textarea_class_value !== (textarea_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[2]]: true,
+					'mdc-text-field__input': true
+				})) && { class: textarea_class_value },
+				dirty & /*resizable, style*/ 24 && textarea_style_value !== (textarea_style_value = `${/*resizable*/ ctx[4] ? '' : 'resize: none; '}${/*style*/ ctx[3]}`) && { style: textarea_style_value },
+				dirty & /*internalAttrs*/ 64 && /*internalAttrs*/ ctx[6],
+				dirty & /*$$restProps*/ 512 && /*$$restProps*/ ctx[9]
+			]));
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty & /*use*/ 2) useActions_action.update.call(null, /*use*/ ctx[1]);
+
+			if (dirty & /*value*/ 1) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_input_value)(textarea, /*value*/ ctx[0]);
+			}
+		},
+		i: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		o: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(textarea);
+			/*textarea_binding*/ ctx[18](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	const omit_props_names = [
+		"use","class","style","value","dirty","invalid","updateInvalid","resizable","getAttr","addAttr","removeAttr","focus","getElement"
+	];
+
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	const forwardEvents = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+	let { use = [] } = $$props;
+	let { class: className = '' } = $$props;
+	let { style = '' } = $$props;
+	let { value = '' } = $$props;
+	let { dirty = false } = $$props;
+	let { invalid = false } = $$props;
+	let { updateInvalid = true } = $$props;
+	let { resizable = true } = $$props;
+	let element;
+	let internalAttrs = {};
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onMount)(() => {
+		if (updateInvalid) {
+			$$invalidate(11, invalid = element.matches(':invalid'));
+		}
+	});
+
+	function changeHandler() {
+		$$invalidate(10, dirty = true);
+
+		if (updateInvalid) {
+			$$invalidate(11, invalid = element.matches(':invalid'));
+		}
+	}
+
+	function getAttr(name) {
+		return name in internalAttrs
+		? internalAttrs[name]
+		: getElement().getAttribute(name);
+	}
+
+	function addAttr(name, value) {
+		if (internalAttrs[name] !== value) {
+			$$invalidate(6, internalAttrs[name] = value, internalAttrs);
+		}
+	}
+
+	function removeAttr(name) {
+		if (!(name in internalAttrs) || internalAttrs[name] != null) {
+			$$invalidate(6, internalAttrs[name] = undefined, internalAttrs);
+		}
+	}
+
+	function focus() {
+		getElement().focus();
+	}
+
+	function getElement() {
+		return element;
+	}
+
+	function textarea_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(5, element);
+		});
+	}
+
+	function textarea_input_handler() {
+		value = this.value;
+		$$invalidate(0, value);
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(9, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(1, use = $$new_props.use);
+		if ('class' in $$new_props) $$invalidate(2, className = $$new_props.class);
+		if ('style' in $$new_props) $$invalidate(3, style = $$new_props.style);
+		if ('value' in $$new_props) $$invalidate(0, value = $$new_props.value);
+		if ('dirty' in $$new_props) $$invalidate(10, dirty = $$new_props.dirty);
+		if ('invalid' in $$new_props) $$invalidate(11, invalid = $$new_props.invalid);
+		if ('updateInvalid' in $$new_props) $$invalidate(12, updateInvalid = $$new_props.updateInvalid);
+		if ('resizable' in $$new_props) $$invalidate(4, resizable = $$new_props.resizable);
+	};
+
+	return [
+		value,
+		use,
+		className,
+		style,
+		resizable,
+		element,
+		internalAttrs,
+		forwardEvents,
+		changeHandler,
+		$$restProps,
+		dirty,
+		invalid,
+		updateInvalid,
+		getAttr,
+		addAttr,
+		removeAttr,
+		focus,
+		getElement,
+		textarea_binding,
+		textarea_input_handler
+	];
+}
+
+class Textarea extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			use: 1,
+			class: 2,
+			style: 3,
+			value: 0,
+			dirty: 10,
+			invalid: 11,
+			updateInvalid: 12,
+			resizable: 4,
+			getAttr: 13,
+			addAttr: 14,
+			removeAttr: 15,
+			focus: 16,
+			getElement: 17
+		});
+	}
+
+	get getAttr() {
+		return this.$$.ctx[13];
+	}
+
+	get addAttr() {
+		return this.$$.ctx[14];
+	}
+
+	get removeAttr() {
+		return this.$$.ctx[15];
+	}
+
+	get focus() {
+		return this.$$.ctx[16];
+	}
+
+	get getElement() {
+		return this.$$.ctx[17];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Textarea);
+
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/textfield/Textfield.svelte":
+/*!*******************************************************!*\
+  !*** ./node_modules/@smui/textfield/Textfield.svelte ***!
+  \*******************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _material_textfield__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @material/textfield */ "./node_modules/@material/textfield/foundation.js");
+/* harmony import */ var _material_dom__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material/dom */ "./node_modules/@material/dom/events.js");
+/* harmony import */ var svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! svelte */ "./node_modules/svelte/index.mjs");
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_ContextFragment_svelte__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @smui/common/ContextFragment.svelte */ "./node_modules/@smui/common/ContextFragment.svelte");
+/* harmony import */ var _smui_ripple__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @smui/ripple */ "./node_modules/@smui/ripple/index.js");
+/* harmony import */ var _smui_floating_label_FloatingLabel_svelte__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @smui/floating-label/FloatingLabel.svelte */ "./node_modules/@smui/floating-label/FloatingLabel.svelte");
+/* harmony import */ var _smui_line_ripple_LineRipple_svelte__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @smui/line-ripple/LineRipple.svelte */ "./node_modules/@smui/line-ripple/LineRipple.svelte");
+/* harmony import */ var _smui_notched_outline_NotchedOutline_svelte__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @smui/notched-outline/NotchedOutline.svelte */ "./node_modules/@smui/notched-outline/NotchedOutline.svelte");
+/* harmony import */ var _HelperLine_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./HelperLine.js */ "./node_modules/@smui/textfield/HelperLine.js");
+/* harmony import */ var _Prefix_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Prefix.js */ "./node_modules/@smui/textfield/Prefix.js");
+/* harmony import */ var _Suffix_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Suffix.js */ "./node_modules/@smui/textfield/Suffix.js");
+/* harmony import */ var _Input_svelte__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Input.svelte */ "./node_modules/@smui/textfield/Input.svelte");
+/* harmony import */ var _Textarea_svelte__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Textarea.svelte */ "./node_modules/@smui/textfield/Textarea.svelte");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* node_modules\@smui\textfield\Textfield.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const get_helper_slot_changes = dirty => ({});
+const get_helper_slot_context = ctx => ({});
+const get_ripple_slot_changes = dirty => ({});
+const get_ripple_slot_context = ctx => ({});
+const get_trailingIcon_slot_changes_1 = dirty => ({});
+const get_trailingIcon_slot_context_1 = ctx => ({});
+const get_leadingIcon_slot_changes_1 = dirty => ({});
+const get_leadingIcon_slot_context_1 = ctx => ({});
+const get_label_slot_changes_2 = dirty => ({});
+const get_label_slot_context_2 = ctx => ({});
+const get_trailingIcon_slot_changes = dirty => ({});
+const get_trailingIcon_slot_context = ctx => ({});
+const get_suffix_slot_changes = dirty => ({});
+const get_suffix_slot_context = ctx => ({});
+const get_prefix_slot_changes = dirty => ({});
+const get_prefix_slot_context = ctx => ({});
+const get_internalCounter_slot_changes = dirty => ({});
+const get_internalCounter_slot_context = ctx => ({});
+const get_leadingIcon_slot_changes = dirty => ({});
+const get_leadingIcon_slot_context = ctx => ({});
+const get_label_slot_changes_1 = dirty => ({});
+const get_label_slot_context_1 = ctx => ({});
+const get_label_slot_changes = dirty => ({});
+const get_label_slot_context = ctx => ({});
+
+// (164:0) {:else}
+function create_else_block_1(ctx) {
+	let div;
+	let t0;
+	let contextfragment0;
+	let t1;
+	let t2;
+	let contextfragment1;
+	let t3;
+	let div_class_value;
+	let div_style_value;
+	let Ripple_action;
+	let useActions_action;
+	let forwardEvents_action;
+	let current;
+	let mounted;
+	let dispose;
+	const label_slot_template = /*#slots*/ ctx[50].label;
+	const label_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(label_slot_template, ctx, /*$$scope*/ ctx[89], get_label_slot_context_2);
+
+	contextfragment0 = new _smui_common_ContextFragment_svelte__WEBPACK_IMPORTED_MODULE_3__["default"]({
+			props: {
+				key: "SMUI:textfield:icon:leading",
+				value: true,
+				$$slots: { default: [create_default_slot_9] },
+				$$scope: { ctx }
+			}
+		});
+
+	const default_slot_template = /*#slots*/ ctx[50].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[89], null);
+
+	contextfragment1 = new _smui_common_ContextFragment_svelte__WEBPACK_IMPORTED_MODULE_3__["default"]({
+			props: {
+				key: "SMUI:textfield:icon:leading",
+				value: false,
+				$$slots: { default: [create_default_slot_8] },
+				$$scope: { ctx }
+			}
+		});
+
+	const ripple_slot_template = /*#slots*/ ctx[50].ripple;
+	const ripple_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(ripple_slot_template, ctx, /*$$scope*/ ctx[89], get_ripple_slot_context);
+
+	let div_levels = [
+		{
+			class: div_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[9]]: true,
+				'mdc-text-field': true,
+				'mdc-text-field--disabled': /*disabled*/ ctx[12],
+				'mdc-text-field--textarea': /*textarea*/ ctx[14],
+				'mdc-text-field--filled': /*variant*/ ctx[15] === 'filled',
+				'mdc-text-field--outlined': /*variant*/ ctx[15] === 'outlined',
+				'smui-text-field--standard': /*variant*/ ctx[15] === 'standard' && !/*textarea*/ ctx[14],
+				'mdc-text-field--no-label': /*noLabel*/ ctx[16] || !/*$$slots*/ ctx[41].label,
+				'mdc-text-field--with-leading-icon': /*$$slots*/ ctx[41].leadingIcon,
+				'mdc-text-field--with-trailing-icon': /*$$slots*/ ctx[41].trailingIcon,
+				'mdc-text-field--invalid': /*invalid*/ ctx[2] !== /*uninitializedValue*/ ctx[36] && /*invalid*/ ctx[2],
+				.../*internalClasses*/ ctx[26]
+			})
+		},
+		{
+			style: div_style_value = Object.entries(/*internalStyles*/ ctx[27]).map(func_1).concat([/*style*/ ctx[10]]).join(' ')
+		},
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.exclude)(/*$$restProps*/ ctx[42], ['input$', 'label$', 'ripple$', 'outline$', 'helperLine$'])
+	];
+
+	let div_data = {};
+
+	for (let i = 0; i < div_levels.length; i += 1) {
+		div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div_data, div_levels[i]);
+	}
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			if (label_slot) label_slot.c();
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(contextfragment0.$$.fragment);
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (default_slot) default_slot.c();
+			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(contextfragment1.$$.fragment);
+			t3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (ripple_slot) ripple_slot.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+
+			if (label_slot) {
+				label_slot.m(div, null);
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(contextfragment0, div, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t1);
+
+			if (default_slot) {
+				default_slot.m(div, null);
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(contextfragment1, div, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t3);
+
+			if (ripple_slot) {
+				ripple_slot.m(div, null);
+			}
+
+			/*div_binding*/ ctx[79](div);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(Ripple_action = _smui_ripple__WEBPACK_IMPORTED_MODULE_4__["default"].call(null, div, {
+						ripple: /*ripple*/ ctx[11],
+						unbounded: false,
+						addClass: /*addClass*/ ctx[38],
+						removeClass: /*removeClass*/ ctx[39],
+						addStyle: /*addStyle*/ ctx[40]
+					})),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, div, /*use*/ ctx[8])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[35].call(null, div)),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div, "SMUI:textfield:leading-icon:mount", /*SMUI_textfield_leading_icon_mount_handler_1*/ ctx[80]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div, "SMUI:textfield:leading-icon:unmount", /*SMUI_textfield_leading_icon_unmount_handler_1*/ ctx[81]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div, "SMUI:textfield:trailing-icon:mount", /*SMUI_textfield_trailing_icon_mount_handler_1*/ ctx[82]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div, "SMUI:textfield:trailing-icon:unmount", /*SMUI_textfield_trailing_icon_unmount_handler_1*/ ctx[83])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (label_slot) {
+				if (label_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						label_slot,
+						label_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(label_slot_template, /*$$scope*/ ctx[89], dirty, get_label_slot_changes_2),
+						get_label_slot_context_2
+					);
+				}
+			}
+
+			const contextfragment0_changes = {};
+
+			if (dirty[2] & /*$$scope*/ 134217728) {
+				contextfragment0_changes.$$scope = { dirty, ctx };
+			}
+
+			contextfragment0.$set(contextfragment0_changes);
+
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[89], dirty, null),
+						null
+					);
+				}
+			}
+
+			const contextfragment1_changes = {};
+
+			if (dirty[2] & /*$$scope*/ 134217728) {
+				contextfragment1_changes.$$scope = { dirty, ctx };
+			}
+
+			contextfragment1.$set(contextfragment1_changes);
+
+			if (ripple_slot) {
+				if (ripple_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						ripple_slot,
+						ripple_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(ripple_slot_template, /*$$scope*/ ctx[89], dirty, get_ripple_slot_changes),
+						get_ripple_slot_context
+					);
+				}
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div_levels, [
+				(!current || dirty[0] & /*className, disabled, textarea, variant, noLabel, invalid, internalClasses*/ 67228164 | dirty[1] & /*$$slots*/ 1024 && div_class_value !== (div_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[9]]: true,
+					'mdc-text-field': true,
+					'mdc-text-field--disabled': /*disabled*/ ctx[12],
+					'mdc-text-field--textarea': /*textarea*/ ctx[14],
+					'mdc-text-field--filled': /*variant*/ ctx[15] === 'filled',
+					'mdc-text-field--outlined': /*variant*/ ctx[15] === 'outlined',
+					'smui-text-field--standard': /*variant*/ ctx[15] === 'standard' && !/*textarea*/ ctx[14],
+					'mdc-text-field--no-label': /*noLabel*/ ctx[16] || !/*$$slots*/ ctx[41].label,
+					'mdc-text-field--with-leading-icon': /*$$slots*/ ctx[41].leadingIcon,
+					'mdc-text-field--with-trailing-icon': /*$$slots*/ ctx[41].trailingIcon,
+					'mdc-text-field--invalid': /*invalid*/ ctx[2] !== /*uninitializedValue*/ ctx[36] && /*invalid*/ ctx[2],
+					.../*internalClasses*/ ctx[26]
+				}))) && { class: div_class_value },
+				(!current || dirty[0] & /*internalStyles, style*/ 134218752 && div_style_value !== (div_style_value = Object.entries(/*internalStyles*/ ctx[27]).map(func_1).concat([/*style*/ ctx[10]]).join(' '))) && { style: div_style_value },
+				dirty[1] & /*$$restProps*/ 2048 && (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.exclude)(/*$$restProps*/ ctx[42], ['input$', 'label$', 'ripple$', 'outline$', 'helperLine$'])
+			]));
+
+			if (Ripple_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(Ripple_action.update) && dirty[0] & /*ripple*/ 2048) Ripple_action.update.call(null, {
+				ripple: /*ripple*/ ctx[11],
+				unbounded: false,
+				addClass: /*addClass*/ ctx[38],
+				removeClass: /*removeClass*/ ctx[39],
+				addStyle: /*addStyle*/ ctx[40]
+			});
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty[0] & /*use*/ 256) useActions_action.update.call(null, /*use*/ ctx[8]);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(label_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(contextfragment0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(contextfragment1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(ripple_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(label_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(contextfragment0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(contextfragment1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(ripple_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			if (label_slot) label_slot.d(detaching);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(contextfragment0);
+			if (default_slot) default_slot.d(detaching);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(contextfragment1);
+			if (ripple_slot) ripple_slot.d(detaching);
+			/*div_binding*/ ctx[79](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+// (1:0) {#if valued}
+function create_if_block_1(ctx) {
+	let label_1;
+	let t0;
+	let t1;
+	let contextfragment0;
+	let t2;
+	let t3;
+	let current_block_type_index;
+	let if_block2;
+	let t4;
+	let contextfragment1;
+	let t5;
+	let label_1_class_value;
+	let label_1_style_value;
+	let label_1_for_value;
+	let Ripple_action;
+	let useActions_action;
+	let forwardEvents_action;
+	let current;
+	let mounted;
+	let dispose;
+	let if_block0 = !/*textarea*/ ctx[14] && /*variant*/ ctx[15] !== 'outlined' && create_if_block_8(ctx);
+	let if_block1 = (/*textarea*/ ctx[14] || /*variant*/ ctx[15] === 'outlined') && create_if_block_6(ctx);
+
+	contextfragment0 = new _smui_common_ContextFragment_svelte__WEBPACK_IMPORTED_MODULE_3__["default"]({
+			props: {
+				key: "SMUI:textfield:icon:leading",
+				value: true,
+				$$slots: { default: [create_default_slot_4] },
+				$$scope: { ctx }
+			}
+		});
+
+	const default_slot_template = /*#slots*/ ctx[50].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[89], null);
+	const if_block_creators = [create_if_block_3, create_else_block];
+	const if_blocks = [];
+
+	function select_block_type_1(ctx, dirty) {
+		if (/*textarea*/ ctx[14]) return 0;
+		return 1;
+	}
+
+	current_block_type_index = select_block_type_1(ctx, [-1, -1, -1, -1]);
+	if_block2 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+
+	contextfragment1 = new _smui_common_ContextFragment_svelte__WEBPACK_IMPORTED_MODULE_3__["default"]({
+			props: {
+				key: "SMUI:textfield:icon:leading",
+				value: false,
+				$$slots: { default: [create_default_slot_1] },
+				$$scope: { ctx }
+			}
+		});
+
+	let if_block3 = !/*textarea*/ ctx[14] && /*variant*/ ctx[15] !== 'outlined' && /*ripple*/ ctx[11] && create_if_block_2(ctx);
+
+	let label_1_levels = [
+		{
+			class: label_1_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				[/*className*/ ctx[9]]: true,
+				'mdc-text-field': true,
+				'mdc-text-field--disabled': /*disabled*/ ctx[12],
+				'mdc-text-field--textarea': /*textarea*/ ctx[14],
+				'mdc-text-field--filled': /*variant*/ ctx[15] === 'filled',
+				'mdc-text-field--outlined': /*variant*/ ctx[15] === 'outlined',
+				'smui-text-field--standard': /*variant*/ ctx[15] === 'standard' && !/*textarea*/ ctx[14],
+				'mdc-text-field--no-label': /*noLabel*/ ctx[16] || /*label*/ ctx[17] == null && !/*$$slots*/ ctx[41].label,
+				'mdc-text-field--label-floating': /*focused*/ ctx[29] || /*value*/ ctx[0] != null && /*value*/ ctx[0] !== '',
+				'mdc-text-field--with-leading-icon': /*withLeadingIcon*/ ctx[22] === /*uninitializedValue*/ ctx[36]
+				? /*$$slots*/ ctx[41].leadingIcon
+				: /*withLeadingIcon*/ ctx[22],
+				'mdc-text-field--with-trailing-icon': /*withTrailingIcon*/ ctx[23] === /*uninitializedValue*/ ctx[36]
+				? /*$$slots*/ ctx[41].trailingIcon
+				: /*withTrailingIcon*/ ctx[23],
+				'mdc-text-field--with-internal-counter': /*textarea*/ ctx[14] && /*$$slots*/ ctx[41].internalCounter,
+				'mdc-text-field--invalid': /*invalid*/ ctx[2] !== /*uninitializedValue*/ ctx[36] && /*invalid*/ ctx[2],
+				.../*internalClasses*/ ctx[26]
+			})
+		},
+		{
+			style: label_1_style_value = Object.entries(/*internalStyles*/ ctx[27]).map(func).concat([/*style*/ ctx[10]]).join(' ')
+		},
+		{
+			for: label_1_for_value = /* suppress a11y warning, since this is wrapped */ null
+		},
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.exclude)(/*$$restProps*/ ctx[42], ['input$', 'label$', 'ripple$', 'outline$', 'helperLine$'])
+	];
+
+	let label_1_data = {};
+
+	for (let i = 0; i < label_1_levels.length; i += 1) {
+		label_1_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(label_1_data, label_1_levels[i]);
+	}
+
+	return {
+		c() {
+			label_1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("label");
+			if (if_block0) if_block0.c();
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block1) if_block1.c();
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(contextfragment0.$$.fragment);
+			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (default_slot) default_slot.c();
+			t3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if_block2.c();
+			t4 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(contextfragment1.$$.fragment);
+			t5 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block3) if_block3.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(label_1, label_1_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, label_1, anchor);
+			if (if_block0) if_block0.m(label_1, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(label_1, t0);
+			if (if_block1) if_block1.m(label_1, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(label_1, t1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(contextfragment0, label_1, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(label_1, t2);
+
+			if (default_slot) {
+				default_slot.m(label_1, null);
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(label_1, t3);
+			if_blocks[current_block_type_index].m(label_1, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(label_1, t4);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(contextfragment1, label_1, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(label_1, t5);
+			if (if_block3) if_block3.m(label_1, null);
+			/*label_1_binding*/ ctx[72](label_1);
+			current = true;
+
+			if (!mounted) {
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(Ripple_action = _smui_ripple__WEBPACK_IMPORTED_MODULE_4__["default"].call(null, label_1, {
+						ripple: !/*textarea*/ ctx[14] && /*variant*/ ctx[15] === 'filled',
+						unbounded: false,
+						addClass: /*addClass*/ ctx[38],
+						removeClass: /*removeClass*/ ctx[39],
+						addStyle: /*addStyle*/ ctx[40],
+						eventTarget: /*inputElement*/ ctx[34],
+						activeTarget: /*inputElement*/ ctx[34],
+						initPromise: /*initPromise*/ ctx[37]
+					})),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(useActions_action = _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.useActions.call(null, label_1, /*use*/ ctx[8])),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.action_destroyer)(forwardEvents_action = /*forwardEvents*/ ctx[35].call(null, label_1)),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(label_1, "SMUI:textfield:leading-icon:mount", /*SMUI_textfield_leading_icon_mount_handler*/ ctx[73]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(label_1, "SMUI:textfield:leading-icon:unmount", /*SMUI_textfield_leading_icon_unmount_handler*/ ctx[74]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(label_1, "SMUI:textfield:trailing-icon:mount", /*SMUI_textfield_trailing_icon_mount_handler*/ ctx[75]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(label_1, "SMUI:textfield:trailing-icon:unmount", /*SMUI_textfield_trailing_icon_unmount_handler*/ ctx[76]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(label_1, "SMUI:textfield:character-counter:mount", /*SMUI_textfield_character_counter_mount_handler*/ ctx[77]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(label_1, "SMUI:textfield:character-counter:unmount", /*SMUI_textfield_character_counter_unmount_handler*/ ctx[78])
+				];
+
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			if (!/*textarea*/ ctx[14] && /*variant*/ ctx[15] !== 'outlined') {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+
+					if (dirty[0] & /*textarea, variant*/ 49152) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0, 1);
+					}
+				} else {
+					if_block0 = create_if_block_8(ctx);
+					if_block0.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0, 1);
+					if_block0.m(label_1, t0);
+				}
+			} else if (if_block0) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block0, 1, 1, () => {
+					if_block0 = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			if (/*textarea*/ ctx[14] || /*variant*/ ctx[15] === 'outlined') {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+
+					if (dirty[0] & /*textarea, variant*/ 49152) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					}
+				} else {
+					if_block1 = create_if_block_6(ctx);
+					if_block1.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					if_block1.m(label_1, t1);
+				}
+			} else if (if_block1) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1, 1, 1, () => {
+					if_block1 = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			const contextfragment0_changes = {};
+
+			if (dirty[2] & /*$$scope*/ 134217728) {
+				contextfragment0_changes.$$scope = { dirty, ctx };
+			}
+
+			contextfragment0.$set(contextfragment0_changes);
+
+			if (default_slot) {
+				if (default_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						default_slot,
+						default_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[89], dirty, null),
+						null
+					);
+				}
+			}
+
+			let previous_block_index = current_block_type_index;
+			current_block_type_index = select_block_type_1(ctx, dirty);
+
+			if (current_block_type_index === previous_block_index) {
+				if_blocks[current_block_type_index].p(ctx, dirty);
+			} else {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_blocks[previous_block_index], 1, 1, () => {
+					if_blocks[previous_block_index] = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+				if_block2 = if_blocks[current_block_type_index];
+
+				if (!if_block2) {
+					if_block2 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+					if_block2.c();
+				} else {
+					if_block2.p(ctx, dirty);
+				}
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block2, 1);
+				if_block2.m(label_1, t4);
+			}
+
+			const contextfragment1_changes = {};
+
+			if (dirty[2] & /*$$scope*/ 134217728) {
+				contextfragment1_changes.$$scope = { dirty, ctx };
+			}
+
+			contextfragment1.$set(contextfragment1_changes);
+
+			if (!/*textarea*/ ctx[14] && /*variant*/ ctx[15] !== 'outlined' && /*ripple*/ ctx[11]) {
+				if (if_block3) {
+					if_block3.p(ctx, dirty);
+
+					if (dirty[0] & /*textarea, variant, ripple*/ 51200) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block3, 1);
+					}
+				} else {
+					if_block3 = create_if_block_2(ctx);
+					if_block3.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block3, 1);
+					if_block3.m(label_1, null);
+				}
+			} else if (if_block3) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block3, 1, 1, () => {
+					if_block3 = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(label_1, label_1_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(label_1_levels, [
+				(!current || dirty[0] & /*className, disabled, textarea, variant, noLabel, label, focused, value, withLeadingIcon, withTrailingIcon, invalid, internalClasses*/ 616813061 | dirty[1] & /*$$slots*/ 1024 && label_1_class_value !== (label_1_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+					[/*className*/ ctx[9]]: true,
+					'mdc-text-field': true,
+					'mdc-text-field--disabled': /*disabled*/ ctx[12],
+					'mdc-text-field--textarea': /*textarea*/ ctx[14],
+					'mdc-text-field--filled': /*variant*/ ctx[15] === 'filled',
+					'mdc-text-field--outlined': /*variant*/ ctx[15] === 'outlined',
+					'smui-text-field--standard': /*variant*/ ctx[15] === 'standard' && !/*textarea*/ ctx[14],
+					'mdc-text-field--no-label': /*noLabel*/ ctx[16] || /*label*/ ctx[17] == null && !/*$$slots*/ ctx[41].label,
+					'mdc-text-field--label-floating': /*focused*/ ctx[29] || /*value*/ ctx[0] != null && /*value*/ ctx[0] !== '',
+					'mdc-text-field--with-leading-icon': /*withLeadingIcon*/ ctx[22] === /*uninitializedValue*/ ctx[36]
+					? /*$$slots*/ ctx[41].leadingIcon
+					: /*withLeadingIcon*/ ctx[22],
+					'mdc-text-field--with-trailing-icon': /*withTrailingIcon*/ ctx[23] === /*uninitializedValue*/ ctx[36]
+					? /*$$slots*/ ctx[41].trailingIcon
+					: /*withTrailingIcon*/ ctx[23],
+					'mdc-text-field--with-internal-counter': /*textarea*/ ctx[14] && /*$$slots*/ ctx[41].internalCounter,
+					'mdc-text-field--invalid': /*invalid*/ ctx[2] !== /*uninitializedValue*/ ctx[36] && /*invalid*/ ctx[2],
+					.../*internalClasses*/ ctx[26]
+				}))) && { class: label_1_class_value },
+				(!current || dirty[0] & /*internalStyles, style*/ 134218752 && label_1_style_value !== (label_1_style_value = Object.entries(/*internalStyles*/ ctx[27]).map(func).concat([/*style*/ ctx[10]]).join(' '))) && { style: label_1_style_value },
+				{ for: label_1_for_value },
+				dirty[1] & /*$$restProps*/ 2048 && (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.exclude)(/*$$restProps*/ ctx[42], ['input$', 'label$', 'ripple$', 'outline$', 'helperLine$'])
+			]));
+
+			if (Ripple_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(Ripple_action.update) && dirty[0] & /*textarea, variant*/ 49152 | dirty[1] & /*inputElement*/ 8) Ripple_action.update.call(null, {
+				ripple: !/*textarea*/ ctx[14] && /*variant*/ ctx[15] === 'filled',
+				unbounded: false,
+				addClass: /*addClass*/ ctx[38],
+				removeClass: /*removeClass*/ ctx[39],
+				addStyle: /*addStyle*/ ctx[40],
+				eventTarget: /*inputElement*/ ctx[34],
+				activeTarget: /*inputElement*/ ctx[34],
+				initPromise: /*initPromise*/ ctx[37]
+			});
+
+			if (useActions_action && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.is_function)(useActions_action.update) && dirty[0] & /*use*/ 256) useActions_action.update.call(null, /*use*/ ctx[8]);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(contextfragment0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(contextfragment1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block3);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(contextfragment0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(contextfragment1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block3);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(label_1);
+			if (if_block0) if_block0.d();
+			if (if_block1) if_block1.d();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(contextfragment0);
+			if (default_slot) default_slot.d(detaching);
+			if_blocks[current_block_type_index].d();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(contextfragment1);
+			if (if_block3) if_block3.d();
+			/*label_1_binding*/ ctx[72](null);
+			mounted = false;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
+		}
+	};
+}
+
+// (209:4) <ContextFragment key="SMUI:textfield:icon:leading" value={true}>
+function create_default_slot_9(ctx) {
+	let current;
+	const leadingIcon_slot_template = /*#slots*/ ctx[50].leadingIcon;
+	const leadingIcon_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(leadingIcon_slot_template, ctx, /*$$scope*/ ctx[89], get_leadingIcon_slot_context_1);
+
+	return {
+		c() {
+			if (leadingIcon_slot) leadingIcon_slot.c();
+		},
+		m(target, anchor) {
+			if (leadingIcon_slot) {
+				leadingIcon_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (leadingIcon_slot) {
+				if (leadingIcon_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						leadingIcon_slot,
+						leadingIcon_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(leadingIcon_slot_template, /*$$scope*/ ctx[89], dirty, get_leadingIcon_slot_changes_1),
+						get_leadingIcon_slot_context_1
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(leadingIcon_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(leadingIcon_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (leadingIcon_slot) leadingIcon_slot.d(detaching);
+		}
+	};
+}
+
+// (213:4) <ContextFragment key="SMUI:textfield:icon:leading" value={false}>
+function create_default_slot_8(ctx) {
+	let current;
+	const trailingIcon_slot_template = /*#slots*/ ctx[50].trailingIcon;
+	const trailingIcon_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(trailingIcon_slot_template, ctx, /*$$scope*/ ctx[89], get_trailingIcon_slot_context_1);
+
+	return {
+		c() {
+			if (trailingIcon_slot) trailingIcon_slot.c();
+		},
+		m(target, anchor) {
+			if (trailingIcon_slot) {
+				trailingIcon_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (trailingIcon_slot) {
+				if (trailingIcon_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						trailingIcon_slot,
+						trailingIcon_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(trailingIcon_slot_template, /*$$scope*/ ctx[89], dirty, get_trailingIcon_slot_changes_1),
+						get_trailingIcon_slot_context_1
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(trailingIcon_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(trailingIcon_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (trailingIcon_slot) trailingIcon_slot.d(detaching);
+		}
+	};
+}
+
+// (63:4) {#if !textarea && variant !== 'outlined'}
+function create_if_block_8(ctx) {
+	let t;
+	let if_block1_anchor;
+	let current;
+	let if_block0 = /*variant*/ ctx[15] === 'filled' && create_if_block_10(ctx);
+	let if_block1 = !/*noLabel*/ ctx[16] && (/*label*/ ctx[17] != null || /*$$slots*/ ctx[41].label) && create_if_block_9(ctx);
+
+	return {
+		c() {
+			if (if_block0) if_block0.c();
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block1) if_block1.c();
+			if_block1_anchor = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.empty)();
+		},
+		m(target, anchor) {
+			if (if_block0) if_block0.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+			if (if_block1) if_block1.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, if_block1_anchor, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (/*variant*/ ctx[15] === 'filled') {
+				if (if_block0) {
+					
+				} else {
+					if_block0 = create_if_block_10(ctx);
+					if_block0.c();
+					if_block0.m(t.parentNode, t);
+				}
+			} else if (if_block0) {
+				if_block0.d(1);
+				if_block0 = null;
+			}
+
+			if (!/*noLabel*/ ctx[16] && (/*label*/ ctx[17] != null || /*$$slots*/ ctx[41].label)) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+
+					if (dirty[0] & /*noLabel, label*/ 196608 | dirty[1] & /*$$slots*/ 1024) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					}
+				} else {
+					if_block1 = create_if_block_9(ctx);
+					if_block1.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+				}
+			} else if (if_block1) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1, 1, 1, () => {
+					if_block1 = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1);
+			current = false;
+		},
+		d(detaching) {
+			if (if_block0) if_block0.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+			if (if_block1) if_block1.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(if_block1_anchor);
+		}
+	};
+}
+
+// (64:6) {#if variant === 'filled'}
+function create_if_block_10(ctx) {
+	let span;
+
+	return {
+		c() {
+			span = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("span");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(span, "class", "mdc-text-field__ripple");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, span, anchor);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(span);
+		}
+	};
+}
+
+// (67:6) {#if !noLabel && (label != null || $$slots.label)}
+function create_if_block_9(ctx) {
+	let floatinglabel;
+	let current;
+
+	const floatinglabel_spread_levels = [
+		{
+			floatAbove: /*focused*/ ctx[29] || /*value*/ ctx[0] != null && /*value*/ ctx[0] !== ''
+		},
+		{ required: /*required*/ ctx[13] },
+		{ wrapped: true },
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'label$')
+	];
+
+	let floatinglabel_props = {
+		$$slots: { default: [create_default_slot_7] },
+		$$scope: { ctx }
+	};
+
+	for (let i = 0; i < floatinglabel_spread_levels.length; i += 1) {
+		floatinglabel_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(floatinglabel_props, floatinglabel_spread_levels[i]);
+	}
+
+	floatinglabel = new _smui_floating_label_FloatingLabel_svelte__WEBPACK_IMPORTED_MODULE_5__["default"]({ props: floatinglabel_props });
+	/*floatinglabel_binding*/ ctx[51](floatinglabel);
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(floatinglabel.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(floatinglabel, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const floatinglabel_changes = (dirty[0] & /*focused, value, required*/ 536879105 | dirty[1] & /*$$restProps*/ 2048)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(floatinglabel_spread_levels, [
+					dirty[0] & /*focused, value*/ 536870913 && {
+						floatAbove: /*focused*/ ctx[29] || /*value*/ ctx[0] != null && /*value*/ ctx[0] !== ''
+					},
+					dirty[0] & /*required*/ 8192 && { required: /*required*/ ctx[13] },
+					floatinglabel_spread_levels[2],
+					dirty[1] & /*$$restProps*/ 2048 && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'label$'))
+				])
+			: {};
+
+			if (dirty[0] & /*label*/ 131072 | dirty[2] & /*$$scope*/ 134217728) {
+				floatinglabel_changes.$$scope = { dirty, ctx };
+			}
+
+			floatinglabel.$set(floatinglabel_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(floatinglabel.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(floatinglabel.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			/*floatinglabel_binding*/ ctx[51](null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(floatinglabel, detaching);
+		}
+	};
+}
+
+// (68:8) <FloatingLabel           bind:this={floatingLabel}           floatAbove={focused || (value != null && value !== '')}           {required}           wrapped           {...prefixFilter($$restProps, 'label$')}           >
+function create_default_slot_7(ctx) {
+	let t_value = (/*label*/ ctx[17] == null ? '' : /*label*/ ctx[17]) + "";
+	let t;
+	let current;
+	const label_slot_template = /*#slots*/ ctx[50].label;
+	const label_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(label_slot_template, ctx, /*$$scope*/ ctx[89], get_label_slot_context);
+
+	return {
+		c() {
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t_value);
+			if (label_slot) label_slot.c();
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+
+			if (label_slot) {
+				label_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if ((!current || dirty[0] & /*label*/ 131072) && t_value !== (t_value = (/*label*/ ctx[17] == null ? '' : /*label*/ ctx[17]) + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t, t_value);
+
+			if (label_slot) {
+				if (label_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						label_slot,
+						label_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(label_slot_template, /*$$scope*/ ctx[89], dirty, get_label_slot_changes),
+						get_label_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(label_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(label_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+			if (label_slot) label_slot.d(detaching);
+		}
+	};
+}
+
+// (78:4) {#if textarea || variant === 'outlined'}
+function create_if_block_6(ctx) {
+	let notchedoutline;
+	let current;
+
+	const notchedoutline_spread_levels = [
+		{
+			noLabel: /*noLabel*/ ctx[16] || /*label*/ ctx[17] == null && !/*$$slots*/ ctx[41].label
+		},
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'outline$')
+	];
+
+	let notchedoutline_props = {
+		$$slots: { default: [create_default_slot_5] },
+		$$scope: { ctx }
+	};
+
+	for (let i = 0; i < notchedoutline_spread_levels.length; i += 1) {
+		notchedoutline_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(notchedoutline_props, notchedoutline_spread_levels[i]);
+	}
+
+	notchedoutline = new _smui_notched_outline_NotchedOutline_svelte__WEBPACK_IMPORTED_MODULE_7__["default"]({ props: notchedoutline_props });
+	/*notchedoutline_binding*/ ctx[53](notchedoutline);
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(notchedoutline.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(notchedoutline, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const notchedoutline_changes = (dirty[0] & /*noLabel, label*/ 196608 | dirty[1] & /*$$slots, $$restProps*/ 3072)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(notchedoutline_spread_levels, [
+					dirty[0] & /*noLabel, label*/ 196608 | dirty[1] & /*$$slots*/ 1024 && {
+						noLabel: /*noLabel*/ ctx[16] || /*label*/ ctx[17] == null && !/*$$slots*/ ctx[41].label
+					},
+					dirty[1] & /*$$restProps*/ 2048 && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'outline$'))
+				])
+			: {};
+
+			if (dirty[0] & /*focused, value, required, floatingLabel, label, noLabel*/ 537075745 | dirty[1] & /*$$restProps, $$slots*/ 3072 | dirty[2] & /*$$scope*/ 134217728) {
+				notchedoutline_changes.$$scope = { dirty, ctx };
+			}
+
+			notchedoutline.$set(notchedoutline_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(notchedoutline.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(notchedoutline.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			/*notchedoutline_binding*/ ctx[53](null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(notchedoutline, detaching);
+		}
+	};
+}
+
+// (84:8) {#if !noLabel && (label != null || $$slots.label)}
+function create_if_block_7(ctx) {
+	let floatinglabel;
+	let current;
+
+	const floatinglabel_spread_levels = [
+		{
+			floatAbove: /*focused*/ ctx[29] || /*value*/ ctx[0] != null && /*value*/ ctx[0] !== ''
+		},
+		{ required: /*required*/ ctx[13] },
+		{ wrapped: true },
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'label$')
+	];
+
+	let floatinglabel_props = {
+		$$slots: { default: [create_default_slot_6] },
+		$$scope: { ctx }
+	};
+
+	for (let i = 0; i < floatinglabel_spread_levels.length; i += 1) {
+		floatinglabel_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(floatinglabel_props, floatinglabel_spread_levels[i]);
+	}
+
+	floatinglabel = new _smui_floating_label_FloatingLabel_svelte__WEBPACK_IMPORTED_MODULE_5__["default"]({ props: floatinglabel_props });
+	/*floatinglabel_binding_1*/ ctx[52](floatinglabel);
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(floatinglabel.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(floatinglabel, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const floatinglabel_changes = (dirty[0] & /*focused, value, required*/ 536879105 | dirty[1] & /*$$restProps*/ 2048)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(floatinglabel_spread_levels, [
+					dirty[0] & /*focused, value*/ 536870913 && {
+						floatAbove: /*focused*/ ctx[29] || /*value*/ ctx[0] != null && /*value*/ ctx[0] !== ''
+					},
+					dirty[0] & /*required*/ 8192 && { required: /*required*/ ctx[13] },
+					floatinglabel_spread_levels[2],
+					dirty[1] & /*$$restProps*/ 2048 && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'label$'))
+				])
+			: {};
+
+			if (dirty[0] & /*label*/ 131072 | dirty[2] & /*$$scope*/ 134217728) {
+				floatinglabel_changes.$$scope = { dirty, ctx };
+			}
+
+			floatinglabel.$set(floatinglabel_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(floatinglabel.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(floatinglabel.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			/*floatinglabel_binding_1*/ ctx[52](null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(floatinglabel, detaching);
+		}
+	};
+}
+
+// (85:10) <FloatingLabel             bind:this={floatingLabel}             floatAbove={focused || (value != null && value !== '')}             {required}             wrapped             {...prefixFilter($$restProps, 'label$')}             >
+function create_default_slot_6(ctx) {
+	let t_value = (/*label*/ ctx[17] == null ? '' : /*label*/ ctx[17]) + "";
+	let t;
+	let current;
+	const label_slot_template = /*#slots*/ ctx[50].label;
+	const label_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(label_slot_template, ctx, /*$$scope*/ ctx[89], get_label_slot_context_1);
+
+	return {
+		c() {
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t_value);
+			if (label_slot) label_slot.c();
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+
+			if (label_slot) {
+				label_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if ((!current || dirty[0] & /*label*/ 131072) && t_value !== (t_value = (/*label*/ ctx[17] == null ? '' : /*label*/ ctx[17]) + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t, t_value);
+
+			if (label_slot) {
+				if (label_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						label_slot,
+						label_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(label_slot_template, /*$$scope*/ ctx[89], dirty, get_label_slot_changes_1),
+						get_label_slot_context_1
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(label_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(label_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+			if (label_slot) label_slot.d(detaching);
+		}
+	};
+}
+
+// (79:6) <NotchedOutline         bind:this={notchedOutline}         noLabel={noLabel || (label == null && !$$slots.label)}         {...prefixFilter($$restProps, 'outline$')}       >
+function create_default_slot_5(ctx) {
+	let if_block_anchor;
+	let current;
+	let if_block = !/*noLabel*/ ctx[16] && (/*label*/ ctx[17] != null || /*$$slots*/ ctx[41].label) && create_if_block_7(ctx);
+
+	return {
+		c() {
+			if (if_block) if_block.c();
+			if_block_anchor = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.empty)();
+		},
+		m(target, anchor) {
+			if (if_block) if_block.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, if_block_anchor, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (!/*noLabel*/ ctx[16] && (/*label*/ ctx[17] != null || /*$$slots*/ ctx[41].label)) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+
+					if (dirty[0] & /*noLabel, label*/ 196608 | dirty[1] & /*$$slots*/ 1024) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					}
+				} else {
+					if_block = create_if_block_7(ctx);
+					if_block.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+				}
+			} else if (if_block) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block, 1, 1, () => {
+					if_block = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if (if_block) if_block.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(if_block_anchor);
+		}
+	};
+}
+
+// (96:4) <ContextFragment key="SMUI:textfield:icon:leading" value={true}>
+function create_default_slot_4(ctx) {
+	let current;
+	const leadingIcon_slot_template = /*#slots*/ ctx[50].leadingIcon;
+	const leadingIcon_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(leadingIcon_slot_template, ctx, /*$$scope*/ ctx[89], get_leadingIcon_slot_context);
+
+	return {
+		c() {
+			if (leadingIcon_slot) leadingIcon_slot.c();
+		},
+		m(target, anchor) {
+			if (leadingIcon_slot) {
+				leadingIcon_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (leadingIcon_slot) {
+				if (leadingIcon_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						leadingIcon_slot,
+						leadingIcon_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(leadingIcon_slot_template, /*$$scope*/ ctx[89], dirty, get_leadingIcon_slot_changes),
+						get_leadingIcon_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(leadingIcon_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(leadingIcon_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (leadingIcon_slot) leadingIcon_slot.d(detaching);
+		}
+	};
+}
+
+// (125:4) {:else}
+function create_else_block(ctx) {
+	let t0;
+	let t1;
+	let input_1;
+	let updating_value;
+	let updating_files;
+	let updating_dirty;
+	let updating_invalid;
+	let t2;
+	let t3;
+	let current;
+	const prefix_slot_template = /*#slots*/ ctx[50].prefix;
+	const prefix_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(prefix_slot_template, ctx, /*$$scope*/ ctx[89], get_prefix_slot_context);
+	let if_block0 = /*prefix*/ ctx[19] != null && create_if_block_5(ctx);
+
+	const input_1_spread_levels = [
+		{ type: /*type*/ ctx[18] },
+		{ disabled: /*disabled*/ ctx[12] },
+		{ required: /*required*/ ctx[13] },
+		{ updateInvalid: /*updateInvalid*/ ctx[21] },
+		{ "aria-controls": /*helperId*/ ctx[28] },
+		{ "aria-describedby": /*helperId*/ ctx[28] },
+		/*noLabel*/ ctx[16] && /*label*/ ctx[17] != null
+		? { placeholder: /*label*/ ctx[17] }
+		: {},
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'input$')
+	];
+
+	function input_1_value_binding(value) {
+		/*input_1_value_binding*/ ctx[63](value);
+	}
+
+	function input_1_files_binding(value) {
+		/*input_1_files_binding*/ ctx[64](value);
+	}
+
+	function input_1_dirty_binding(value) {
+		/*input_1_dirty_binding*/ ctx[65](value);
+	}
+
+	function input_1_invalid_binding(value) {
+		/*input_1_invalid_binding*/ ctx[66](value);
+	}
+
+	let input_1_props = {};
+
+	for (let i = 0; i < input_1_spread_levels.length; i += 1) {
+		input_1_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(input_1_props, input_1_spread_levels[i]);
+	}
+
+	if (/*value*/ ctx[0] !== void 0) {
+		input_1_props.value = /*value*/ ctx[0];
+	}
+
+	if (/*files*/ ctx[1] !== void 0) {
+		input_1_props.files = /*files*/ ctx[1];
+	}
+
+	if (/*dirty*/ ctx[4] !== void 0) {
+		input_1_props.dirty = /*dirty*/ ctx[4];
+	}
+
+	if (/*invalid*/ ctx[2] !== void 0) {
+		input_1_props.invalid = /*invalid*/ ctx[2];
+	}
+
+	input_1 = new _Input_svelte__WEBPACK_IMPORTED_MODULE_11__["default"]({ props: input_1_props });
+	/*input_1_binding*/ ctx[62](input_1);
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(input_1, 'value', input_1_value_binding));
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(input_1, 'files', input_1_files_binding));
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(input_1, 'dirty', input_1_dirty_binding));
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(input_1, 'invalid', input_1_invalid_binding));
+	input_1.$on("blur", /*blur_handler_3*/ ctx[67]);
+	input_1.$on("focus", /*focus_handler_3*/ ctx[68]);
+	input_1.$on("blur", /*blur_handler_1*/ ctx[69]);
+	input_1.$on("focus", /*focus_handler_1*/ ctx[70]);
+	let if_block1 = /*suffix*/ ctx[20] != null && create_if_block_4(ctx);
+	const suffix_slot_template = /*#slots*/ ctx[50].suffix;
+	const suffix_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(suffix_slot_template, ctx, /*$$scope*/ ctx[89], get_suffix_slot_context);
+
+	return {
+		c() {
+			if (prefix_slot) prefix_slot.c();
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block0) if_block0.c();
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(input_1.$$.fragment);
+			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block1) if_block1.c();
+			t3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (suffix_slot) suffix_slot.c();
+		},
+		m(target, anchor) {
+			if (prefix_slot) {
+				prefix_slot.m(target, anchor);
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t0, anchor);
+			if (if_block0) if_block0.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t1, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(input_1, target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t2, anchor);
+			if (if_block1) if_block1.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t3, anchor);
+
+			if (suffix_slot) {
+				suffix_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (prefix_slot) {
+				if (prefix_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						prefix_slot,
+						prefix_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(prefix_slot_template, /*$$scope*/ ctx[89], dirty, get_prefix_slot_changes),
+						get_prefix_slot_context
+					);
+				}
+			}
+
+			if (/*prefix*/ ctx[19] != null) {
+				if (if_block0) {
+					if_block0.p(ctx, dirty);
+
+					if (dirty[0] & /*prefix*/ 524288) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0, 1);
+					}
+				} else {
+					if_block0 = create_if_block_5(ctx);
+					if_block0.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0, 1);
+					if_block0.m(t1.parentNode, t1);
+				}
+			} else if (if_block0) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block0, 1, 1, () => {
+					if_block0 = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			const input_1_changes = (dirty[0] & /*type, disabled, required, updateInvalid, helperId, noLabel, label*/ 271003648 | dirty[1] & /*$$restProps*/ 2048)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(input_1_spread_levels, [
+					dirty[0] & /*type*/ 262144 && { type: /*type*/ ctx[18] },
+					dirty[0] & /*disabled*/ 4096 && { disabled: /*disabled*/ ctx[12] },
+					dirty[0] & /*required*/ 8192 && { required: /*required*/ ctx[13] },
+					dirty[0] & /*updateInvalid*/ 2097152 && { updateInvalid: /*updateInvalid*/ ctx[21] },
+					dirty[0] & /*helperId*/ 268435456 && { "aria-controls": /*helperId*/ ctx[28] },
+					dirty[0] & /*helperId*/ 268435456 && { "aria-describedby": /*helperId*/ ctx[28] },
+					dirty[0] & /*noLabel, label*/ 196608 && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)(/*noLabel*/ ctx[16] && /*label*/ ctx[17] != null
+					? { placeholder: /*label*/ ctx[17] }
+					: {}),
+					dirty[1] & /*$$restProps*/ 2048 && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'input$'))
+				])
+			: {};
+
+			if (!updating_value && dirty[0] & /*value*/ 1) {
+				updating_value = true;
+				input_1_changes.value = /*value*/ ctx[0];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value = false);
+			}
+
+			if (!updating_files && dirty[0] & /*files*/ 2) {
+				updating_files = true;
+				input_1_changes.files = /*files*/ ctx[1];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_files = false);
+			}
+
+			if (!updating_dirty && dirty[0] & /*dirty*/ 16) {
+				updating_dirty = true;
+				input_1_changes.dirty = /*dirty*/ ctx[4];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_dirty = false);
+			}
+
+			if (!updating_invalid && dirty[0] & /*invalid*/ 4) {
+				updating_invalid = true;
+				input_1_changes.invalid = /*invalid*/ ctx[2];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_invalid = false);
+			}
+
+			input_1.$set(input_1_changes);
+
+			if (/*suffix*/ ctx[20] != null) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+
+					if (dirty[0] & /*suffix*/ 1048576) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					}
+				} else {
+					if_block1 = create_if_block_4(ctx);
+					if_block1.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					if_block1.m(t3.parentNode, t3);
+				}
+			} else if (if_block1) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1, 1, 1, () => {
+					if_block1 = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			if (suffix_slot) {
+				if (suffix_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						suffix_slot,
+						suffix_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(suffix_slot_template, /*$$scope*/ ctx[89], dirty, get_suffix_slot_changes),
+						get_suffix_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(prefix_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(input_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(suffix_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(prefix_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(input_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(suffix_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (prefix_slot) prefix_slot.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t0);
+			if (if_block0) if_block0.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t1);
+			/*input_1_binding*/ ctx[62](null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(input_1, detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t2);
+			if (if_block1) if_block1.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t3);
+			if (suffix_slot) suffix_slot.d(detaching);
+		}
+	};
+}
+
+// (100:4) {#if textarea}
+function create_if_block_3(ctx) {
+	let span;
+	let textarea_1;
+	let updating_value;
+	let updating_dirty;
+	let updating_invalid;
+	let t;
+	let span_class_value;
+	let current;
+
+	const textarea_1_spread_levels = [
+		{ disabled: /*disabled*/ ctx[12] },
+		{ required: /*required*/ ctx[13] },
+		{ updateInvalid: /*updateInvalid*/ ctx[21] },
+		{ "aria-controls": /*helperId*/ ctx[28] },
+		{ "aria-describedby": /*helperId*/ ctx[28] },
+		(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'input$')
+	];
+
+	function textarea_1_value_binding(value) {
+		/*textarea_1_value_binding*/ ctx[55](value);
+	}
+
+	function textarea_1_dirty_binding(value) {
+		/*textarea_1_dirty_binding*/ ctx[56](value);
+	}
+
+	function textarea_1_invalid_binding(value) {
+		/*textarea_1_invalid_binding*/ ctx[57](value);
+	}
+
+	let textarea_1_props = {};
+
+	for (let i = 0; i < textarea_1_spread_levels.length; i += 1) {
+		textarea_1_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(textarea_1_props, textarea_1_spread_levels[i]);
+	}
+
+	if (/*value*/ ctx[0] !== void 0) {
+		textarea_1_props.value = /*value*/ ctx[0];
+	}
+
+	if (/*dirty*/ ctx[4] !== void 0) {
+		textarea_1_props.dirty = /*dirty*/ ctx[4];
+	}
+
+	if (/*invalid*/ ctx[2] !== void 0) {
+		textarea_1_props.invalid = /*invalid*/ ctx[2];
+	}
+
+	textarea_1 = new _Textarea_svelte__WEBPACK_IMPORTED_MODULE_12__["default"]({ props: textarea_1_props });
+	/*textarea_1_binding*/ ctx[54](textarea_1);
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(textarea_1, 'value', textarea_1_value_binding));
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(textarea_1, 'dirty', textarea_1_dirty_binding));
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(textarea_1, 'invalid', textarea_1_invalid_binding));
+	textarea_1.$on("blur", /*blur_handler_2*/ ctx[58]);
+	textarea_1.$on("focus", /*focus_handler_2*/ ctx[59]);
+	textarea_1.$on("blur", /*blur_handler*/ ctx[60]);
+	textarea_1.$on("focus", /*focus_handler*/ ctx[61]);
+	const internalCounter_slot_template = /*#slots*/ ctx[50].internalCounter;
+	const internalCounter_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(internalCounter_slot_template, ctx, /*$$scope*/ ctx[89], get_internalCounter_slot_context);
+
+	return {
+		c() {
+			span = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("span");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(textarea_1.$$.fragment);
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (internalCounter_slot) internalCounter_slot.c();
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(span, "class", span_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				'mdc-text-field__resizer': !('input$resizable' in /*$$restProps*/ ctx[42]) || /*$$restProps*/ ctx[42].input$resizable
+			}));
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, span, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(textarea_1, span, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(span, t);
+
+			if (internalCounter_slot) {
+				internalCounter_slot.m(span, null);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			const textarea_1_changes = (dirty[0] & /*disabled, required, updateInvalid, helperId*/ 270544896 | dirty[1] & /*$$restProps*/ 2048)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(textarea_1_spread_levels, [
+					dirty[0] & /*disabled*/ 4096 && { disabled: /*disabled*/ ctx[12] },
+					dirty[0] & /*required*/ 8192 && { required: /*required*/ ctx[13] },
+					dirty[0] & /*updateInvalid*/ 2097152 && { updateInvalid: /*updateInvalid*/ ctx[21] },
+					dirty[0] & /*helperId*/ 268435456 && { "aria-controls": /*helperId*/ ctx[28] },
+					dirty[0] & /*helperId*/ 268435456 && { "aria-describedby": /*helperId*/ ctx[28] },
+					dirty[1] & /*$$restProps*/ 2048 && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'input$'))
+				])
+			: {};
+
+			if (!updating_value && dirty[0] & /*value*/ 1) {
+				updating_value = true;
+				textarea_1_changes.value = /*value*/ ctx[0];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value = false);
+			}
+
+			if (!updating_dirty && dirty[0] & /*dirty*/ 16) {
+				updating_dirty = true;
+				textarea_1_changes.dirty = /*dirty*/ ctx[4];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_dirty = false);
+			}
+
+			if (!updating_invalid && dirty[0] & /*invalid*/ 4) {
+				updating_invalid = true;
+				textarea_1_changes.invalid = /*invalid*/ ctx[2];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_invalid = false);
+			}
+
+			textarea_1.$set(textarea_1_changes);
+
+			if (internalCounter_slot) {
+				if (internalCounter_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						internalCounter_slot,
+						internalCounter_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(internalCounter_slot_template, /*$$scope*/ ctx[89], dirty, get_internalCounter_slot_changes),
+						get_internalCounter_slot_context
+					);
+				}
+			}
+
+			if (!current || dirty[1] & /*$$restProps*/ 2048 && span_class_value !== (span_class_value = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.classMap)({
+				'mdc-text-field__resizer': !('input$resizable' in /*$$restProps*/ ctx[42]) || /*$$restProps*/ ctx[42].input$resizable
+			}))) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(span, "class", span_class_value);
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(textarea_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(internalCounter_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(textarea_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(internalCounter_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(span);
+			/*textarea_1_binding*/ ctx[54](null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(textarea_1);
+			if (internalCounter_slot) internalCounter_slot.d(detaching);
+		}
+	};
+}
+
+// (127:6) {#if prefix != null}
+function create_if_block_5(ctx) {
+	let prefix_1;
+	let current;
+
+	prefix_1 = new _Prefix_js__WEBPACK_IMPORTED_MODULE_9__["default"]({
+			props: {
+				$$slots: { default: [create_default_slot_3] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(prefix_1.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(prefix_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const prefix_1_changes = {};
+
+			if (dirty[0] & /*prefix*/ 524288 | dirty[2] & /*$$scope*/ 134217728) {
+				prefix_1_changes.$$scope = { dirty, ctx };
+			}
+
+			prefix_1.$set(prefix_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(prefix_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(prefix_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(prefix_1, detaching);
+		}
+	};
+}
+
+// (128:8) <Prefix>
+function create_default_slot_3(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(/*prefix*/ ctx[19]);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty[0] & /*prefix*/ 524288) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t, /*prefix*/ ctx[19]);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+		}
+	};
+}
+
+// (149:6) {#if suffix != null}
+function create_if_block_4(ctx) {
+	let suffix_1;
+	let current;
+
+	suffix_1 = new _Suffix_js__WEBPACK_IMPORTED_MODULE_10__["default"]({
+			props: {
+				$$slots: { default: [create_default_slot_2] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(suffix_1.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(suffix_1, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const suffix_1_changes = {};
+
+			if (dirty[0] & /*suffix*/ 1048576 | dirty[2] & /*$$scope*/ 134217728) {
+				suffix_1_changes.$$scope = { dirty, ctx };
+			}
+
+			suffix_1.$set(suffix_1_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(suffix_1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(suffix_1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(suffix_1, detaching);
+		}
+	};
+}
+
+// (150:8) <Suffix>
+function create_default_slot_2(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(/*suffix*/ ctx[20]);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+		},
+		p(ctx, dirty) {
+			if (dirty[0] & /*suffix*/ 1048576) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t, /*suffix*/ ctx[20]);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+		}
+	};
+}
+
+// (154:4) <ContextFragment key="SMUI:textfield:icon:leading" value={false}>
+function create_default_slot_1(ctx) {
+	let current;
+	const trailingIcon_slot_template = /*#slots*/ ctx[50].trailingIcon;
+	const trailingIcon_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(trailingIcon_slot_template, ctx, /*$$scope*/ ctx[89], get_trailingIcon_slot_context);
+
+	return {
+		c() {
+			if (trailingIcon_slot) trailingIcon_slot.c();
+		},
+		m(target, anchor) {
+			if (trailingIcon_slot) {
+				trailingIcon_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (trailingIcon_slot) {
+				if (trailingIcon_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						trailingIcon_slot,
+						trailingIcon_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(trailingIcon_slot_template, /*$$scope*/ ctx[89], dirty, get_trailingIcon_slot_changes),
+						get_trailingIcon_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(trailingIcon_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(trailingIcon_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (trailingIcon_slot) trailingIcon_slot.d(detaching);
+		}
+	};
+}
+
+// (157:4) {#if !textarea && variant !== 'outlined' && ripple}
+function create_if_block_2(ctx) {
+	let lineripple;
+	let current;
+	const lineripple_spread_levels = [(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'ripple$')];
+	let lineripple_props = {};
+
+	for (let i = 0; i < lineripple_spread_levels.length; i += 1) {
+		lineripple_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(lineripple_props, lineripple_spread_levels[i]);
+	}
+
+	lineripple = new _smui_line_ripple_LineRipple_svelte__WEBPACK_IMPORTED_MODULE_6__["default"]({ props: lineripple_props });
+	/*lineripple_binding*/ ctx[71](lineripple);
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(lineripple.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(lineripple, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const lineripple_changes = (dirty[1] & /*$$restProps*/ 2048)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(lineripple_spread_levels, [(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'ripple$'))])
+			: {};
+
+			lineripple.$set(lineripple_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(lineripple.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(lineripple.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			/*lineripple_binding*/ ctx[71](null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(lineripple, detaching);
+		}
+	};
+}
+
+// (219:0) {#if $$slots.helper}
+function create_if_block(ctx) {
+	let helperline;
+	let current;
+	const helperline_spread_levels = [(0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'helperLine$')];
+
+	let helperline_props = {
+		$$slots: { default: [create_default_slot] },
+		$$scope: { ctx }
+	};
+
+	for (let i = 0; i < helperline_spread_levels.length; i += 1) {
+		helperline_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(helperline_props, helperline_spread_levels[i]);
+	}
+
+	helperline = new _HelperLine_js__WEBPACK_IMPORTED_MODULE_8__["default"]({ props: helperline_props });
+	helperline.$on("SMUI:textfield:helper-text:id", /*SMUI_textfield_helper_text_id_handler*/ ctx[84]);
+	helperline.$on("SMUI:textfield:helper-text:mount", /*SMUI_textfield_helper_text_mount_handler*/ ctx[85]);
+	helperline.$on("SMUI:textfield:helper-text:unmount", /*SMUI_textfield_helper_text_unmount_handler*/ ctx[86]);
+	helperline.$on("SMUI:textfield:character-counter:mount", /*SMUI_textfield_character_counter_mount_handler_1*/ ctx[87]);
+	helperline.$on("SMUI:textfield:character-counter:unmount", /*SMUI_textfield_character_counter_unmount_handler_1*/ ctx[88]);
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(helperline.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(helperline, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const helperline_changes = (dirty[1] & /*$$restProps*/ 2048)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(helperline_spread_levels, [(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.prefixFilter)(/*$$restProps*/ ctx[42], 'helperLine$'))])
+			: {};
+
+			if (dirty[2] & /*$$scope*/ 134217728) {
+				helperline_changes.$$scope = { dirty, ctx };
+			}
+
+			helperline.$set(helperline_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(helperline.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(helperline.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(helperline, detaching);
+		}
+	};
+}
+
+// (220:2) <HelperLine     on:SMUI:textfield:helper-text:id={(event) => (helperId = event.detail)}     on:SMUI:textfield:helper-text:mount={(event) => (helperText = event.detail)}     on:SMUI:textfield:helper-text:unmount={() => {       helperId = undefined;       helperText = undefined;     }}     on:SMUI:textfield:character-counter:mount={(event) =>       (characterCounter = event.detail)}     on:SMUI:textfield:character-counter:unmount={() =>       (characterCounter = undefined)}     {...prefixFilter($$restProps, 'helperLine$')}     >
+function create_default_slot(ctx) {
+	let current;
+	const helper_slot_template = /*#slots*/ ctx[50].helper;
+	const helper_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(helper_slot_template, ctx, /*$$scope*/ ctx[89], get_helper_slot_context);
+
+	return {
+		c() {
+			if (helper_slot) helper_slot.c();
+		},
+		m(target, anchor) {
+			if (helper_slot) {
+				helper_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (helper_slot) {
+				if (helper_slot.p && (!current || dirty[2] & /*$$scope*/ 134217728)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						helper_slot,
+						helper_slot_template,
+						ctx,
+						/*$$scope*/ ctx[89],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[89])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(helper_slot_template, /*$$scope*/ ctx[89], dirty, get_helper_slot_changes),
+						get_helper_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(helper_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(helper_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (helper_slot) helper_slot.d(detaching);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let current_block_type_index;
+	let if_block0;
+	let t;
+	let if_block1_anchor;
+	let current;
+	const if_block_creators = [create_if_block_1, create_else_block_1];
+	const if_blocks = [];
+
+	function select_block_type(ctx, dirty) {
+		if (/*valued*/ ctx[24]) return 0;
+		return 1;
+	}
+
+	current_block_type_index = select_block_type(ctx, [-1, -1, -1, -1]);
+	if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+	let if_block1 = /*$$slots*/ ctx[41].helper && create_if_block(ctx);
+
+	return {
+		c() {
+			if_block0.c();
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block1) if_block1.c();
+			if_block1_anchor = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.empty)();
+		},
+		m(target, anchor) {
+			if_blocks[current_block_type_index].m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+			if (if_block1) if_block1.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, if_block1_anchor, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			let previous_block_index = current_block_type_index;
+			current_block_type_index = select_block_type(ctx, dirty);
+
+			if (current_block_type_index === previous_block_index) {
+				if_blocks[current_block_type_index].p(ctx, dirty);
+			} else {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_blocks[previous_block_index], 1, 1, () => {
+					if_blocks[previous_block_index] = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+				if_block0 = if_blocks[current_block_type_index];
+
+				if (!if_block0) {
+					if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+					if_block0.c();
+				} else {
+					if_block0.p(ctx, dirty);
+				}
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0, 1);
+				if_block0.m(t.parentNode, t);
+			}
+
+			if (/*$$slots*/ ctx[41].helper) {
+				if (if_block1) {
+					if_block1.p(ctx, dirty);
+
+					if (dirty[1] & /*$$slots*/ 1024) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					}
+				} else {
+					if_block1 = create_if_block(ctx);
+					if_block1.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1, 1);
+					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+				}
+			} else if (if_block1) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1, 1, 1, () => {
+					if_block1 = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block1);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block1);
+			current = false;
+		},
+		d(detaching) {
+			if_blocks[current_block_type_index].d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+			if (if_block1) if_block1.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(if_block1_anchor);
+		}
+	};
+}
+
+const func = ([name, value]) => `${name}: ${value};`;
+const func_1 = ([name, value]) => `${name}: ${value};`;
+
+function instance_1($$self, $$props, $$invalidate) {
+	let valued;
+	let inputElement;
+
+	const omit_props_names = [
+		"use","class","style","ripple","disabled","required","textarea","variant","noLabel","label","type","value","files","dirty","invalid","prefix","suffix","updateInvalid","validateOnValueChange","useNativeValidation","withLeadingIcon","withTrailingIcon","input","floatingLabel","lineRipple","notchedOutline","focus","layout","getElement"
+	];
+
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { $$slots: slots = {}, $$scope } = $$props;
+	const $$slots = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_slots)(slots);
+	const { applyPassive } = _material_dom__WEBPACK_IMPORTED_MODULE_13__;
+	const forwardEvents = (0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_2__.forwardEventsBuilder)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_current_component)());
+
+	let uninitializedValue = () => {
+		
+	};
+
+	let { use = [] } = $$props;
+	let { class: className = '' } = $$props;
+	let { style = '' } = $$props;
+	let { ripple = true } = $$props;
+	let { disabled = false } = $$props;
+	let { required = false } = $$props;
+	let { textarea = false } = $$props;
+	let { variant = textarea ? 'outlined' : 'standard' } = $$props;
+	let { noLabel = false } = $$props;
+	let { label = null } = $$props;
+	let { type = 'text' } = $$props;
+	let { value = uninitializedValue } = $$props;
+	let { files = uninitializedValue } = $$props;
+	let { dirty = false } = $$props;
+	let { invalid = uninitializedValue } = $$props;
+	let { prefix = null } = $$props;
+	let { suffix = null } = $$props;
+	let { updateInvalid = invalid === uninitializedValue } = $$props;
+	let { validateOnValueChange = updateInvalid } = $$props;
+	let { useNativeValidation = updateInvalid } = $$props;
+	let { withLeadingIcon = uninitializedValue } = $$props;
+	let { withTrailingIcon = uninitializedValue } = $$props;
+	let { input = undefined } = $$props;
+	let { floatingLabel = undefined } = $$props;
+	let { lineRipple = undefined } = $$props;
+	let { notchedOutline = undefined } = $$props;
+	let element;
+	let instance;
+	let internalClasses = {};
+	let internalStyles = {};
+	let helperId;
+	let focused = false;
+	let addLayoutListener = (0,svelte__WEBPACK_IMPORTED_MODULE_1__.getContext)('SMUI:addLayoutListener');
+	let removeLayoutListener;
+	let initPromiseResolve;
+	let initPromise = new Promise(resolve => initPromiseResolve = resolve);
+
+	// These are instances, not accessors.
+	let leadingIcon;
+
+	let trailingIcon;
+	let helperText;
+	let characterCounter;
+
+	// React to changes of value from outside component.
+	let previousValue = value;
+
+	if (addLayoutListener) {
+		removeLayoutListener = addLayoutListener(layout);
+	}
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onMount)(() => {
+		$$invalidate(48, instance = new _material_textfield__WEBPACK_IMPORTED_MODULE_14__.MDCTextFieldFoundation({
+				// getRootAdapterMethods_
+				addClass,
+				removeClass,
+				hasClass,
+				registerTextFieldInteractionHandler: (evtType, handler) => getElement().addEventListener(evtType, handler),
+				deregisterTextFieldInteractionHandler: (evtType, handler) => getElement().removeEventListener(evtType, handler),
+				registerValidationAttributeChangeHandler: handler => {
+					const getAttributesList = mutationsList => {
+						return mutationsList.map(mutation => mutation.attributeName).filter(attributeName => attributeName);
+					};
+
+					const observer = new MutationObserver(mutationsList => {
+							if (useNativeValidation) {
+								handler(getAttributesList(mutationsList));
+							}
+						});
+
+					const config = { attributes: true };
+					observer.observe(input.getElement(), config);
+					return observer;
+				},
+				deregisterValidationAttributeChangeHandler: observer => {
+					observer.disconnect();
+				},
+				// getInputAdapterMethods_
+				getNativeInput: () => input.getElement(),
+				setInputAttr: (name, value) => {
+					input.addAttr(name, value);
+				},
+				removeInputAttr: name => {
+					input.removeAttr(name);
+				},
+				isFocused: () => document.activeElement === input.getElement(),
+				registerInputInteractionHandler: (evtType, handler) => {
+					input.getElement().addEventListener(evtType, handler, applyPassive());
+				},
+				deregisterInputInteractionHandler: (evtType, handler) => {
+					input.getElement().removeEventListener(evtType, handler, applyPassive());
+				},
+				// getLabelAdapterMethods_
+				floatLabel: shouldFloat => floatingLabel && floatingLabel.float(shouldFloat),
+				getLabelWidth: () => floatingLabel ? floatingLabel.getWidth() : 0,
+				hasLabel: () => !!floatingLabel,
+				shakeLabel: shouldShake => floatingLabel && floatingLabel.shake(shouldShake),
+				setLabelRequired: isRequired => floatingLabel && floatingLabel.setRequired(isRequired),
+				// getLineRippleAdapterMethods_
+				activateLineRipple: () => lineRipple && lineRipple.activate(),
+				deactivateLineRipple: () => lineRipple && lineRipple.deactivate(),
+				setLineRippleTransformOrigin: normalizedX => lineRipple && lineRipple.setRippleCenter(normalizedX),
+				// getOutlineAdapterMethods_
+				closeOutline: () => notchedOutline && notchedOutline.closeNotch(),
+				hasOutline: () => !!notchedOutline,
+				notchOutline: labelWidth => notchedOutline && notchedOutline.notch(labelWidth)
+			},
+		{
+				get helperText() {
+					return helperText;
+				},
+				get characterCounter() {
+					return characterCounter;
+				},
+				get leadingIcon() {
+					return leadingIcon;
+				},
+				get trailingIcon() {
+					return trailingIcon;
+				}
+			}));
+
+		if (valued) {
+			instance.init();
+		} else {
+			(0,svelte__WEBPACK_IMPORTED_MODULE_1__.tick)().then(() => {
+				instance.init();
+			});
+		}
+
+		initPromiseResolve();
+
+		return () => {
+			instance.destroy();
+		};
+	});
+
+	(0,svelte__WEBPACK_IMPORTED_MODULE_1__.onDestroy)(() => {
+		if (removeLayoutListener) {
+			removeLayoutListener();
+		}
+	});
+
+	function hasClass(className) {
+		return className in internalClasses
+		? internalClasses[className]
+		: getElement().classList.contains(className);
+	}
+
+	function addClass(className) {
+		if (!internalClasses[className]) {
+			$$invalidate(26, internalClasses[className] = true, internalClasses);
+		}
+	}
+
+	function removeClass(className) {
+		if (!(className in internalClasses) || internalClasses[className]) {
+			$$invalidate(26, internalClasses[className] = false, internalClasses);
+		}
+	}
+
+	function addStyle(name, value) {
+		if (internalStyles[name] != value) {
+			if (value === '' || value == null) {
+				delete internalStyles[name];
+				$$invalidate(27, internalStyles);
+			} else {
+				$$invalidate(27, internalStyles[name] = value, internalStyles);
+			}
+		}
+	}
+
+	function focus() {
+		input.focus();
+	}
+
+	function layout() {
+		if (instance) {
+			const openNotch = instance.shouldFloat;
+			instance.notchOutline(openNotch);
+		}
+	}
+
+	function getElement() {
+		return element;
+	}
+
+	function floatinglabel_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			floatingLabel = $$value;
+			$$invalidate(5, floatingLabel);
+		});
+	}
+
+	function floatinglabel_binding_1($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			floatingLabel = $$value;
+			$$invalidate(5, floatingLabel);
+		});
+	}
+
+	function notchedoutline_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			notchedOutline = $$value;
+			$$invalidate(7, notchedOutline);
+		});
+	}
+
+	function textarea_1_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			input = $$value;
+			$$invalidate(3, input);
+		});
+	}
+
+	function textarea_1_value_binding(value$1) {
+		value = value$1;
+		$$invalidate(0, value);
+	}
+
+	function textarea_1_dirty_binding(value) {
+		dirty = value;
+		$$invalidate(4, dirty);
+	}
+
+	function textarea_1_invalid_binding(value) {
+		invalid = value;
+		(($$invalidate(2, invalid), $$invalidate(48, instance)), $$invalidate(21, updateInvalid));
+	}
+
+	const blur_handler_2 = () => $$invalidate(29, focused = false);
+	const focus_handler_2 = () => $$invalidate(29, focused = true);
+
+	function blur_handler(event) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bubble.call(this, $$self, event);
+	}
+
+	function focus_handler(event) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bubble.call(this, $$self, event);
+	}
+
+	function input_1_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			input = $$value;
+			$$invalidate(3, input);
+		});
+	}
+
+	function input_1_value_binding(value$1) {
+		value = value$1;
+		$$invalidate(0, value);
+	}
+
+	function input_1_files_binding(value) {
+		files = value;
+		$$invalidate(1, files);
+	}
+
+	function input_1_dirty_binding(value) {
+		dirty = value;
+		$$invalidate(4, dirty);
+	}
+
+	function input_1_invalid_binding(value) {
+		invalid = value;
+		(($$invalidate(2, invalid), $$invalidate(48, instance)), $$invalidate(21, updateInvalid));
+	}
+
+	const blur_handler_3 = () => $$invalidate(29, focused = false);
+	const focus_handler_3 = () => $$invalidate(29, focused = true);
+
+	function blur_handler_1(event) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bubble.call(this, $$self, event);
+	}
+
+	function focus_handler_1(event) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bubble.call(this, $$self, event);
+	}
+
+	function lineripple_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			lineRipple = $$value;
+			$$invalidate(6, lineRipple);
+		});
+	}
+
+	function label_1_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(25, element);
+		});
+	}
+
+	const SMUI_textfield_leading_icon_mount_handler = event => $$invalidate(30, leadingIcon = event.detail);
+	const SMUI_textfield_leading_icon_unmount_handler = () => $$invalidate(30, leadingIcon = undefined);
+	const SMUI_textfield_trailing_icon_mount_handler = event => $$invalidate(31, trailingIcon = event.detail);
+	const SMUI_textfield_trailing_icon_unmount_handler = () => $$invalidate(31, trailingIcon = undefined);
+	const SMUI_textfield_character_counter_mount_handler = event => $$invalidate(33, characterCounter = event.detail);
+	const SMUI_textfield_character_counter_unmount_handler = () => $$invalidate(33, characterCounter = undefined);
+
+	function div_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			element = $$value;
+			$$invalidate(25, element);
+		});
+	}
+
+	const SMUI_textfield_leading_icon_mount_handler_1 = event => $$invalidate(30, leadingIcon = event.detail);
+	const SMUI_textfield_leading_icon_unmount_handler_1 = () => $$invalidate(30, leadingIcon = undefined);
+	const SMUI_textfield_trailing_icon_mount_handler_1 = event => $$invalidate(31, trailingIcon = event.detail);
+	const SMUI_textfield_trailing_icon_unmount_handler_1 = () => $$invalidate(31, trailingIcon = undefined);
+	const SMUI_textfield_helper_text_id_handler = event => $$invalidate(28, helperId = event.detail);
+	const SMUI_textfield_helper_text_mount_handler = event => $$invalidate(32, helperText = event.detail);
+
+	const SMUI_textfield_helper_text_unmount_handler = () => {
+		$$invalidate(28, helperId = undefined);
+		$$invalidate(32, helperText = undefined);
+	};
+
+	const SMUI_textfield_character_counter_mount_handler_1 = event => $$invalidate(33, characterCounter = event.detail);
+	const SMUI_textfield_character_counter_unmount_handler_1 = () => $$invalidate(33, characterCounter = undefined);
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(42, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('use' in $$new_props) $$invalidate(8, use = $$new_props.use);
+		if ('class' in $$new_props) $$invalidate(9, className = $$new_props.class);
+		if ('style' in $$new_props) $$invalidate(10, style = $$new_props.style);
+		if ('ripple' in $$new_props) $$invalidate(11, ripple = $$new_props.ripple);
+		if ('disabled' in $$new_props) $$invalidate(12, disabled = $$new_props.disabled);
+		if ('required' in $$new_props) $$invalidate(13, required = $$new_props.required);
+		if ('textarea' in $$new_props) $$invalidate(14, textarea = $$new_props.textarea);
+		if ('variant' in $$new_props) $$invalidate(15, variant = $$new_props.variant);
+		if ('noLabel' in $$new_props) $$invalidate(16, noLabel = $$new_props.noLabel);
+		if ('label' in $$new_props) $$invalidate(17, label = $$new_props.label);
+		if ('type' in $$new_props) $$invalidate(18, type = $$new_props.type);
+		if ('value' in $$new_props) $$invalidate(0, value = $$new_props.value);
+		if ('files' in $$new_props) $$invalidate(1, files = $$new_props.files);
+		if ('dirty' in $$new_props) $$invalidate(4, dirty = $$new_props.dirty);
+		if ('invalid' in $$new_props) $$invalidate(2, invalid = $$new_props.invalid);
+		if ('prefix' in $$new_props) $$invalidate(19, prefix = $$new_props.prefix);
+		if ('suffix' in $$new_props) $$invalidate(20, suffix = $$new_props.suffix);
+		if ('updateInvalid' in $$new_props) $$invalidate(21, updateInvalid = $$new_props.updateInvalid);
+		if ('validateOnValueChange' in $$new_props) $$invalidate(43, validateOnValueChange = $$new_props.validateOnValueChange);
+		if ('useNativeValidation' in $$new_props) $$invalidate(44, useNativeValidation = $$new_props.useNativeValidation);
+		if ('withLeadingIcon' in $$new_props) $$invalidate(22, withLeadingIcon = $$new_props.withLeadingIcon);
+		if ('withTrailingIcon' in $$new_props) $$invalidate(23, withTrailingIcon = $$new_props.withTrailingIcon);
+		if ('input' in $$new_props) $$invalidate(3, input = $$new_props.input);
+		if ('floatingLabel' in $$new_props) $$invalidate(5, floatingLabel = $$new_props.floatingLabel);
+		if ('lineRipple' in $$new_props) $$invalidate(6, lineRipple = $$new_props.lineRipple);
+		if ('notchedOutline' in $$new_props) $$invalidate(7, notchedOutline = $$new_props.notchedOutline);
+		if ('$$scope' in $$new_props) $$invalidate(89, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty[0] & /*value, files*/ 3) {
+			$: $$invalidate(24, valued = value !== uninitializedValue || files !== uninitializedValue);
+		}
+
+		if ($$self.$$.dirty[0] & /*input*/ 8) {
+			$: $$invalidate(34, inputElement = input && input.getElement());
+		}
+
+		if ($$self.$$.dirty[0] & /*invalid, updateInvalid*/ 2097156 | $$self.$$.dirty[1] & /*instance*/ 131072) {
+			$: if (instance && instance.isValid() !== !invalid) {
+				if (updateInvalid) {
+					$$invalidate(2, invalid = !instance.isValid());
+				} else {
+					instance.setValid(!invalid);
+				}
+			}
+		}
+
+		if ($$self.$$.dirty[1] & /*instance, validateOnValueChange*/ 135168) {
+			$: if (instance && instance.getValidateOnValueChange() !== validateOnValueChange) {
+				instance.setValidateOnValueChange(validateOnValueChange === uninitializedValue
+				? false
+				: validateOnValueChange);
+			}
+		}
+
+		if ($$self.$$.dirty[1] & /*instance, useNativeValidation*/ 139264) {
+			$: if (instance) {
+				instance.setUseNativeValidation(useNativeValidation);
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*disabled*/ 4096 | $$self.$$.dirty[1] & /*instance*/ 131072) {
+			$: if (instance) {
+				instance.setDisabled(disabled);
+			}
+		}
+
+		if ($$self.$$.dirty[0] & /*valued, value*/ 16777217 | $$self.$$.dirty[1] & /*instance, previousValue*/ 393216) {
+			$: if (instance && valued && previousValue !== value) {
+				$$invalidate(49, previousValue = value);
+
+				// Check the data is flowing down.
+				if (instance.getValue() !== value) {
+					instance.setValue(value);
+				}
+			}
+		}
+	};
+
+	return [
+		value,
+		files,
+		invalid,
+		input,
+		dirty,
+		floatingLabel,
+		lineRipple,
+		notchedOutline,
+		use,
+		className,
+		style,
+		ripple,
+		disabled,
+		required,
+		textarea,
+		variant,
+		noLabel,
+		label,
+		type,
+		prefix,
+		suffix,
+		updateInvalid,
+		withLeadingIcon,
+		withTrailingIcon,
+		valued,
+		element,
+		internalClasses,
+		internalStyles,
+		helperId,
+		focused,
+		leadingIcon,
+		trailingIcon,
+		helperText,
+		characterCounter,
+		inputElement,
+		forwardEvents,
+		uninitializedValue,
+		initPromise,
+		addClass,
+		removeClass,
+		addStyle,
+		$$slots,
+		$$restProps,
+		validateOnValueChange,
+		useNativeValidation,
+		focus,
+		layout,
+		getElement,
+		instance,
+		previousValue,
+		slots,
+		floatinglabel_binding,
+		floatinglabel_binding_1,
+		notchedoutline_binding,
+		textarea_1_binding,
+		textarea_1_value_binding,
+		textarea_1_dirty_binding,
+		textarea_1_invalid_binding,
+		blur_handler_2,
+		focus_handler_2,
+		blur_handler,
+		focus_handler,
+		input_1_binding,
+		input_1_value_binding,
+		input_1_files_binding,
+		input_1_dirty_binding,
+		input_1_invalid_binding,
+		blur_handler_3,
+		focus_handler_3,
+		blur_handler_1,
+		focus_handler_1,
+		lineripple_binding,
+		label_1_binding,
+		SMUI_textfield_leading_icon_mount_handler,
+		SMUI_textfield_leading_icon_unmount_handler,
+		SMUI_textfield_trailing_icon_mount_handler,
+		SMUI_textfield_trailing_icon_unmount_handler,
+		SMUI_textfield_character_counter_mount_handler,
+		SMUI_textfield_character_counter_unmount_handler,
+		div_binding,
+		SMUI_textfield_leading_icon_mount_handler_1,
+		SMUI_textfield_leading_icon_unmount_handler_1,
+		SMUI_textfield_trailing_icon_mount_handler_1,
+		SMUI_textfield_trailing_icon_unmount_handler_1,
+		SMUI_textfield_helper_text_id_handler,
+		SMUI_textfield_helper_text_mount_handler,
+		SMUI_textfield_helper_text_unmount_handler,
+		SMUI_textfield_character_counter_mount_handler_1,
+		SMUI_textfield_character_counter_unmount_handler_1,
+		$$scope
+	];
+}
+
+class Textfield extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(
+			this,
+			options,
+			instance_1,
+			create_fragment,
+			svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal,
+			{
+				use: 8,
+				class: 9,
+				style: 10,
+				ripple: 11,
+				disabled: 12,
+				required: 13,
+				textarea: 14,
+				variant: 15,
+				noLabel: 16,
+				label: 17,
+				type: 18,
+				value: 0,
+				files: 1,
+				dirty: 4,
+				invalid: 2,
+				prefix: 19,
+				suffix: 20,
+				updateInvalid: 21,
+				validateOnValueChange: 43,
+				useNativeValidation: 44,
+				withLeadingIcon: 22,
+				withTrailingIcon: 23,
+				input: 3,
+				floatingLabel: 5,
+				lineRipple: 6,
+				notchedOutline: 7,
+				focus: 45,
+				layout: 46,
+				getElement: 47
+			},
+			null,
+			[-1, -1, -1, -1]
+		);
+	}
+
+	get focus() {
+		return this.$$.ctx[45];
+	}
+
+	get layout() {
+		return this.$$.ctx[46];
+	}
+
+	get getElement() {
+		return this.$$.ctx[47];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Textfield);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/Components/ApplicationLogo.svelte":
 /*!********************************************************!*\
   !*** ./resources/js/Components/ApplicationLogo.svelte ***!
@@ -7025,6 +14545,370 @@ class Button_1 extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteCompon
 
 if (module && module.hot) {}
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Button_1);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/Dialog.svelte":
+/*!***********************************************!*\
+  !*** ./resources/js/Components/Dialog.svelte ***!
+  \***********************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _smui_dialog__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/dialog */ "./node_modules/@smui/dialog/index.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* resources\js\Components\Dialog.svelte generated by Svelte v3.43.1 */
+
+
+
+const get_actions_slot_changes = dirty => ({});
+const get_actions_slot_context = ctx => ({});
+const get_content_slot_changes = dirty => ({});
+const get_content_slot_context = ctx => ({});
+const get_title_slot_changes = dirty => ({});
+const get_title_slot_context = ctx => ({});
+
+// (9:4) <Title id="{id}-mandatory-title">
+function create_default_slot_3(ctx) {
+	let current;
+	const title_slot_template = /*#slots*/ ctx[2].title;
+	const title_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(title_slot_template, ctx, /*$$scope*/ ctx[4], get_title_slot_context);
+
+	return {
+		c() {
+			if (title_slot) title_slot.c();
+		},
+		m(target, anchor) {
+			if (title_slot) {
+				title_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (title_slot) {
+				if (title_slot.p && (!current || dirty & /*$$scope*/ 16)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						title_slot,
+						title_slot_template,
+						ctx,
+						/*$$scope*/ ctx[4],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[4])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(title_slot_template, /*$$scope*/ ctx[4], dirty, get_title_slot_changes),
+						get_title_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(title_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(title_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (title_slot) title_slot.d(detaching);
+		}
+	};
+}
+
+// (12:4) <Content id="{id}-mandatory-content">
+function create_default_slot_2(ctx) {
+	let current;
+	const content_slot_template = /*#slots*/ ctx[2].content;
+	const content_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(content_slot_template, ctx, /*$$scope*/ ctx[4], get_content_slot_context);
+
+	return {
+		c() {
+			if (content_slot) content_slot.c();
+		},
+		m(target, anchor) {
+			if (content_slot) {
+				content_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (content_slot) {
+				if (content_slot.p && (!current || dirty & /*$$scope*/ 16)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						content_slot,
+						content_slot_template,
+						ctx,
+						/*$$scope*/ ctx[4],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[4])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(content_slot_template, /*$$scope*/ ctx[4], dirty, get_content_slot_changes),
+						get_content_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(content_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(content_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (content_slot) content_slot.d(detaching);
+		}
+	};
+}
+
+// (15:4) <Actions>
+function create_default_slot_1(ctx) {
+	let current;
+	const actions_slot_template = /*#slots*/ ctx[2].actions;
+	const actions_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(actions_slot_template, ctx, /*$$scope*/ ctx[4], get_actions_slot_context);
+
+	return {
+		c() {
+			if (actions_slot) actions_slot.c();
+		},
+		m(target, anchor) {
+			if (actions_slot) {
+				actions_slot.m(target, anchor);
+			}
+
+			current = true;
+		},
+		p(ctx, dirty) {
+			if (actions_slot) {
+				if (actions_slot.p && (!current || dirty & /*$$scope*/ 16)) {
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
+						actions_slot,
+						actions_slot_template,
+						ctx,
+						/*$$scope*/ ctx[4],
+						!current
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[4])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(actions_slot_template, /*$$scope*/ ctx[4], dirty, get_actions_slot_changes),
+						get_actions_slot_context
+					);
+				}
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(actions_slot, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(actions_slot, local);
+			current = false;
+		},
+		d(detaching) {
+			if (actions_slot) actions_slot.d(detaching);
+		}
+	};
+}
+
+// (8:0) <Dialog bind:open scrimClickAction="" escapeKeyAction="" aria-labelledby="mandatory-title" aria-describedby="mandatory-content" id="{id}-dialog">
+function create_default_slot(ctx) {
+	let title;
+	let t0;
+	let content;
+	let t1;
+	let actions;
+	let current;
+
+	title = new _smui_dialog__WEBPACK_IMPORTED_MODULE_1__.Title({
+			props: {
+				id: "" + (/*id*/ ctx[1] + "-mandatory-title"),
+				$$slots: { default: [create_default_slot_3] },
+				$$scope: { ctx }
+			}
+		});
+
+	content = new _smui_dialog__WEBPACK_IMPORTED_MODULE_1__.Content({
+			props: {
+				id: "" + (/*id*/ ctx[1] + "-mandatory-content"),
+				$$slots: { default: [create_default_slot_2] },
+				$$scope: { ctx }
+			}
+		});
+
+	actions = new _smui_dialog__WEBPACK_IMPORTED_MODULE_1__.Actions({
+			props: {
+				$$slots: { default: [create_default_slot_1] },
+				$$scope: { ctx }
+			}
+		});
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(title.$$.fragment);
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(content.$$.fragment);
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(actions.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(title, target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t0, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(content, target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t1, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(actions, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const title_changes = {};
+			if (dirty & /*id*/ 2) title_changes.id = "" + (/*id*/ ctx[1] + "-mandatory-title");
+
+			if (dirty & /*$$scope*/ 16) {
+				title_changes.$$scope = { dirty, ctx };
+			}
+
+			title.$set(title_changes);
+			const content_changes = {};
+			if (dirty & /*id*/ 2) content_changes.id = "" + (/*id*/ ctx[1] + "-mandatory-content");
+
+			if (dirty & /*$$scope*/ 16) {
+				content_changes.$$scope = { dirty, ctx };
+			}
+
+			content.$set(content_changes);
+			const actions_changes = {};
+
+			if (dirty & /*$$scope*/ 16) {
+				actions_changes.$$scope = { dirty, ctx };
+			}
+
+			actions.$set(actions_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(title.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(content.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(actions.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(title.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(content.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(actions.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(title, detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(content, detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(actions, detaching);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let dialog;
+	let updating_open;
+	let current;
+
+	function dialog_open_binding(value) {
+		/*dialog_open_binding*/ ctx[3](value);
+	}
+
+	let dialog_props = {
+		scrimClickAction: "",
+		escapeKeyAction: "",
+		"aria-labelledby": "mandatory-title",
+		"aria-describedby": "mandatory-content",
+		id: "" + (/*id*/ ctx[1] + "-dialog"),
+		$$slots: { default: [create_default_slot] },
+		$$scope: { ctx }
+	};
+
+	if (/*open*/ ctx[0] !== void 0) {
+		dialog_props.open = /*open*/ ctx[0];
+	}
+
+	dialog = new _smui_dialog__WEBPACK_IMPORTED_MODULE_1__["default"]({ props: dialog_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(dialog, 'open', dialog_open_binding));
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(dialog.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(dialog, target, anchor);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			const dialog_changes = {};
+			if (dirty & /*id*/ 2) dialog_changes.id = "" + (/*id*/ ctx[1] + "-dialog");
+
+			if (dirty & /*$$scope, id*/ 18) {
+				dialog_changes.$$scope = { dirty, ctx };
+			}
+
+			if (!updating_open && dirty & /*open*/ 1) {
+				updating_open = true;
+				dialog_changes.open = /*open*/ ctx[0];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_open = false);
+			}
+
+			dialog.$set(dialog_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(dialog.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(dialog.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(dialog, detaching);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let { $$slots: slots = {}, $$scope } = $$props;
+	let { open = false } = $$props;
+	let { id } = $$props;
+
+	function dialog_open_binding(value) {
+		open = value;
+		$$invalidate(0, open);
+	}
+
+	$$self.$$set = $$props => {
+		if ('open' in $$props) $$invalidate(0, open = $$props.open);
+		if ('id' in $$props) $$invalidate(1, id = $$props.id);
+		if ('$$scope' in $$props) $$invalidate(4, $$scope = $$props.$$scope);
+	};
+
+	return [open, id, slots, dialog_open_binding, $$scope];
+}
+
+class Dialog_1 extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, { open: 0, id: 1 });
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Dialog_1);
 
 
 
@@ -7529,6 +15413,845 @@ if (module && module.hot) {}
 
 /***/ }),
 
+/***/ "./resources/js/Components/File.svelte":
+/*!*********************************************!*\
+  !*** ./resources/js/Components/File.svelte ***!
+  \*********************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _Components_Label__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Label */ "./resources/js/Components/Label.svelte");
+/* harmony import */ var _Components_InputError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/Components/InputError */ "./resources/js/Components/InputError.svelte");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* resources\js\Components\File.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+function create_if_block(ctx) {
+	let inputerror;
+	let current;
+	inputerror = new _Components_InputError__WEBPACK_IMPORTED_MODULE_2__["default"]({ props: { message: /*error*/ ctx[0] } });
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(inputerror.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(inputerror, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const inputerror_changes = {};
+			if (dirty & /*error*/ 1) inputerror_changes.message = /*error*/ ctx[0];
+			inputerror.$set(inputerror_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(inputerror.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(inputerror.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(inputerror, detaching);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let div;
+	let label_1;
+	let t0;
+	let input_1;
+	let input_1_class_value;
+	let t1;
+	let div_class_value;
+	let current;
+	let mounted;
+	let dispose;
+
+	label_1 = new _Components_Label__WEBPACK_IMPORTED_MODULE_1__["default"]({
+			props: {
+				label: /*label*/ ctx[2],
+				id: /*id*/ ctx[1]
+			}
+		});
+
+	let input_1_levels = [
+		/*props*/ ctx[3],
+		{ type: "file" },
+		{
+			class: input_1_class_value = "w-full border-gray-300 shadow-sm focus:ring focus:ring-opacity-50" + (/*error*/ ctx[0]
+			? ' ring ring-opacity-50 border-red-200 ring-red-200 focus:border-red-200 focus:ring-red-200'
+			: 'focus:border-indigo-200 focus:ring-indigo-200')
+		},
+		{ id: /*id*/ ctx[1] }
+	];
+
+	let input_1_data = {};
+
+	for (let i = 0; i < input_1_levels.length; i += 1) {
+		input_1_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(input_1_data, input_1_levels[i]);
+	}
+
+	let if_block = /*error*/ ctx[0] && create_if_block(ctx);
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(label_1.$$.fragment);
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			input_1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("input");
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block) if_block.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(input_1, input_1_data);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", div_class_value = /*$$restProps*/ ctx[5].class);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(label_1, div, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, input_1);
+			if (input_1.autofocus) input_1.focus();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t1);
+			if (if_block) if_block.m(div, null);
+			current = true;
+
+			if (!mounted) {
+				dispose = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(input_1, "change", /*change_handler*/ ctx[11]);
+				mounted = true;
+			}
+		},
+		p(ctx, [dirty]) {
+			const label_1_changes = {};
+			if (dirty & /*label*/ 4) label_1_changes.label = /*label*/ ctx[2];
+			if (dirty & /*id*/ 2) label_1_changes.id = /*id*/ ctx[1];
+			label_1.$set(label_1_changes);
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(input_1, input_1_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(input_1_levels, [
+				dirty & /*props*/ 8 && /*props*/ ctx[3],
+				{ type: "file" },
+				(!current || dirty & /*error*/ 1 && input_1_class_value !== (input_1_class_value = "w-full border-gray-300 shadow-sm focus:ring focus:ring-opacity-50" + (/*error*/ ctx[0]
+				? ' ring ring-opacity-50 border-red-200 ring-red-200 focus:border-red-200 focus:ring-red-200'
+				: 'focus:border-indigo-200 focus:ring-indigo-200'))) && { class: input_1_class_value },
+				(!current || dirty & /*id*/ 2) && { id: /*id*/ ctx[1] }
+			]));
+
+			if (/*error*/ ctx[0]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+
+					if (dirty & /*error*/ 1) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					}
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					if_block.m(div, null);
+				}
+			} else if (if_block) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block, 1, 1, () => {
+					if_block = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			if (!current || dirty & /*$$restProps*/ 32 && div_class_value !== (div_class_value = /*$$restProps*/ ctx[5].class)) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", div_class_value);
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(label_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(label_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(label_1);
+			if (if_block) if_block.d();
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let props;
+	const omit_props_names = ["id","value","label","error","maxSize","focus","select"];
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { id } = $$props;
+	let { value } = $$props;
+	let { label } = $$props;
+	let { error } = $$props;
+	let { maxSize } = $$props;
+	let input;
+	let size;
+	const focus = () => input.focus();
+	const select = () => input.select();
+
+	function update(event) {
+		$$invalidate(6, value = event.target.files[0]);
+	}
+
+	const change_handler = event => update(event);
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(5, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('id' in $$new_props) $$invalidate(1, id = $$new_props.id);
+		if ('value' in $$new_props) $$invalidate(6, value = $$new_props.value);
+		if ('label' in $$new_props) $$invalidate(2, label = $$new_props.label);
+		if ('error' in $$new_props) $$invalidate(0, error = $$new_props.error);
+		if ('maxSize' in $$new_props) $$invalidate(7, maxSize = $$new_props.maxSize);
+	};
+
+	$$self.$$.update = () => {
+		$: $$invalidate(3, props = {
+			...$$restProps,
+			class: `w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm ${$$restProps.class || ''}`
+		});
+
+		if ($$self.$$.dirty & /*value*/ 64) {
+			$: if (value?.size) $$invalidate(10, size = value?.size / 1e6);
+		}
+
+		if ($$self.$$.dirty & /*size, maxSize*/ 1152) {
+			$: size > maxSize / 1000
+			? $$invalidate(0, error = `El archivo pesa más de ${maxSize / 1000} MB. Por favor optimice el tamaño.`)
+			: $$invalidate(0, error = null);
+		}
+	};
+
+	return [
+		error,
+		id,
+		label,
+		props,
+		update,
+		$$restProps,
+		value,
+		maxSize,
+		focus,
+		select,
+		size,
+		change_handler
+	];
+}
+
+class File extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			id: 1,
+			value: 6,
+			label: 2,
+			error: 0,
+			maxSize: 7,
+			focus: 8,
+			select: 9
+		});
+	}
+
+	get focus() {
+		return this.$$.ctx[8];
+	}
+
+	get select() {
+		return this.$$.ctx[9];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (File);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/Input.svelte":
+/*!**********************************************!*\
+  !*** ./resources/js/Components/Input.svelte ***!
+  \**********************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var _Components_Label__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Components/Label */ "./resources/js/Components/Label.svelte");
+/* harmony import */ var _InputError__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InputError */ "./resources/js/Components/InputError.svelte");
+/* harmony import */ var _smui_textfield__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @smui/textfield */ "./node_modules/@smui/textfield/index.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* resources\js\Components\Input.svelte generated by Svelte v3.43.1 */
+
+
+
+
+
+
+function create_if_block(ctx) {
+	let inputerror;
+	let current;
+	inputerror = new _InputError__WEBPACK_IMPORTED_MODULE_2__["default"]({ props: { message: /*error*/ ctx[3] } });
+
+	return {
+		c() {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(inputerror.$$.fragment);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(inputerror, target, anchor);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const inputerror_changes = {};
+			if (dirty & /*error*/ 8) inputerror_changes.message = /*error*/ ctx[3];
+			inputerror.$set(inputerror_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(inputerror.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(inputerror.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(inputerror, detaching);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let div;
+	let label_1;
+	let t0;
+	let textfield;
+	let t1;
+	let div_class_value;
+	let current;
+
+	label_1 = new _Components_Label__WEBPACK_IMPORTED_MODULE_1__["default"]({
+			props: {
+				label: /*label*/ ctx[2],
+				id: /*id*/ ctx[1]
+			}
+		});
+
+	const textfield_spread_levels = [
+		{ disabled: /*disabled*/ ctx[5] },
+		/*props*/ ctx[7],
+		{ id: /*id*/ ctx[1] },
+		{ type: /*type*/ ctx[4] },
+		{ value: /*value*/ ctx[0] },
+		{ label: /*label*/ ctx[2] }
+	];
+
+	let textfield_props = {};
+
+	for (let i = 0; i < textfield_spread_levels.length; i += 1) {
+		textfield_props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(textfield_props, textfield_spread_levels[i]);
+	}
+
+	textfield = new _smui_textfield__WEBPACK_IMPORTED_MODULE_3__["default"]({ props: textfield_props });
+	/*textfield_binding*/ ctx[12](textfield);
+	textfield.$on("input", /*update*/ ctx[8]);
+	let if_block = /*error*/ ctx[3] && create_if_block(ctx);
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(label_1.$$.fragment);
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(textfield.$$.fragment);
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block) if_block.c();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", div_class_value = /*$$restProps*/ ctx[9].class);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(label_1, div, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(textfield, div, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, t1);
+			if (if_block) if_block.m(div, null);
+			current = true;
+		},
+		p(ctx, [dirty]) {
+			const label_1_changes = {};
+			if (dirty & /*label*/ 4) label_1_changes.label = /*label*/ ctx[2];
+			if (dirty & /*id*/ 2) label_1_changes.id = /*id*/ ctx[1];
+			label_1.$set(label_1_changes);
+
+			const textfield_changes = (dirty & /*disabled, props, id, type, value, label*/ 183)
+			? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(textfield_spread_levels, [
+					dirty & /*disabled*/ 32 && { disabled: /*disabled*/ ctx[5] },
+					dirty & /*props*/ 128 && (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_object)(/*props*/ ctx[7]),
+					dirty & /*id*/ 2 && { id: /*id*/ ctx[1] },
+					dirty & /*type*/ 16 && { type: /*type*/ ctx[4] },
+					dirty & /*value*/ 1 && { value: /*value*/ ctx[0] },
+					dirty & /*label*/ 4 && { label: /*label*/ ctx[2] }
+				])
+			: {};
+
+			textfield.$set(textfield_changes);
+
+			if (/*error*/ ctx[3]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+
+					if (dirty & /*error*/ 8) {
+						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					}
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
+					if_block.m(div, null);
+				}
+			} else if (if_block) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block, 1, 1, () => {
+					if_block = null;
+				});
+
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.check_outros)();
+			}
+
+			if (!current || dirty & /*$$restProps*/ 512 && div_class_value !== (div_class_value = /*$$restProps*/ ctx[9].class)) {
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", div_class_value);
+			}
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(label_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(textfield.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(label_1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(textfield.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(label_1);
+			/*textfield_binding*/ ctx[12](null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(textfield);
+			if (if_block) if_block.d();
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let props;
+	const omit_props_names = ["id","value","label","error","type","disabled","focus","select"];
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { id } = $$props;
+	let { value } = $$props;
+	let { label } = $$props;
+	let { error } = $$props;
+	let { type } = $$props;
+	let { disabled } = $$props;
+	let input;
+	const focus = () => input.focus();
+	const select = () => input.select();
+
+	function update(event) {
+		$$invalidate(0, value = event.target.value);
+	}
+
+	function textfield_binding($$value) {
+		svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks[$$value ? 'unshift' : 'push'](() => {
+			input = $$value;
+			$$invalidate(6, input);
+		});
+	}
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(9, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('id' in $$new_props) $$invalidate(1, id = $$new_props.id);
+		if ('value' in $$new_props) $$invalidate(0, value = $$new_props.value);
+		if ('label' in $$new_props) $$invalidate(2, label = $$new_props.label);
+		if ('error' in $$new_props) $$invalidate(3, error = $$new_props.error);
+		if ('type' in $$new_props) $$invalidate(4, type = $$new_props.type);
+		if ('disabled' in $$new_props) $$invalidate(5, disabled = $$new_props.disabled);
+	};
+
+	$$self.$$.update = () => {
+		$: $$invalidate(7, props = {
+			variant: 'outlined',
+			...$$restProps,
+			class: `w-full block bg-white ${$$restProps.class || ''}`
+		});
+	};
+
+	return [
+		value,
+		id,
+		label,
+		error,
+		type,
+		disabled,
+		input,
+		props,
+		update,
+		$$restProps,
+		focus,
+		select,
+		textfield_binding
+	];
+}
+
+class Input extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, {
+			id: 1,
+			value: 0,
+			label: 2,
+			error: 3,
+			type: 4,
+			disabled: 5,
+			focus: 10,
+			select: 11
+		});
+	}
+
+	get focus() {
+		return this.$$.ctx[10];
+	}
+
+	get select() {
+		return this.$$.ctx[11];
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Input);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/InputError.svelte":
+/*!***************************************************!*\
+  !*** ./resources/js/Components/InputError.svelte ***!
+  \***************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* resources\js\Components\InputError.svelte generated by Svelte v3.43.1 */
+
+
+function create_if_block(ctx) {
+	let div;
+	let p;
+	let t;
+	let div_levels = [/*props*/ ctx[1]];
+	let div_data = {};
+
+	for (let i = 0; i < div_levels.length; i += 1) {
+		div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(div_data, div_levels[i]);
+	}
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			p = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("p");
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(/*message*/ ctx[0]);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div, p);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(p, t);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*message*/ 1) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t, /*message*/ ctx[0]);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(div, div_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(div_levels, [dirty & /*props*/ 2 && /*props*/ ctx[1]]));
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let if_block_anchor;
+	let if_block = /*message*/ ctx[0] && create_if_block(ctx);
+
+	return {
+		c() {
+			if (if_block) if_block.c();
+			if_block_anchor = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.empty)();
+		},
+		m(target, anchor) {
+			if (if_block) if_block.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, if_block_anchor, anchor);
+		},
+		p(ctx, [dirty]) {
+			if (/*message*/ ctx[0]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
+		},
+		i: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		o: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		d(detaching) {
+			if (if_block) if_block.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(if_block_anchor);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let props;
+	const omit_props_names = ["message"];
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { message } = $$props;
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(2, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('message' in $$new_props) $$invalidate(0, message = $$new_props.message);
+	};
+
+	$$self.$$.update = () => {
+		$: $$invalidate(1, props = {
+			...$$restProps,
+			class: `text-red-400 bg-red-100 py-1 px-2 ${$$restProps.class || ''}`
+		});
+	};
+
+	return [message, props];
+}
+
+class InputError extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, { message: 0 });
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InputError);
+
+
+
+/***/ }),
+
+/***/ "./resources/js/Components/Label.svelte":
+/*!**********************************************!*\
+  !*** ./resources/js/Components/Label.svelte ***!
+  \**********************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var svelte_internal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! svelte/internal */ "./node_modules/svelte/internal/index.mjs");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* module decorator */ module = __webpack_require__.hmd(module);
+/* resources\js\Components\Label.svelte generated by Svelte v3.43.1 */
+
+
+function create_if_block(ctx) {
+	let label;
+	let html_tag;
+	let t;
+	let if_block = /*required*/ ctx[2] && create_if_block_1(ctx);
+	let label_levels = [/*props*/ ctx[3], { for: /*labelFor*/ ctx[0] }];
+	let label_data = {};
+
+	for (let i = 0; i < label_levels.length; i += 1) {
+		label_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)(label_data, label_levels[i]);
+	}
+
+	return {
+		c() {
+			label = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("label");
+			html_tag = new svelte_internal__WEBPACK_IMPORTED_MODULE_0__.HtmlTag();
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block) if_block.c();
+			html_tag.a = t;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(label, label_data);
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, label, anchor);
+			html_tag.m(/*value*/ ctx[1], label);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(label, t);
+			if (if_block) if_block.m(label, null);
+		},
+		p(ctx, dirty) {
+			if (dirty & /*value*/ 2) html_tag.p(/*value*/ ctx[1]);
+
+			if (/*required*/ ctx[2]) {
+				if (if_block) {
+					
+				} else {
+					if_block = create_if_block_1(ctx);
+					if_block.c();
+					if_block.m(label, null);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
+
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_attributes)(label, label_data = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_spread_update)(label_levels, [
+				dirty & /*props*/ 8 && /*props*/ ctx[3],
+				dirty & /*labelFor*/ 1 && { for: /*labelFor*/ ctx[0] }
+			]));
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(label);
+			if (if_block) if_block.d();
+		}
+	};
+}
+
+// (15:8) {#if required}
+function create_if_block_1(ctx) {
+	let small;
+
+	return {
+		c() {
+			small = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("small");
+			small.textContent = "* Campo obligatorio";
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(small, "class", "label-required text-red-400");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, small, anchor);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(small);
+		}
+	};
+}
+
+function create_fragment(ctx) {
+	let if_block_anchor;
+	let if_block = /*value*/ ctx[1] && create_if_block(ctx);
+
+	return {
+		c() {
+			if (if_block) if_block.c();
+			if_block_anchor = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.empty)();
+		},
+		m(target, anchor) {
+			if (if_block) if_block.m(target, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, if_block_anchor, anchor);
+		},
+		p(ctx, [dirty]) {
+			if (/*value*/ ctx[1]) {
+				if (if_block) {
+					if_block.p(ctx, dirty);
+				} else {
+					if_block = create_if_block(ctx);
+					if_block.c();
+					if_block.m(if_block_anchor.parentNode, if_block_anchor);
+				}
+			} else if (if_block) {
+				if_block.d(1);
+				if_block = null;
+			}
+		},
+		i: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		o: svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
+		d(detaching) {
+			if (if_block) if_block.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(if_block_anchor);
+		}
+	};
+}
+
+function instance($$self, $$props, $$invalidate) {
+	let props;
+	const omit_props_names = ["labelFor","value","required"];
+	let $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names);
+	let { labelFor } = $$props;
+	let { value } = $$props;
+	let { required } = $$props;
+
+	$$self.$$set = $$new_props => {
+		$$props = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)((0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.assign)({}, $$props), (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.exclude_internal_props)($$new_props));
+		$$invalidate(4, $$restProps = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_rest_props)($$props, omit_props_names));
+		if ('labelFor' in $$new_props) $$invalidate(0, labelFor = $$new_props.labelFor);
+		if ('value' in $$new_props) $$invalidate(1, value = $$new_props.value);
+		if ('required' in $$new_props) $$invalidate(2, required = $$new_props.required);
+	};
+
+	$$self.$$.update = () => {
+		$: $$invalidate(3, props = {
+			...$$restProps,
+			class: `block font-medium text-sm text-gray-700 ${$$restProps.class || ''}`
+		});
+	};
+
+	return [labelFor, value, required, props];
+}
+
+class Label extends svelte_internal__WEBPACK_IMPORTED_MODULE_0__.SvelteComponent {
+	constructor(options) {
+		super();
+		(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.init)(this, options, instance, create_fragment, svelte_internal__WEBPACK_IMPORTED_MODULE_0__.safe_not_equal, { labelFor: 0, value: 1, required: 2 });
+	}
+}
+
+if (module && module.hot) {}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Label);
+
+
+
+/***/ }),
+
 /***/ "./resources/js/Components/Link.svelte":
 /*!*********************************************!*\
   !*** ./resources/js/Components/Link.svelte ***!
@@ -7955,10 +16678,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_NavLink_svelte__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @/Components/NavLink.svelte */ "./resources/js/Components/NavLink.svelte");
 /* harmony import */ var _Components_ResponsiveNavLink_svelte__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @/Components/ResponsiveNavLink.svelte */ "./resources/js/Components/ResponsiveNavLink.svelte");
 /* harmony import */ var _Components_Link_svelte__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @/Components/Link.svelte */ "./resources/js/Components/Link.svelte");
-/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
-/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
+/* harmony import */ var _Components_Dialog_svelte__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @/Components/Dialog.svelte */ "./resources/js/Components/Dialog.svelte");
+/* harmony import */ var _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @/Components/Input.svelte */ "./resources/js/Components/Input.svelte");
+/* harmony import */ var _Components_Button_svelte__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @/Components/Button.svelte */ "./resources/js/Components/Button.svelte");
+/* harmony import */ var _Components_File_svelte__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @/Components/File.svelte */ "./resources/js/Components/File.svelte");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_loader_lib_hot_api_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./node_modules/svelte-loader/lib/hot-api.js */ "./node_modules/svelte-loader/lib/hot-api.js");
+/* harmony import */ var C_laragon_www_gym_node_modules_svelte_hmr_runtime_proxy_adapter_dom_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js */ "./node_modules/svelte-hmr/runtime/proxy-adapter-dom.js");
 /* module decorator */ module = __webpack_require__.hmd(module);
 /* resources\js\Layouts\Authenticated.svelte generated by Svelte v3.43.1 */
+
+
+
+
 
 
 
@@ -7973,8 +16704,8 @@ __webpack_require__.r(__webpack_exports__);
 const get_header_slot_changes = dirty => ({});
 const get_header_slot_context = ctx => ({});
 
-// (33:28) <Link href={route('dashboard')}>
-function create_default_slot_6(ctx) {
+// (48:28) <Link href={route('dashboard')}>
+function create_default_slot_8(ctx) {
 	let breezeapplicationlogo;
 	let current;
 	breezeapplicationlogo = new _Components_ApplicationLogo_svelte__WEBPACK_IMPORTED_MODULE_4__["default"]({ props: { class: "block h-9 w-auto" } });
@@ -8003,8 +16734,8 @@ function create_default_slot_6(ctx) {
 	};
 }
 
-// (40:28) <BreezeNavLink href={route('dashboard')} active={route().current('dashboard')}>
-function create_default_slot_5(ctx) {
+// (55:28) <BreezeNavLink href={route('dashboard')} active={route().current('dashboard')}>
+function create_default_slot_7(ctx) {
 	let t;
 
 	return {
@@ -8020,12 +16751,12 @@ function create_default_slot_5(ctx) {
 	};
 }
 
-// (47:28) <BreezeDropdown align="right" width="48">
-function create_default_slot_4(ctx) {
+// (62:28) <BreezeDropdown align="right" width="48">
+function create_default_slot_6(ctx) {
 	let div;
 	let span;
 	let button;
-	let t0_value = /*$page*/ ctx[2].props.auth.user.name + "";
+	let t0_value = /*$page*/ ctx[4].props.auth.user.name + "";
 	let t0;
 	let t1;
 	let svg;
@@ -8061,7 +16792,7 @@ function create_default_slot_4(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(svg, path);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*$page*/ 4 && t0_value !== (t0_value = /*$page*/ ctx[2].props.auth.user.name + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t0, t0_value);
+			if (dirty & /*$page*/ 16 && t0_value !== (t0_value = /*$page*/ ctx[4].props.auth.user.name + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t0, t0_value);
 		},
 		d(detaching) {
 			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
@@ -8069,8 +16800,8 @@ function create_default_slot_4(ctx) {
 	};
 }
 
-// (61:36) <BreezeDropdownLink href={route('logout')} method="post" as="button" class="flex">
-function create_default_slot_3(ctx) {
+// (76:36) <BreezeDropdownLink href={route('logout')} method="post" as="button" class="flex">
+function create_default_slot_5(ctx) {
 	let svg;
 	let path;
 	let t;
@@ -8100,7 +16831,7 @@ function create_default_slot_3(ctx) {
 	};
 }
 
-// (60:32) 
+// (75:32) 
 function create_dropdown_slot(ctx) {
 	let div;
 	let breezedropdownlink;
@@ -8112,7 +16843,7 @@ function create_dropdown_slot(ctx) {
 				method: "post",
 				as: "button",
 				class: "flex",
-				$$slots: { default: [create_default_slot_3] },
+				$$slots: { default: [create_default_slot_5] },
 				$$scope: { ctx }
 			}
 		});
@@ -8132,7 +16863,7 @@ function create_dropdown_slot(ctx) {
 		p(ctx, dirty) {
 			const breezedropdownlink_changes = {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope*/ 262144) {
 				breezedropdownlink_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8154,8 +16885,8 @@ function create_dropdown_slot(ctx) {
 	};
 }
 
-// (87:20) <BreezeResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-function create_default_slot_2(ctx) {
+// (102:20) <BreezeResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+function create_default_slot_4(ctx) {
 	let t;
 
 	return {
@@ -8171,8 +16902,8 @@ function create_default_slot_2(ctx) {
 	};
 }
 
-// (88:20) <BreezeResponsiveNavLink href={route('sesion.index')} active={route().current('sesion.index')}>
-function create_default_slot_1(ctx) {
+// (103:20) <BreezeResponsiveNavLink href={route('sesion.index')} active={route().current('sesion.index')}>
+function create_default_slot_3(ctx) {
 	let t;
 
 	return {
@@ -8188,8 +16919,8 @@ function create_default_slot_1(ctx) {
 	};
 }
 
-// (99:24) <BreezeResponsiveNavLink href={route('logout')} method="post" as="button">
-function create_default_slot(ctx) {
+// (115:24) <BreezeResponsiveNavLink href={route('logout')} method="post" as="button">
+function create_default_slot_2(ctx) {
 	let t;
 
 	return {
@@ -8205,13 +16936,13 @@ function create_default_slot(ctx) {
 	};
 }
 
-// (106:8) {#if $$slots.header}
-function create_if_block(ctx) {
+// (122:8) {#if $$slots.header}
+function create_if_block_1(ctx) {
 	let header;
 	let div;
 	let current;
-	const header_slot_template = /*#slots*/ ctx[4].header;
-	const header_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(header_slot_template, ctx, /*$$scope*/ ctx[6], get_header_slot_context);
+	const header_slot_template = /*#slots*/ ctx[8].header;
+	const header_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(header_slot_template, ctx, /*$$scope*/ ctx[18], get_header_slot_context);
 
 	return {
 		c() {
@@ -8233,15 +16964,15 @@ function create_if_block(ctx) {
 		},
 		p(ctx, dirty) {
 			if (header_slot) {
-				if (header_slot.p && (!current || dirty & /*$$scope*/ 64)) {
+				if (header_slot.p && (!current || dirty & /*$$scope*/ 262144)) {
 					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
 						header_slot,
 						header_slot_template,
 						ctx,
-						/*$$scope*/ ctx[6],
+						/*$$scope*/ ctx[18],
 						!current
-						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[6])
-						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(header_slot_template, /*$$scope*/ ctx[6], dirty, get_header_slot_changes),
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[18])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(header_slot_template, /*$$scope*/ ctx[18], dirty, get_header_slot_changes),
 						get_header_slot_context
 					);
 				}
@@ -8263,11 +16994,426 @@ function create_if_block(ctx) {
 	};
 }
 
+// (138:4) 
+function create_title_slot(ctx) {
+	let div;
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div.textContent = "Añadir ejercicio";
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "slot", "title");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div, "class", "text-center");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+		}
+	};
+}
+
+// (139:4) 
+function create_content_slot(ctx) {
+	let div4;
+	let form_1;
+	let div0;
+	let breezeinput0;
+	let updating_value;
+	let t0;
+	let div1;
+	let breezeinput1;
+	let updating_value_1;
+	let t1;
+	let div2;
+	let breezefile;
+	let updating_value_2;
+	let t2;
+	let div3;
+	let breezeinput2;
+	let updating_value_3;
+	let current;
+	let mounted;
+	let dispose;
+
+	function breezeinput0_value_binding(value) {
+		/*breezeinput0_value_binding*/ ctx[13](value);
+	}
+
+	let breezeinput0_props = {
+		id: "nombre",
+		type: "text",
+		class: "mt-1 block w-full",
+		label: "Nombre",
+		required: true
+	};
+
+	if (/*$form*/ ctx[2].nombre !== void 0) {
+		breezeinput0_props.value = /*$form*/ ctx[2].nombre;
+	}
+
+	breezeinput0 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_11__["default"]({ props: breezeinput0_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput0, 'value', breezeinput0_value_binding));
+
+	function breezeinput1_value_binding(value) {
+		/*breezeinput1_value_binding*/ ctx[14](value);
+	}
+
+	let breezeinput1_props = {
+		id: "categoria",
+		type: "text",
+		class: "mt-1 block w-full",
+		label: "Categoría",
+		required: true
+	};
+
+	if (/*$form*/ ctx[2].categoria !== void 0) {
+		breezeinput1_props.value = /*$form*/ ctx[2].categoria;
+	}
+
+	breezeinput1 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_11__["default"]({ props: breezeinput1_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput1, 'value', breezeinput1_value_binding));
+
+	function breezefile_value_binding(value) {
+		/*breezefile_value_binding*/ ctx[15](value);
+	}
+
+	let breezefile_props = {
+		id: "imagen",
+		type: "file",
+		maxSize: "10000",
+		accept: ".png,.jpeg,.jpg",
+		class: "mt-1 block w-full",
+		label: "Imagen",
+		required: true
+	};
+
+	if (/*$form*/ ctx[2].imagen !== void 0) {
+		breezefile_props.value = /*$form*/ ctx[2].imagen;
+	}
+
+	breezefile = new _Components_File_svelte__WEBPACK_IMPORTED_MODULE_13__["default"]({ props: breezefile_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezefile, 'value', breezefile_value_binding));
+
+	function breezeinput2_value_binding(value) {
+		/*breezeinput2_value_binding*/ ctx[16](value);
+	}
+
+	let breezeinput2_props = {
+		id: "link_video",
+		type: "url",
+		class: "mt-1 block w-full",
+		label: "Link del video"
+	};
+
+	if (/*$form*/ ctx[2].link_video !== void 0) {
+		breezeinput2_props.value = /*$form*/ ctx[2].link_video;
+	}
+
+	breezeinput2 = new _Components_Input_svelte__WEBPACK_IMPORTED_MODULE_11__["default"]({ props: breezeinput2_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezeinput2, 'value', breezeinput2_value_binding));
+
+	return {
+		c() {
+			div4 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			form_1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("form");
+			div0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeinput0.$$.fragment);
+			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeinput1.$$.fragment);
+			t1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezefile.$$.fragment);
+			t2 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div3 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeinput2.$$.fragment);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div0, "class", "mt-4");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div1, "class", "mt-4");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div2, "class", "mt-4");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div3, "class", "mt-4");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(form_1, "id", "form");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div4, "slot", "content");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div4, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div4, form_1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, div0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeinput0, div0, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, t0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, div1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeinput1, div1, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, t1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, div2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezefile, div2, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, t2);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(form_1, div3);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeinput2, div3, null);
+			current = true;
+
+			if (!mounted) {
+				dispose = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(form_1, "submit", (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.prevent_default)(/*submit*/ ctx[6]));
+				mounted = true;
+			}
+		},
+		p(ctx, dirty) {
+			const breezeinput0_changes = {};
+
+			if (!updating_value && dirty & /*$form*/ 4) {
+				updating_value = true;
+				breezeinput0_changes.value = /*$form*/ ctx[2].nombre;
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value = false);
+			}
+
+			breezeinput0.$set(breezeinput0_changes);
+			const breezeinput1_changes = {};
+
+			if (!updating_value_1 && dirty & /*$form*/ 4) {
+				updating_value_1 = true;
+				breezeinput1_changes.value = /*$form*/ ctx[2].categoria;
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value_1 = false);
+			}
+
+			breezeinput1.$set(breezeinput1_changes);
+			const breezefile_changes = {};
+
+			if (!updating_value_2 && dirty & /*$form*/ 4) {
+				updating_value_2 = true;
+				breezefile_changes.value = /*$form*/ ctx[2].imagen;
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value_2 = false);
+			}
+
+			breezefile.$set(breezefile_changes);
+			const breezeinput2_changes = {};
+
+			if (!updating_value_3 && dirty & /*$form*/ 4) {
+				updating_value_3 = true;
+				breezeinput2_changes.value = /*$form*/ ctx[2].link_video;
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_value_3 = false);
+			}
+
+			breezeinput2.$set(breezeinput2_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeinput0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeinput1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezefile.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeinput2.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeinput0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeinput1.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezefile.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeinput2.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div4);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeinput0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeinput1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezefile);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeinput2);
+			mounted = false;
+			dispose();
+		}
+	};
+}
+
+// (160:12) <BreezeButton on:click={() => (dialog = false)} variant={null}>
+function create_default_slot_1(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Cancelar");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+		}
+	};
+}
+
+// (165:20) {:else}
+function create_else_block(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Añadir");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+		}
+	};
+}
+
+// (163:20) {#if $form.processing}
+function create_if_block(ctx) {
+	let t;
+
+	return {
+		c() {
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)("Añadiendo");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t, anchor);
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t);
+		}
+	};
+}
+
+// (161:12) <BreezeButton variant="raised" bind:disabled={$form.processing} form="form">
+function create_default_slot(ctx) {
+	let div;
+
+	function select_block_type(ctx, dirty) {
+		if (/*$form*/ ctx[2].processing) return create_if_block;
+		return create_else_block;
+	}
+
+	let current_block_type = select_block_type(ctx, -1);
+	let if_block = current_block_type(ctx);
+
+	return {
+		c() {
+			div = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			if_block.c();
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div, anchor);
+			if_block.m(div, null);
+		},
+		p(ctx, dirty) {
+			if (current_block_type !== (current_block_type = select_block_type(ctx, dirty))) {
+				if_block.d(1);
+				if_block = current_block_type(ctx);
+
+				if (if_block) {
+					if_block.c();
+					if_block.m(div, null);
+				}
+			}
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div);
+			if_block.d();
+		}
+	};
+}
+
+// (158:4) 
+function create_actions_slot(ctx) {
+	let div1;
+	let div0;
+	let breezebutton0;
+	let t;
+	let breezebutton1;
+	let updating_disabled;
+	let current;
+
+	breezebutton0 = new _Components_Button_svelte__WEBPACK_IMPORTED_MODULE_12__["default"]({
+			props: {
+				variant: null,
+				$$slots: { default: [create_default_slot_1] },
+				$$scope: { ctx }
+			}
+		});
+
+	breezebutton0.$on("click", /*click_handler_2*/ ctx[11]);
+
+	function breezebutton1_disabled_binding(value) {
+		/*breezebutton1_disabled_binding*/ ctx[12](value);
+	}
+
+	let breezebutton1_props = {
+		variant: "raised",
+		form: "form",
+		$$slots: { default: [create_default_slot] },
+		$$scope: { ctx }
+	};
+
+	if (/*$form*/ ctx[2].processing !== void 0) {
+		breezebutton1_props.disabled = /*$form*/ ctx[2].processing;
+	}
+
+	breezebutton1 = new _Components_Button_svelte__WEBPACK_IMPORTED_MODULE_12__["default"]({ props: breezebutton1_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(breezebutton1, 'disabled', breezebutton1_disabled_binding));
+
+	return {
+		c() {
+			div1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezebutton0.$$.fragment);
+			t = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezebutton1.$$.fragment);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div0, "class", "p-4");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div1, "slot", "actions");
+		},
+		m(target, anchor) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div1, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div1, div0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezebutton0, div0, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div0, t);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezebutton1, div0, null);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const breezebutton0_changes = {};
+
+			if (dirty & /*$$scope*/ 262144) {
+				breezebutton0_changes.$$scope = { dirty, ctx };
+			}
+
+			breezebutton0.$set(breezebutton0_changes);
+			const breezebutton1_changes = {};
+
+			if (dirty & /*$$scope, $form*/ 262148) {
+				breezebutton1_changes.$$scope = { dirty, ctx };
+			}
+
+			if (!updating_disabled && dirty & /*$form*/ 4) {
+				updating_disabled = true;
+				breezebutton1_changes.disabled = /*$form*/ ctx[2].processing;
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_disabled = false);
+			}
+
+			breezebutton1.$set(breezebutton1_changes);
+		},
+		i(local) {
+			if (current) return;
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezebutton0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezebutton1.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezebutton0.$$.fragment, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezebutton1.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div1);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezebutton0);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezebutton1);
+		}
+	};
+}
+
 function create_fragment(ctx) {
 	let title_value;
 	let t0;
+	let div17;
 	let div16;
-	let div15;
 	let nav;
 	let div7;
 	let div6;
@@ -8290,37 +17436,43 @@ function create_fragment(ctx) {
 	let path1;
 	let path1_class_value;
 	let t4;
-	let div14;
-	let div8;
+	let div15;
+	let div9;
 	let breezeresponsivenavlink0;
 	let t5;
 	let breezeresponsivenavlink1;
 	let t6;
-	let div13;
-	let div11;
-	let div9;
-	let t7_value = /*$page*/ ctx[2].props.auth.user.name + "";
-	let t7;
+	let div8;
+	let div8_variant_value;
 	let t8;
+	let div14;
+	let div12;
 	let div10;
-	let t9_value = /*$page*/ ctx[2].props.auth.user.email + "";
+	let t9_value = /*$page*/ ctx[4].props.auth.user.name + "";
 	let t9;
 	let t10;
-	let div12;
-	let breezeresponsivenavlink2;
-	let div14_class_value;
+	let div11;
+	let t11_value = /*$page*/ ctx[4].props.auth.user.email + "";
 	let t11;
 	let t12;
+	let div13;
+	let breezeresponsivenavlink2;
+	let div15_class_value;
+	let t13;
+	let t14;
 	let main;
+	let t15;
+	let dialog_1;
+	let updating_open;
 	let current;
 	let mounted;
 	let dispose;
-	document.title = title_value = /*$title*/ ctx[1] ? `${/*$title*/ ctx[1]}` : '';
+	document.title = title_value = /*$title*/ ctx[3] ? `${/*$title*/ ctx[3]}` : '';
 
 	link = new _Components_Link_svelte__WEBPACK_IMPORTED_MODULE_9__["default"]({
 			props: {
 				href: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('dashboard'),
-				$$slots: { default: [create_default_slot_6] },
+				$$slots: { default: [create_default_slot_8] },
 				$$scope: { ctx }
 			}
 		});
@@ -8329,7 +17481,7 @@ function create_fragment(ctx) {
 			props: {
 				href: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('dashboard'),
 				active: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)().current('dashboard'),
-				$$slots: { default: [create_default_slot_5] },
+				$$slots: { default: [create_default_slot_7] },
 				$$scope: { ctx }
 			}
 		});
@@ -8340,7 +17492,7 @@ function create_fragment(ctx) {
 				width: "48",
 				$$slots: {
 					dropdown: [create_dropdown_slot],
-					default: [create_default_slot_4]
+					default: [create_default_slot_6]
 				},
 				$$scope: { ctx }
 			}
@@ -8350,7 +17502,7 @@ function create_fragment(ctx) {
 			props: {
 				href: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('dashboard'),
 				active: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)().current('dashboard'),
-				$$slots: { default: [create_default_slot_2] },
+				$$slots: { default: [create_default_slot_4] },
 				$$scope: { ctx }
 			}
 		});
@@ -8359,7 +17511,7 @@ function create_fragment(ctx) {
 			props: {
 				href: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('sesion.index'),
 				active: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)().current('sesion.index'),
-				$$slots: { default: [create_default_slot_1] },
+				$$slots: { default: [create_default_slot_3] },
 				$$scope: { ctx }
 			}
 		});
@@ -8369,20 +17521,40 @@ function create_fragment(ctx) {
 				href: (0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('logout'),
 				method: "post",
 				as: "button",
-				$$slots: { default: [create_default_slot] },
+				$$slots: { default: [create_default_slot_2] },
 				$$scope: { ctx }
 			}
 		});
 
-	let if_block = /*$$slots*/ ctx[3].header && create_if_block(ctx);
-	const default_slot_template = /*#slots*/ ctx[4].default;
-	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[6], null);
+	let if_block = /*$$slots*/ ctx[7].header && create_if_block_1(ctx);
+	const default_slot_template = /*#slots*/ ctx[8].default;
+	const default_slot = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_slot)(default_slot_template, ctx, /*$$scope*/ ctx[18], null);
+
+	function dialog_1_open_binding(value) {
+		/*dialog_1_open_binding*/ ctx[17](value);
+	}
+
+	let dialog_1_props = {
+		$$slots: {
+			actions: [create_actions_slot],
+			content: [create_content_slot],
+			title: [create_title_slot]
+		},
+		$$scope: { ctx }
+	};
+
+	if (/*dialog*/ ctx[1] !== void 0) {
+		dialog_1_props.open = /*dialog*/ ctx[1];
+	}
+
+	dialog_1 = new _Components_Dialog_svelte__WEBPACK_IMPORTED_MODULE_10__["default"]({ props: dialog_1_props });
+	svelte_internal__WEBPACK_IMPORTED_MODULE_0__.binding_callbacks.push(() => (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.bind)(dialog_1, 'open', dialog_1_open_binding));
 
 	return {
 		c() {
 			t0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div17 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			div16 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			div15 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			nav = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("nav");
 			div7 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			div6 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
@@ -8403,27 +17575,32 @@ function create_fragment(ctx) {
 			path0 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.svg_element)("path");
 			path1 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.svg_element)("path");
 			t4 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
-			div14 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			div8 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div15 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div9 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeresponsivenavlink0.$$.fragment);
 			t5 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeresponsivenavlink1.$$.fragment);
 			t6 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
-			div13 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			div11 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			div9 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			t7 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t7_value);
+			div8 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div8.textContent = "Crear ejercicio";
 			t8 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div14 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			div12 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			div10 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
 			t9 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t9_value);
 			t10 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
-			div12 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeresponsivenavlink2.$$.fragment);
-			t11 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
-			if (if_block) if_block.c();
+			div11 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			t11 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.text)(t11_value);
 			t12 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			div13 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("div");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(breezeresponsivenavlink2.$$.fragment);
+			t13 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			if (if_block) if_block.c();
+			t14 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
 			main = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.element)("main");
 			if (default_slot) default_slot.c();
+			t15 = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.space)();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.create_component)(dialog_1.$$.fragment);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div0, "class", "flex-shrink-0 flex items-center");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div1, "class", "hidden space-x-8 sm:-my-px sm:ml-10 sm:flex");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div2, "class", "flex");
@@ -8455,25 +17632,27 @@ function create_fragment(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div5, "class", "-mr-2 flex items-center sm:hidden");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div6, "class", "flex justify-between h-16");
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div7, "class", "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div8, "class", "pt-2 pb-3 space-y-1");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div9, "class", "font-medium text-base text-gray-800");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div10, "class", "font-medium text-sm text-gray-500");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div11, "class", "px-4");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div12, "class", "mt-3 space-y-1");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div13, "class", "pt-4 pb-1 border-t border-gray-200");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div8, "class", "block border-l-4 duration-150 ease-in-out focus:bg-indigo-100 focus:border-indigo-700 focus:outline-none focus:text-indigo-800 font-medium pl-3 pr-4 py-2 text-base transition");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div8, "variant", div8_variant_value = null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div9, "class", "pt-2 pb-3 space-y-1");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div10, "class", "font-medium text-base text-gray-800");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div11, "class", "font-medium text-sm text-gray-500");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div12, "class", "px-4");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div13, "class", "mt-3 space-y-1");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div14, "class", "pt-4 pb-1 border-t border-gray-200");
 
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div14, "class", div14_class_value = /*showingNavigationDropdown*/ ctx[0]
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div15, "class", div15_class_value = /*showingNavigationDropdown*/ ctx[0]
 			? 'block sm:hidden'
 			: 'hidden sm:hidden');
 
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(nav, "class", "bg-white border-b border-gray-100");
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div15, "class", "min-h-screen bg-gray-100");
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div16, "class", "min-h-screen bg-gray-100");
 		},
 		m(target, anchor) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t0, anchor);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div16, anchor);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div16, div15);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div15, nav);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, div17, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div17, div16);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div16, nav);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(nav, div7);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div7, div6);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div6, div2);
@@ -8493,60 +17672,68 @@ function create_fragment(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(svg, path0);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(svg, path1);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(nav, t4);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(nav, div14);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div14, div8);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeresponsivenavlink0, div8, null);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div8, t5);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeresponsivenavlink1, div8, null);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div14, t6);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div14, div13);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div13, div11);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div11, div9);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div9, t7);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div11, t8);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div11, div10);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(nav, div15);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div15, div9);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeresponsivenavlink0, div9, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div9, t5);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeresponsivenavlink1, div9, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div9, t6);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div9, div8);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div15, t8);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div15, div14);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div14, div12);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div12, div10);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div10, t9);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div13, t10);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div13, div12);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeresponsivenavlink2, div12, null);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div15, t11);
-			if (if_block) if_block.m(div15, null);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div15, t12);
-			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div15, main);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div12, t10);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div12, div11);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div11, t11);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div14, t12);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div14, div13);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(breezeresponsivenavlink2, div13, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div16, t13);
+			if (if_block) if_block.m(div16, null);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div16, t14);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.append)(div16, main);
 
 			if (default_slot) {
 				default_slot.m(main, null);
 			}
 
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.insert)(target, t15, anchor);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.mount_component)(dialog_1, target, anchor);
 			current = true;
 
 			if (!mounted) {
-				dispose = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(button, "click", /*click_handler*/ ctx[5]);
+				dispose = [
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(button, "click", /*click_handler*/ ctx[9]),
+					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.listen)(div8, "click", /*click_handler_1*/ ctx[10])
+				];
+
 				mounted = true;
 			}
 		},
 		p(ctx, [dirty]) {
-			if ((!current || dirty & /*$title*/ 2) && title_value !== (title_value = /*$title*/ ctx[1] ? `${/*$title*/ ctx[1]}` : '')) {
+			if ((!current || dirty & /*$title*/ 8) && title_value !== (title_value = /*$title*/ ctx[3] ? `${/*$title*/ ctx[3]}` : '')) {
 				document.title = title_value;
 			}
 
 			const link_changes = {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope*/ 262144) {
 				link_changes.$$scope = { dirty, ctx };
 			}
 
 			link.$set(link_changes);
 			const breezenavlink_changes = {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope*/ 262144) {
 				breezenavlink_changes.$$scope = { dirty, ctx };
 			}
 
 			breezenavlink.$set(breezenavlink_changes);
 			const breezedropdown_changes = {};
 
-			if (dirty & /*$$scope, $page*/ 68) {
+			if (dirty & /*$$scope, $page*/ 262160) {
 				breezedropdown_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8566,46 +17753,46 @@ function create_fragment(ctx) {
 
 			const breezeresponsivenavlink0_changes = {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope*/ 262144) {
 				breezeresponsivenavlink0_changes.$$scope = { dirty, ctx };
 			}
 
 			breezeresponsivenavlink0.$set(breezeresponsivenavlink0_changes);
 			const breezeresponsivenavlink1_changes = {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope*/ 262144) {
 				breezeresponsivenavlink1_changes.$$scope = { dirty, ctx };
 			}
 
 			breezeresponsivenavlink1.$set(breezeresponsivenavlink1_changes);
-			if ((!current || dirty & /*$page*/ 4) && t7_value !== (t7_value = /*$page*/ ctx[2].props.auth.user.name + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t7, t7_value);
-			if ((!current || dirty & /*$page*/ 4) && t9_value !== (t9_value = /*$page*/ ctx[2].props.auth.user.email + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t9, t9_value);
+			if ((!current || dirty & /*$page*/ 16) && t9_value !== (t9_value = /*$page*/ ctx[4].props.auth.user.name + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t9, t9_value);
+			if ((!current || dirty & /*$page*/ 16) && t11_value !== (t11_value = /*$page*/ ctx[4].props.auth.user.email + "")) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.set_data)(t11, t11_value);
 			const breezeresponsivenavlink2_changes = {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope*/ 262144) {
 				breezeresponsivenavlink2_changes.$$scope = { dirty, ctx };
 			}
 
 			breezeresponsivenavlink2.$set(breezeresponsivenavlink2_changes);
 
-			if (!current || dirty & /*showingNavigationDropdown*/ 1 && div14_class_value !== (div14_class_value = /*showingNavigationDropdown*/ ctx[0]
+			if (!current || dirty & /*showingNavigationDropdown*/ 1 && div15_class_value !== (div15_class_value = /*showingNavigationDropdown*/ ctx[0]
 			? 'block sm:hidden'
 			: 'hidden sm:hidden')) {
-				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div14, "class", div14_class_value);
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.attr)(div15, "class", div15_class_value);
 			}
 
-			if (/*$$slots*/ ctx[3].header) {
+			if (/*$$slots*/ ctx[7].header) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 
-					if (dirty & /*$$slots*/ 8) {
+					if (dirty & /*$$slots*/ 128) {
 						(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
 					}
 				} else {
-					if_block = create_if_block(ctx);
+					if_block = create_if_block_1(ctx);
 					if_block.c();
 					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block, 1);
-					if_block.m(div15, t12);
+					if_block.m(div16, t14);
 				}
 			} else if (if_block) {
 				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.group_outros)();
@@ -8618,19 +17805,33 @@ function create_fragment(ctx) {
 			}
 
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 64)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 262144)) {
 					(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.update_slot_base)(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[6],
+						/*$$scope*/ ctx[18],
 						!current
-						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[6])
-						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[6], dirty, null),
+						? (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_all_dirty_from_scope)(/*$$scope*/ ctx[18])
+						: (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.get_slot_changes)(default_slot_template, /*$$scope*/ ctx[18], dirty, null),
 						null
 					);
 				}
 			}
+
+			const dialog_1_changes = {};
+
+			if (dirty & /*$$scope, $form, dialog*/ 262150) {
+				dialog_1_changes.$$scope = { dirty, ctx };
+			}
+
+			if (!updating_open && dirty & /*dialog*/ 2) {
+				updating_open = true;
+				dialog_1_changes.open = /*dialog*/ ctx[1];
+				(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.add_flush_callback)(() => updating_open = false);
+			}
+
+			dialog_1.$set(dialog_1_changes);
 		},
 		i(local) {
 			if (current) return;
@@ -8642,6 +17843,7 @@ function create_fragment(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(breezeresponsivenavlink2.$$.fragment, local);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(if_block);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_in)(dialog_1.$$.fragment, local);
 			current = true;
 		},
 		o(local) {
@@ -8653,11 +17855,12 @@ function create_fragment(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(breezeresponsivenavlink2.$$.fragment, local);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(if_block);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(default_slot, local);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.transition_out)(dialog_1.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
 			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t0);
-			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div16);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(div17);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(link);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezenavlink);
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezedropdown);
@@ -8666,8 +17869,10 @@ function create_fragment(ctx) {
 			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(breezeresponsivenavlink2);
 			if (if_block) if_block.d();
 			if (default_slot) default_slot.d(detaching);
+			if (detaching) (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.detach)(t15);
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.destroy_component)(dialog_1, detaching);
 			mounted = false;
-			dispose();
+			(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.run_all)(dispose);
 		}
 	};
 }
@@ -8675,30 +17880,104 @@ function create_fragment(ctx) {
 const title = (0,svelte_store__WEBPACK_IMPORTED_MODULE_1__.writable)(null);
 
 function instance($$self, $$props, $$invalidate) {
+	let $form;
+
 	let $title,
 		$$unsubscribe_title = svelte_internal__WEBPACK_IMPORTED_MODULE_0__.noop,
-		$$subscribe_title = () => ($$unsubscribe_title(), $$unsubscribe_title = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.subscribe)(title, $$value => $$invalidate(1, $title = $$value)), title);
+		$$subscribe_title = () => ($$unsubscribe_title(), $$unsubscribe_title = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.subscribe)(title, $$value => $$invalidate(3, $title = $$value)), title);
 
 	let $page;
-	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, title, $$value => $$invalidate(1, $title = $$value));
-	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_3__.page, $$value => $$invalidate(2, $page = $$value));
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, title, $$value => $$invalidate(3, $title = $$value));
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, _inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_3__.page, $$value => $$invalidate(4, $page = $$value));
 	$$self.$$.on_destroy.push(() => $$unsubscribe_title());
 	let { $$slots: slots = {}, $$scope } = $$props;
 	const $$slots = (0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.compute_slots)(slots);
 	let showingNavigationDropdown = false;
+	let dialog = false;
+
+	let form = (0,_inertiajs_inertia_svelte__WEBPACK_IMPORTED_MODULE_3__.useForm)({
+		nombre: '',
+		imagen: null,
+		categoria: '',
+		link_video: ''
+	});
+
+	(0,svelte_internal__WEBPACK_IMPORTED_MODULE_0__.component_subscribe)($$self, form, value => $$invalidate(2, $form = value));
+
+	function submit() {
+		$form.post((0,_Utils__WEBPACK_IMPORTED_MODULE_2__.route)('ejercicios.store'), {
+			onFinish: () => $$invalidate(1, dialog = false),
+			preserveScroll: true
+		});
+	}
+
 	const click_handler = () => $$invalidate(0, showingNavigationDropdown = !showingNavigationDropdown);
+	const click_handler_1 = () => $$invalidate(1, dialog = true);
+	const click_handler_2 = () => $$invalidate(1, dialog = false);
+
+	function breezebutton1_disabled_binding(value) {
+		if ($$self.$$.not_equal($form.processing, value)) {
+			$form.processing = value;
+			form.set($form);
+		}
+	}
+
+	function breezeinput0_value_binding(value) {
+		if ($$self.$$.not_equal($form.nombre, value)) {
+			$form.nombre = value;
+			form.set($form);
+		}
+	}
+
+	function breezeinput1_value_binding(value) {
+		if ($$self.$$.not_equal($form.categoria, value)) {
+			$form.categoria = value;
+			form.set($form);
+		}
+	}
+
+	function breezefile_value_binding(value) {
+		if ($$self.$$.not_equal($form.imagen, value)) {
+			$form.imagen = value;
+			form.set($form);
+		}
+	}
+
+	function breezeinput2_value_binding(value) {
+		if ($$self.$$.not_equal($form.link_video, value)) {
+			$form.link_video = value;
+			form.set($form);
+		}
+	}
+
+	function dialog_1_open_binding(value) {
+		dialog = value;
+		$$invalidate(1, dialog);
+	}
 
 	$$self.$$set = $$props => {
-		if ('$$scope' in $$props) $$invalidate(6, $$scope = $$props.$$scope);
+		if ('$$scope' in $$props) $$invalidate(18, $$scope = $$props.$$scope);
 	};
 
 	return [
 		showingNavigationDropdown,
+		dialog,
+		$form,
 		$title,
 		$page,
+		form,
+		submit,
 		$$slots,
 		slots,
 		click_handler,
+		click_handler_1,
+		click_handler_2,
+		breezebutton1_disabled_binding,
+		breezeinput0_value_binding,
+		breezeinput1_value_binding,
+		breezefile_value_binding,
+		breezeinput2_value_binding,
+		dialog_1_open_binding,
 		$$scope
 	];
 }
@@ -9892,6 +19171,166 @@ function useActions(node, actions) {
 
 /***/ }),
 
+/***/ "./node_modules/@smui/dialog/Actions.js":
+/*!**********************************************!*\
+  !*** ./node_modules/@smui/dialog/Actions.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/common/Div.svelte */ "./node_modules/@smui/common/Div.svelte");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__.classAdderBuilder)({
+  class: 'mdc-dialog__actions',
+  component: _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__["default"],
+  classMap: {
+    'smui-dialog__actions--reversed': 'SMUI:dialog:actions:reversed',
+  },
+  contexts: {
+    'SMUI:button:context': 'dialog:action',
+  },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/dialog/Content.js":
+/*!**********************************************!*\
+  !*** ./node_modules/@smui/dialog/Content.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/common/Div.svelte */ "./node_modules/@smui/common/Div.svelte");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__.classAdderBuilder)({
+  class: 'mdc-dialog__content',
+  component: _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__["default"],
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/dialog/Header.js":
+/*!*********************************************!*\
+  !*** ./node_modules/@smui/dialog/Header.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/common/Div.svelte */ "./node_modules/@smui/common/Div.svelte");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__.classAdderBuilder)({
+  class: 'mdc-dialog__header',
+  component: _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__["default"],
+  contexts: {
+    'SMUI:icon-button:context': 'dialog:header',
+  },
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/dialog/InitialFocus.js":
+/*!***************************************************!*\
+  !*** ./node_modules/@smui/dialog/InitialFocus.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ InitialFocus)
+/* harmony export */ });
+function InitialFocus(node) {
+  node.setAttribute('data-mdc-dialog-initial-focus', '');
+
+  return {
+    destroy() {
+      node.removeAttribute('data-mdc-dialog-initial-focus');
+    },
+  };
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/dialog/Title.js":
+/*!********************************************!*\
+  !*** ./node_modules/@smui/dialog/Title.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_H2_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/common/H2.svelte */ "./node_modules/@smui/common/H2.svelte");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__.classAdderBuilder)({
+  class: 'mdc-dialog__title',
+  component: _smui_common_H2_svelte__WEBPACK_IMPORTED_MODULE_1__["default"],
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/dialog/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/@smui/dialog/index.js ***!
+  \********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "Header": () => (/* reexport safe */ _Header_js__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "Title": () => (/* reexport safe */ _Title_js__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "Content": () => (/* reexport safe */ _Content_js__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "Actions": () => (/* reexport safe */ _Actions_js__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "InitialFocus": () => (/* reexport safe */ _InitialFocus_js__WEBPACK_IMPORTED_MODULE_5__["default"])
+/* harmony export */ });
+/* harmony import */ var _Dialog_svelte__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dialog.svelte */ "./node_modules/@smui/dialog/Dialog.svelte");
+/* harmony import */ var _Header_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header.js */ "./node_modules/@smui/dialog/Header.js");
+/* harmony import */ var _Title_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Title.js */ "./node_modules/@smui/dialog/Title.js");
+/* harmony import */ var _Content_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Content.js */ "./node_modules/@smui/dialog/Content.js");
+/* harmony import */ var _Actions_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Actions.js */ "./node_modules/@smui/dialog/Actions.js");
+/* harmony import */ var _InitialFocus_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./InitialFocus.js */ "./node_modules/@smui/dialog/InitialFocus.js");
+
+
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Dialog_svelte__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@smui/ripple/Ripple.js":
 /*!*********************************************!*\
   !*** ./node_modules/@smui/ripple/Ripple.js ***!
@@ -10120,6 +19559,111 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Ripple_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/textfield/HelperLine.js":
+/*!****************************************************!*\
+  !*** ./node_modules/@smui/textfield/HelperLine.js ***!
+  \****************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/common/Div.svelte */ "./node_modules/@smui/common/Div.svelte");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__.classAdderBuilder)({
+  class: 'mdc-text-field-helper-line',
+  component: _smui_common_Div_svelte__WEBPACK_IMPORTED_MODULE_1__["default"],
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/textfield/Prefix.js":
+/*!************************************************!*\
+  !*** ./node_modules/@smui/textfield/Prefix.js ***!
+  \************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_Span_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/common/Span.svelte */ "./node_modules/@smui/common/Span.svelte");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__.classAdderBuilder)({
+  class: 'mdc-text-field__affix mdc-text-field__affix--prefix',
+  component: _smui_common_Span_svelte__WEBPACK_IMPORTED_MODULE_1__["default"],
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/textfield/Suffix.js":
+/*!************************************************!*\
+  !*** ./node_modules/@smui/textfield/Suffix.js ***!
+  \************************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @smui/common/internal.js */ "./node_modules/@smui/common/internal.js");
+/* harmony import */ var _smui_common_Span_svelte__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @smui/common/Span.svelte */ "./node_modules/@smui/common/Span.svelte");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_smui_common_internal_js__WEBPACK_IMPORTED_MODULE_0__.classAdderBuilder)({
+  class: 'mdc-text-field__affix mdc-text-field__affix--suffix',
+  component: _smui_common_Span_svelte__WEBPACK_IMPORTED_MODULE_1__["default"],
+}));
+
+
+/***/ }),
+
+/***/ "./node_modules/@smui/textfield/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/@smui/textfield/index.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
+/* harmony export */   "Prefix": () => (/* reexport safe */ _Prefix_js__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "Suffix": () => (/* reexport safe */ _Suffix_js__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "HelperLine": () => (/* reexport safe */ _HelperLine_js__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "Input": () => (/* reexport safe */ _Input_svelte__WEBPACK_IMPORTED_MODULE_4__["default"]),
+/* harmony export */   "Textarea": () => (/* reexport safe */ _Textarea_svelte__WEBPACK_IMPORTED_MODULE_5__["default"])
+/* harmony export */ });
+/* harmony import */ var _Textfield_svelte__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Textfield.svelte */ "./node_modules/@smui/textfield/Textfield.svelte");
+/* harmony import */ var _Prefix_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Prefix.js */ "./node_modules/@smui/textfield/Prefix.js");
+/* harmony import */ var _Suffix_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Suffix.js */ "./node_modules/@smui/textfield/Suffix.js");
+/* harmony import */ var _HelperLine_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HelperLine.js */ "./node_modules/@smui/textfield/HelperLine.js");
+/* harmony import */ var _Input_svelte__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Input.svelte */ "./node_modules/@smui/textfield/Input.svelte");
+/* harmony import */ var _Textarea_svelte__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Textarea.svelte */ "./node_modules/@smui/textfield/Textarea.svelte");
+
+
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Textfield_svelte__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
 
 
 /***/ })

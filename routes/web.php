@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +110,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $authUser->ejercicios()->toggle($ejercicio);
         return back();
     })->name('user-ejercicio.store');
+
+    Route::post('ejercicios/store', function (Request $request) {
+        $path = null;
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('public/' . strtolower($request->categoria));
+            $path = explode("/", $path)[2];
+        }
+
+        $ejercicio = new Ejercicio();
+        $ejercicio->nombre = strtoupper($request->nombre);
+        $ejercicio->slug = Str::slug($request->nombre);
+        $ejercicio->link_video = $request->link_video;
+        $ejercicio->categoria = strtolower($request->categoria);
+        $ejercicio->imagen = $path;
+
+        $ejercicio->save();
+
+        return back();
+    })->name('ejercicios.store');
 });
 
 require __DIR__ . '/auth.php';
