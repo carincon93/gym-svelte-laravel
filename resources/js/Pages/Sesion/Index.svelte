@@ -1,15 +1,15 @@
 <script>
     import { Inertia } from '@inertiajs/inertia'
-    import { useForm } from '@inertiajs/inertia-svelte'
+    import { page, useForm } from '@inertiajs/inertia-svelte'
     import { route } from '@/Utils'
 
     import BreezeAuthenticatedLayout, { title } from '@/Layouts/Authenticated.svelte'
     import BreezeButton from '@/Components/Button.svelte'
+    import Textfield from '@smui/textfield'
 
     export let ejercicios
-    export let categoria
 
-    $: $title = categoria
+    $: $title = 'Sesión del día'
 
     let form = useForm({
         ejercicio_id: null,
@@ -18,20 +18,29 @@
     function submit(ejercicioID) {
         $form.post(route('user-ejercicio.store', ejercicioID), { preserveScroll: true })
     }
+
+    let formSesion = useForm({
+        numero_sesion: $page.props.auth.user.sesion?.numero_sesion,
+    })
 </script>
 
 <BreezeAuthenticatedLayout>
     <div class="py-12">
         <div class="lg:px-8 max-w-7xl mx-auto sm:px-6">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 border-b border-gray-200 text-center sm:text-left">{categoria}</div>
+                <div class="p-6 border-b border-gray-200 text-center sm:text-left">Sesión del día</div>
+
+                <div class="px-4 flex items-center">
+                    <small class="text-gray-500">Configure el número de la sesión de entrenamiento</small>
+                    <Textfield id="numero_sesion" variant="outlined" type="number" class="mt-1 w-1/4" input$min="0" bind:value={$formSesion.numero_sesion} on:input={$formSesion.numero_sesion > 0 ? $formSesion.post(route('sesiones.store'), { preserveScroll: true }) : null} />
+                </div>
             </div>
 
             {#each ejercicios as ejercicio}
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between mb-1 shadow-md">
                     <div class="flex items-center" on:click={() => Inertia.visit(route('ejercicios.show', [ejercicio.categoria, ejercicio.slug]))}>
                         <div class="p-6 titulo-ejercicio text-sm">{ejercicio.nombre}</div>
-                        <img src="/storage/{categoria.toLowerCase()}/{ejercicio.imagen}" class="h-24" alt="" />
+                        <img src="/storage/{ejercicio.categoria.toLowerCase()}/{ejercicio.imagen}" class="h-24" alt="" />
                     </div>
                     <BreezeButton on:click={() => submit(ejercicio.id)} class="h-auto" type="button" variant={null}>
                         {#if ejercicio.users.filter((user) => user.pivot.ejercicio_id == ejercicio.id).length > 0}

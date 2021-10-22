@@ -34,10 +34,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/ejercicios/{ejercicio}', function ($ejercicio) {
         return Inertia::render('Ejercicios/Index', [
-            'ejercicios' => Ejercicio::where('categoria', $ejercicio)->get(),
-            'categoria' => Ejercicio::where('categoria', $ejercicio)->first() ? ucfirst(Ejercicio::where('categoria', $ejercicio)->first()->categoria) : null
+            'ejercicios' => Ejercicio::where('categoria', $ejercicio)->with('users')->get(),
+            'categoria' => Ejercicio::where('categoria', $ejercicio)->first() ? ucfirst(Ejercicio::where('categoria', $ejercicio)->first()->categoria) : null,
         ]);
     })->name('ejercicios.index');
+
+    Route::get('/sesion', function () {
+        return Inertia::render('Sesion/Index', [
+            'ejercicios' => Ejercicio::whereHas('users', function () {
+                return 'user_id' == Auth::user()->id;
+            })->with('users')->get(),
+        ]);
+    })->name('sesion.index');
 
     Route::get('/ejercicios/{ejercicio}/{slug}', function ($ejercicio, $slug) {
         $authUser = Auth::user();
@@ -95,6 +103,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         );
         return back();
     })->name('sesiones.store');
+
+    Route::post('user-ejercicio/store/{ejercicio}', function ($ejercicio) {
+        $authUser = Auth::user();
+        $authUser->ejercicios()->toggle($ejercicio);
+        return back();
+    })->name('user-ejercicio.store');
 });
 
 require __DIR__ . '/auth.php';

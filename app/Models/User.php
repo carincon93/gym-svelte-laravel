@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Serie::class);
     }
+
+    public function ejercicios()
+    {
+        return $this->belongsToMany(Ejercicio::class, 'user_ejercicio',  'user_id', 'ejercicio_id');
+    }
 }

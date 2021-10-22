@@ -23,4 +23,9 @@ class Ejercicio extends Model
     ];
 
     protected $table = 'ejercicios';
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_ejercicio', 'ejercicio_id', 'user_id');
+    }
 }
