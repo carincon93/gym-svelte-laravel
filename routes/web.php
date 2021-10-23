@@ -41,9 +41,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('ejercicios.index');
 
     Route::get('/sesion', function () {
+
         return Inertia::render('Sesion/Index', [
-            'ejercicios' => Ejercicio::whereHas('users', function () {
-                return 'user_id' == Auth::user()->id;
+            'ejercicios' => Ejercicio::orderBy('ejercicios.categoria', 'DESC')->whereHas('users', function () {
+                'user_id' == Auth::user()->id;
             })->with('users')->get(),
         ]);
     })->name('sesion.index');
